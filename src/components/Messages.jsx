@@ -20,7 +20,7 @@ export default function Messages() {
                 <span className="flex lg:w-2/3 sm:w-full items-center justify-center">
                     <MessageInput />
                 </span>
-
+                <span></span>
             </footer>
         </div>
 
