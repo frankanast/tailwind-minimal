@@ -1,7 +1,7 @@
 import 'react'
 import ExpandButton from "./ExpandButton.jsx";
 
-export default function TopBar({ contentLeft, contentCenter, expander }) {
+export default function Topbar({ contentLeft, contentCenter, expander }) {
     return (
         <div
             className="sticky flex top-0 z-40 h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm sm:px-6 lg:px-8">

@@ -4,12 +4,13 @@ import { FaceSmileIcon, PaperClipIcon, PaperAirplaneIcon } from '@heroicons/reac
 
 export default function MessageInput() {
     return (
-        <div className="flex w-full px-7 gap-4 items-center align-middle">
+        <div className="flex w-full gap-4 items-center align-middle">
             <input
                 id="name"
                 name="name"
                 type="text"
                 placeholder="Type your message..."
+                autoComplete="off"
                 className="flex-1 w-full rounded-full border-0 px-4 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
 

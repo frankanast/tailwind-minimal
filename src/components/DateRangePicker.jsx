@@ -37,29 +37,13 @@ export default function DateRangePicker() {
                 onBlur={handleBlur}
                 tabIndex={-1} // Allow this div to capture focus and blur events
             >
-                {/*
-                <DateRangeInput
-                    startDate={dateRange.startDate}
-                    endDate={dateRange.endDate}
-                    onDateChange={handleDateChange}
-                />
-                */}
                 <DateRangeInput />
 
             </div>
 
-            {/* Popover positioned above and centered with respect to DateRangeInput */}
             {isPopoverOpen && (
                 <div className="absolute z-10 w-full flex justify-center items-center my-2">
                     <div className="w-auto">
-                        {/*
-                        <DateRangePopover
-                            startDate={dateRange.startDate}
-                            endDate={dateRange.endDate}
-                            onDateChange={handleDateChange}
-                            closePopover={() => setIsPopoverOpen(false)}
-                        />
-                        */}
                         <DateRangePopover />
                     </div>
                 </div>

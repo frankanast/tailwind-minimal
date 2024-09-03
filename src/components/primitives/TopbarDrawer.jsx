@@ -48,27 +48,9 @@ export default function TopbarDrawer({ barContent, drawerContent, callsToAction,
                 transition
                 className="absolute inset-x-0 top-0 -z-10 bg-white pt-16 shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:-translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
             >
-                <div className="mx-auto grid max-w-7xl grid-cols-1 gap-2 px-6 py-6 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-0 sm:py-10 lg:grid-cols-4 lg:gap-4 lg:px-8 xl:gap-8">
-                    {/*{solutions.map((item) => (*/}
-                    {/*    <div*/}
-                    {/*        key={item.name}*/}
-                    {/*        className="group relative -mx-3 flex gap-6 rounded-lg p-3 text-sm leading-6 hover:bg-gray-50 sm:flex-col sm:p-6"*/}
-                    {/*    >*/}
-                    {/*        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">*/}
-                    {/*            <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />*/}
-                    {/*        </div>*/}
-                    {/*        <div>*/}
-                    {/*            <a href={item.href} className="font-semibold text-gray-900">*/}
-                    {/*                {item.name}*/}
-                    {/*                <span className="absolute inset-0" />*/}
-                    {/*            </a>*/}
-                    {/*            <p className="mt-1 text-gray-600">{item.description}</p>*/}
-                    {/*        </div>*/}
-                    {/*    </div>*/}
-                    {/*))}*/}
-
+                {/* Drawer's content */}
+                <div className="mx-auto max-w-7xl px-6 py-6 sm:py-10 lg:px-8">
                     {drawerContent}
-
                 </div>
 
                 <div className="bg-gray-50">

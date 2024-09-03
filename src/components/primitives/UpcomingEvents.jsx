@@ -1,8 +1,8 @@
 import 'react'
 
-export default function UpcomingEvents({variant}) {
+export default function UpcomingEvents() {
     return (
-        <section className={(variant === "compact")? "mt-0": "mt-12"}>
+        <div>
             <h2 className="text-base font-semibold leading-6 text-gray-900">Upcoming events</h2>
             <ol className="mt-2 divide-y divide-gray-200 text-sm leading-6 text-gray-500">
                 <li className="py-4 sm:flex">
@@ -16,134 +16,30 @@ export default function UpcomingEvents({variant}) {
                         Thu, Jan 13
                     </time>
                     <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">View house with real estate
-                        agent
+                        agent</p>
+                    <p className="flex-none sm:ml-6">
+                        <time dateTime="2022-01-13T14:30">2:30 PM</time>
+                        - <time dateTime="2022-01-13T16:30">4:30 PM</time>
                     </p>
                 </li>
                 <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
+                    <time dateTime="2022-01-20" className="w-28 flex-none">
+                        Fri, Jan 14
                     </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
+                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Meeting with bank manager</p>
+                    <p className="flex-none sm:ml-6">All day</p>
                 </li>
                 <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
+                    <time dateTime="2022-01-18" className="w-28 flex-none">
+                        Mon, Jan 17
                     </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Buy the milk
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">View house with real estate
-                        agent
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">View house with real estate
-                        agent
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">View house with real estate
-                        agent
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">View house with real estate
-                        agent
-                    </p>
-                </li>
-                <li className="py-4 sm:flex">
-                    <time dateTime="2022-01-19" className="w-28 flex-none">
-                        Thu, Jan 13
-                    </time>
-                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">View house with real estate
-                        agent
+                    <p className="mt-2 flex-auto font-semibold text-gray-900 sm:mt-0">Sign paperwork at lawyers</p>
+                    <p className="flex-none sm:ml-6">
+                        <time dateTime="2022-01-17T10:00">10:00 AM</time>
+                        - <time dateTime="2022-01-17T10:15">10:15 AM</time>
                     </p>
                 </li>
             </ol>
-        </section>
-    )
+        </div>
+    );
 }

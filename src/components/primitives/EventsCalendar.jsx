@@ -1,14 +1,10 @@
 import 'react'
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import classNames from "../../utils/classNames.js";
 
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
-
-export default function EventsCalendar({months}) {
+export default function EventsCalendar( {months = {}} ) {
     return (
-        <div className="relative grid grid-cols-1 gap-x-6 md:grid-cols-2">
+        <div className="relative grid grid-cols-1 gap-x-14 md:grid-cols-2">
             <button
                 type="button"
                 className="absolute -left-1.5 -top-1 flex items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
