@@ -1,11 +1,18 @@
-import 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function CustomerLogoImg({prop}) {
-    return (
-        <img
-            alt={prop.company_name ? `${prop.company_name} Logo` : "Hotel Logo"}
-            src={prop.logo?.signifier?.url || ""}
-            className="h-8 w-auto"
-        />
-    )
+function CustomerLogoImg({ name }) {
+    const [SvgComponent, setSvgComponent] = useState(null);
+
+    useEffect(() => {
+        async function loadSvg() {
+            const { ReactComponent } = await import('/src/assets/child.svg');
+            setSvgComponent(() => ReactComponent);
+        }
+
+        loadSvg();
+    }, [name]);
+
+    return SvgComponent ? <SvgComponent /> : null;
 }
+
+export default CustomerLogoImg;

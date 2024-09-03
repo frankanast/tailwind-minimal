@@ -5,12 +5,14 @@ import NoMessagesState from "./primitives/NoMessagesState.jsx";
 import ChatView from "./primitives/ChatView.jsx";
 
 import messages from "./mockups/chat.js";
+import ChatDivider from "./primitives/ChatDivider.jsx";
 
 export default function Messages() {
     return (
         <div className="chat-background flex flex-col h-screen justify-between">
             <main className="mb-auto flex-grow flex max-h-full items-center justify-center overflow-auto">
                 <div className="mt-auto px-6 lg:w-2/3 sm:w-full items-center justify-center">
+                    <ChatDivider date="Today" />
                     <div className="w-full">
                         {(Object.keys(messages).length === 0) ? <NoMessagesState/> : <ChatView data={messages} currentUser="programmer93" />}
                     </div>

@@ -1,13 +1,19 @@
-import 'react'
+import 'react';
 
 export default function ChatView({ data = [], currentUser }) {
-    // For chat styling, we use custom CSS and limit TailwindCSS use only for colors and consistency.
+    if (!currentUser) return null;  // Return nothing or a loading state if currentUser is not available
 
     return (
-        <div>
+        <div className="chat-container">
             {data.map((item) => {
-                const direction = (item.sender.name === currentUser) ? 'outgoing' : 'incoming'  // In production this would be handled from settings (current logged user)
-                const className = `chat-message ${direction} flex flex-col gap-10`
+                let className = 'chat-message flex flex-col gap-10';
+
+                if (item.sender.username.trim() === '_SYSTEM') {
+                    className += ' system';
+                } else {
+                    const isOutgoing = item.sender.username.trim().toLowerCase() === currentUser.trim().toLowerCase();
+                    className += isOutgoing ? ' outgoing' : ' incoming';
+                }
 
                 return (
                     <div
@@ -16,8 +22,8 @@ export default function ChatView({ data = [], currentUser }) {
                     >
                         {item.message.content}
                     </div>
-                )
+                );
             })}
         </div>
-    )
+    );
 }

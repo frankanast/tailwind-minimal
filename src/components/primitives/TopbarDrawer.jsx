@@ -1,7 +1,5 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon, RectangleGroupIcon } from '@heroicons/react/20/solid'
 import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon, SquaresPlusIcon } from '@heroicons/react/24/outline'
-import ToolbarSeparator from "./ToolbarSeparator.jsx";
 import {ChevronDoubleDownIcon} from "@heroicons/react/20/solid/index.js";
 
 const solutions = [

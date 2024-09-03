@@ -1,4 +1,3 @@
-
 const messages = [
     {
         id: 1,
@@ -129,6 +128,20 @@ const messages = [
     {
         id: 10,
         sender: {
+            id: "99999999",
+            username: "_SYSTEM",
+            profile_pic: "https://www.example.com/fakepic1.png"
+        },
+        message: {
+            type: "text",
+            quotes: null,
+            content: "programmer93 has edited a template.",
+            datetime_sent: "2024-08-23T10:22:03Z"
+        }
+    },
+    {
+        id: 11,
+        sender: {
             id: "0584932",
             username: "dev_jane",
             profile_pic: "https://www.example.com/fakepic3.png"
@@ -141,7 +154,7 @@ const messages = [
         }
     },
     {
-        id: 11,
+        id: 12,
         sender: {
             id: "0239847",
             username: "cyber_wizard",
@@ -155,7 +168,7 @@ const messages = [
         }
     },
     {
-        id: 12,
+        id: 13,
         sender: {
             id: "0957392",
             username: "programmer93",
@@ -169,7 +182,7 @@ const messages = [
         }
     },
     {
-        id: 13,
+        id: 14,
         sender: {
             id: "0462846",
             username: "tech_guru",
@@ -183,7 +196,7 @@ const messages = [
         }
     },
     {
-        id: 14,
+        id: 15,
         sender: {
             id: "0584932",
             username: "dev_jane",
@@ -197,7 +210,7 @@ const messages = [
         }
     },
     {
-        id: 15,
+        id: 16,
         sender: {
             id: "0239847",
             username: "cyber_wizard",
@@ -208,6 +221,20 @@ const messages = [
             quotes: 14,
             content: "Great tip! I've been meaning to try that out. 🔍",
             datetime_sent: "2024-08-23T10:27:25Z"
+        }
+    },
+    {
+        id: 17,
+        sender: {
+            id: "0584932",
+            username: "dev_jane",
+            profile_pic: "https://www.example.com/fakepic3.png"
+        },
+        message: {
+            type: "text",
+            quotes: 9,
+            content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc a mauris sit amet mi scelerisque porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec vitae tincidunt ipsum, et pretium sem. Etiam euismod mattis consectetur. Nullam at turpis sollicitudin, dapibus metus in, cursus est. Etiam vel eros quam. Duis lorem velit, dictum quis porttitor id, porta id elit. Morbi molestie arcu velit. Vivamus iaculis enim a lacus aliquet, id porta magna consequat. Mauris aliquet enim nec enim tincidunt, id pharetra odio lacinia. Sed augue elit, malesuada ac tellus nec, euismod consequat felis. Vestibulum sed augue.",
+            datetime_sent: "2024-08-23T10:26:01Z"
         }
     }
 ]
