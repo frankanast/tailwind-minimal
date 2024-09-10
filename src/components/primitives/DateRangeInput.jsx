@@ -8,7 +8,7 @@ import {
 
 export default function DateRangeInput() {
     return (
-        <div className="px-60">
+        <div className="w-full"> {/*was: px-60*/}
             <label htmlFor="checkin-date" className="block text-sm font-medium leading-6 text-gray-900">
                 Find rates
             </label>

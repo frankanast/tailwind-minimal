@@ -1,28 +1,6 @@
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
-import { ChartPieIcon, CursorArrowRaysIcon, FingerPrintIcon, SquaresPlusIcon } from '@heroicons/react/24/outline'
 import {ChevronDoubleDownIcon} from "@heroicons/react/20/solid/index.js";
 
-const solutions = [
-    {
-        name: 'Analytics',
-        description: 'Get a better understanding of where your traffic is coming from',
-        href: '#',
-        icon: ChartPieIcon,
-    },
-    {
-        name: 'Engagement',
-        description: 'Speak directly to your customers with our engagement tool',
-        href: '#',
-        icon: CursorArrowRaysIcon,
-    },
-    { name: 'Security', description: "Your customers' data will be safe and secure", href: '#', icon: FingerPrintIcon },
-    {
-        name: 'Integrations',
-        description: "Connect with third-party tools that you're already using",
-        href: '#',
-        icon: SquaresPlusIcon,
-    },
-]
 
 export default function TopbarDrawer({ barContent, drawerContent, callsToAction, expandable= false }) {
     return (
@@ -35,7 +13,7 @@ export default function TopbarDrawer({ barContent, drawerContent, callsToAction,
                     </>
 
                     <PopoverButton
-                        className="rounded-full bg-yellow-600 p-1 text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
+                        className="rounded-full bg-indigo-600 p-1 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                     >
                         <ChevronDoubleDownIcon aria-hidden="true" className="h-5 w-5"/>
                     </PopoverButton>

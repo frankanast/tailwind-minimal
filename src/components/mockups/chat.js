@@ -4,7 +4,9 @@ const messages = [
         sender: {
             id: "0957392",
             username: "programmer93",
-            profile_pic: "https://www.example.com/fakepic1.png"
+            profile_pic: "https://avatars.githubusercontent.com/u/82828758?v=4",
+            hexColor: "#af2727",
+            initials: "PR"
         },
         message: {
             type: "text",
@@ -18,7 +20,9 @@ const messages = [
         sender: {
             id: "0462846",
             username: "tech_guru",
-            profile_pic: "https://www.example.com/fakepic2.png"
+            profile_pic: "",
+            hexColor: "#5271ff",
+            initials: "TE"
         },
         message: {
             type: "text",
@@ -32,7 +36,9 @@ const messages = [
         sender: {
             id: "0957392",
             username: "programmer93",
-            profile_pic: "https://www.example.com/fakepic1.png"
+            profile_pic: "https://avatars.githubusercontent.com/u/82828758?v=4",
+            hexColor: "#af2727",
+            initials: "PR"
         },
         message: {
             type: "text",
@@ -46,7 +52,9 @@ const messages = [
         sender: {
             id: "0584932",
             username: "dev_jane",
-            profile_pic: "https://www.example.com/fakepic3.png"
+            profile_pic: "",
+            hexColor: "#38a169",
+            initials: "DE"
         },
         message: {
             type: "text",
@@ -60,7 +68,9 @@ const messages = [
         sender: {
             id: "0462846",
             username: "tech_guru",
-            profile_pic: "https://www.example.com/fakepic2.png"
+            profile_pic: "",
+            hexColor: "#5271ff",
+            initials: "TE"
         },
         message: {
             type: "text",
@@ -74,7 +84,9 @@ const messages = [
         sender: {
             id: "0957392",
             username: "programmer93",
-            profile_pic: "https://www.example.com/fakepic1.png"
+            profile_pic: "https://avatars.githubusercontent.com/u/82828758?v=4",
+            hexColor: "#af2727",
+            initials: "PR"
         },
         message: {
             type: "text",
@@ -88,7 +100,9 @@ const messages = [
         sender: {
             id: "0462846",
             username: "tech_guru",
-            profile_pic: "https://www.example.com/fakepic2.png"
+            profile_pic: "",
+            hexColor: "#5271ff",
+            initials: "TE"
         },
         message: {
             type: "text",
@@ -102,7 +116,9 @@ const messages = [
         sender: {
             id: "0584932",
             username: "dev_jane",
-            profile_pic: "https://www.example.com/fakepic3.png"
+            profile_pic: "",
+            hexColor: "#38a169",
+            initials: "DE"
         },
         message: {
             type: "text",
@@ -116,7 +132,9 @@ const messages = [
         sender: {
             id: "0957392",
             username: "programmer93",
-            profile_pic: "https://www.example.com/fakepic1.png"
+            profile_pic: "https://avatars.githubusercontent.com/u/82828758?v=4",
+            hexColor: "#af2727",
+            initials: "PR"
         },
         message: {
             type: "text",
@@ -130,7 +148,9 @@ const messages = [
         sender: {
             id: "99999999",
             username: "_SYSTEM",
-            profile_pic: "https://www.example.com/fakepic1.png"
+            profile_pic: "https://avatars.githubusercontent.com/u/82828758?v=4",
+            hexColor: "#999999",
+            initials: "_S"
         },
         message: {
             type: "text",
@@ -144,7 +164,9 @@ const messages = [
         sender: {
             id: "0584932",
             username: "dev_jane",
-            profile_pic: "https://www.example.com/fakepic3.png"
+            profile_pic: "",
+            hexColor: "#38a169",
+            initials: "DE"
         },
         message: {
             type: "text",
@@ -158,7 +180,9 @@ const messages = [
         sender: {
             id: "0239847",
             username: "cyber_wizard",
-            profile_pic: "https://www.example.com/fakepic4.png"
+            profile_pic: "",
+            hexColor: "#ff6347",
+            initials: "CY"
         },
         message: {
             type: "text",
@@ -172,7 +196,9 @@ const messages = [
         sender: {
             id: "0957392",
             username: "programmer93",
-            profile_pic: "https://www.example.com/fakepic1.png"
+            profile_pic: "https://avatars.githubusercontent.com/u/82828758?v=4",
+            hexColor: "#af2727",
+            initials: "PR"
         },
         message: {
             type: "text",
@@ -186,7 +212,9 @@ const messages = [
         sender: {
             id: "0462846",
             username: "tech_guru",
-            profile_pic: "https://www.example.com/fakepic2.png"
+            profile_pic: "",
+            hexColor: "#5271ff",
+            initials: "TE"
         },
         message: {
             type: "text",
@@ -200,7 +228,9 @@ const messages = [
         sender: {
             id: "0584932",
             username: "dev_jane",
-            profile_pic: "https://www.example.com/fakepic3.png"
+            profile_pic: "",
+            hexColor: "#38a169",
+            initials: "DE"
         },
         message: {
             type: "text",
@@ -214,7 +244,9 @@ const messages = [
         sender: {
             id: "0239847",
             username: "cyber_wizard",
-            profile_pic: "https://www.example.com/fakepic4.png"
+            profile_pic: "",
+            hexColor: "#ff6347",
+            initials: "CY"
         },
         message: {
             type: "text",
@@ -228,15 +260,17 @@ const messages = [
         sender: {
             id: "0584932",
             username: "dev_jane",
-            profile_pic: "https://www.example.com/fakepic3.png"
+            profile_pic: "",
+            hexColor: "#38a169",
+            initials: "DE"
         },
         message: {
             type: "text",
             quotes: 9,
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc a mauris sit amet mi scelerisque porta. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec vitae tincidunt ipsum, et pretium sem. Etiam euismod mattis consectetur. Nullam at turpis sollicitudin, dapibus metus in, cursus est. Etiam vel eros quam. Duis lorem velit, dictum quis porttitor id, porta id elit. Morbi molestie arcu velit. Vivamus iaculis enim a lacus aliquet, id porta magna consequat. Mauris aliquet enim nec enim tincidunt, id pharetra odio lacinia. Sed augue elit, malesuada ac tellus nec, euismod consequat felis. Vestibulum sed augue.",
-            datetime_sent: "2024-08-23T10:26:01Z"
+            datetime_sent: "2024-08-23T23:26:01Z"
         }
     }
 ]
 
-export default messages
+export default messages;

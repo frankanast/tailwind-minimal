@@ -1,6 +1,6 @@
 import 'react'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
-import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline'
+import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline'
 
 const faqs = [
     {
@@ -43,8 +43,8 @@ export default function Help() {
                                     <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-900">
                                         <span className="text-base font-semibold leading-7">{faq.question}</span>
                                         <span className="ml-6 flex h-7 items-center">
-                      <PlusSmallIcon aria-hidden="true" className="h-6 w-6 group-data-[open]:hidden" />
-                      <MinusSmallIcon aria-hidden="true" className="h-6 w-6 [.group:not([data-open])_&]:hidden" />
+                      <PlusIcon aria-hidden="true" className="h-6 w-6 group-data-[open]:hidden" />
+                      <MinusIcon aria-hidden="true" className="h-6 w-6 [.group:not([data-open])_&]:hidden" />
                     </span>
                                     </DisclosureButton>
                                 </dt>

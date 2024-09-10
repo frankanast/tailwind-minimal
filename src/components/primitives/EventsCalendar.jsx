@@ -69,9 +69,10 @@ export default function EventsCalendar() {
                     className={classNames(
                         isCurrentMonth ? 'bg-white text-gray-900' : 'bg-gray-50 text-gray-400',
                         isSelected && 'bg-yellow-200 text-gray-900',
-                        isStartDay && 'bg-yellow-500 text-white font-semibold',
-                        isEndDay && 'bg-yellow-500 text-white font-semibold',
-                        // Rounded corners for only specific cells
+                        isStartDay && 'bg-yellow-500 hover:bg-yellow-400 text-white font-semibold',
+                        isEndDay && 'bg-yellow-500 hover:bg-yellow-400 text-white font-semibold',
+
+                        // Rounded corners for dates at the beginning/end of top/bottom row
                         dayIdx === 0 && 'rounded-tl-lg',  // Top-left corner
                         dayIdx === 6 && 'rounded-tr-lg',  // Top-right corner of first row
                         dayIdx === 35 && 'rounded-bl-lg', // Bottom-left corner of last row

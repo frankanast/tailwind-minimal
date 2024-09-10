@@ -1,23 +1,25 @@
 import 'react'
 import ExpandButton from "./ExpandButton.jsx";
 
-export default function Topbar({ contentLeft, contentCenter, expander }) {
+export default function Topbar({ contentLeft, contentCenter, contentRight, expander }) {
     return (
         <div
             className="sticky flex top-0 z-40 h-16 shrink-0 items-center justify-between border-b border-gray-200 bg-white px-4 shadow-sm sm:px-6 lg:px-8">
+            {/* Left side content */}
             <div className="flex items-center">
-                {/* Left side content */}
+                {contentLeft}
             </div>
 
-            {/* Center section (QueryInputToolbar) */}
+            {/* Center section */}
             <div className="flex justify-center w-full self-stretch">
                 {contentCenter}
             </div>
 
             {/* Right section */}
             <div className="flex items-center">
-                {expander && <ExpandButton />}
+                {contentRight}
             </div>
+            {expander && <ExpandButton />}
         </div>
     );
 }

@@ -16,23 +16,19 @@
     flex-direction: column;
 }
 
-/* Styles for messages. */
-/* Sender's name color is defined by the frontend via style prop. */
+/* Styles for messages */
 .chat-message {
     @apply shadow-md;
     margin: 20px;
     padding: 10px;
     border-radius: 10px;
     max-width: 70%;
-
-    /* Fallback style */
     background-color: #a0abb4;
-    color: whitesmoke;
+    color: darkslategray;
 }
 
 .incoming {
-    @apply bg-indigo-200;
-    @apply text-indigo-700;
+    @apply bg-indigo-200 text-indigo-700;
     border-bottom-left-radius: 0;
     align-self: flex-start;
     margin-left: 0;
@@ -40,8 +36,7 @@
 }
 
 .outgoing {
-    @apply bg-yellow-100;
-    @apply text-yellow-700;
+    @apply bg-yellow-100 text-yellow-700;
     border-bottom-right-radius: 0;
     align-self: flex-end;
     margin-right: 0;
@@ -49,10 +44,7 @@
 }
 
 .system {
-    /* System messages are centered in the conversation. */
-    @apply bg-gray-100;
-    @apply text-gray-500;
-    @apply text-sm;
+    @apply bg-gray-100 text-gray-500 text-sm;
     width: 70%;
     text-align: center;
     margin: 35px 0;
@@ -60,5 +52,43 @@
     align-self: center;
 }
 
+/* Avatar Styles */
+.chat-avatar {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    line-height: 2rem;
+    font-weight: 500;
+    color: white;
+}
 
+.chat-avatar.outgoing {
+    flex-flow: row-reverse;
+}
 
+/* Quoted Message Styles */
+.quoted-message {
+    display: flex;
+    flex-direction: column;
+    font-size: small;
+    background-color: hsla(0, 0%, 100%, 0.6);
+    border-radius: 0.5rem;
+}
+
+.quoted-message-sender {
+    font-weight: 500;
+}
+
+.message-options svg {
+    cursor: pointer;
+    color: #718096; /* Gray-400 */
+}
+
+/* Timestamp */
+.message-timestamp {
+    font-size: 0.75rem;
+    color: #a0abb4;
+}
