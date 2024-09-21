@@ -1,9 +1,33 @@
 import { AgGridReact } from 'ag-grid-react';
-import gridStyle from "../../assets/gridStyle.js";
 import { themeQuartz } from '@ag-grid-community/theming';
 import {useMemo, useState} from "react";
 // import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
 // import "ag-grid-community/styles/ag-theme-quartz.css";
+
+const brandGridTheme = themeQuartz.withParams({
+        accentColor: "#2E5749",
+        backgroundColor: "#ffffff",
+        browserColorScheme: "light",
+        checkboxCheckedBackgroundColor: "#CD7529",
+        checkboxCheckedBorderColor: "#CD7529",
+        columnBorder: false,
+        fontFamily: {
+            googleFont: "Inter"
+        },
+        fontSize: "14px",
+        foregroundColor: "rgb(46, 55, 66)",
+        headerBackgroundColor: "#F9FAFB",
+        headerFontSize: 14,
+        headerFontWeight: 600,
+        headerTextColor: "#919191",
+        oddRowBackgroundColor: "#F9FAFB",
+        rowBorder: false,
+        selectedRowBackgroundColor: "#E3A65629",
+        sidePanelBorder: false,
+        wrapperBorder: false,
+        wrapperBorderRadius: 0,
+    });
+
 
 // A BasicSolutionCard is responsible for parsing and representing a dataset from our API endpoint for a specific occupancy
 
@@ -43,7 +67,7 @@ const BasicSolutionCard = ({rows, columns}) => {
             <AgGridReact
                 rowData={rowData}
                 columnDefs={colDefs}
-                theme={gridStyle}
+                theme={brandGridTheme}
                 selection={selection}
                 loadThemeGoogleFonts
             />
