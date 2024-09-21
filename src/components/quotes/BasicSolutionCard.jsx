@@ -1,6 +1,8 @@
 import { AgGridReact } from 'ag-grid-react';
 import gridStyle from "../../assets/gridStyle.js";
 import {useMemo, useState} from "react";
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the Data Grid
+import "ag-grid-community/styles/ag-theme-quartz.css";
 
 // A BasicSolutionCard is responsible for parsing and representing a dataset from our API endpoint for a specific occupancy
 
