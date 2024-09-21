@@ -35,7 +35,7 @@ const superpowers = [
 
 export default function HomeScreen() {
     const [sidebarOpen, setSidebarOpen] = useState(true)
-    const [currentPage, setCurrentPage] = useState(QuotePage);
+    const [currentPage, setCurrentPage] = useState('QuotePage');
 
     function toggleSidebar() {
         setSidebarOpen(prev => !prev);
@@ -66,6 +66,7 @@ export default function HomeScreen() {
                     <main>
                         <div>
                             {CurrentPage && <CurrentPage toggleHandler={toggleSidebar} />}
+
                         </div>
                     </main>
                 </div>

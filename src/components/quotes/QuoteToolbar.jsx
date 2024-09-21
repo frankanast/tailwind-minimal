@@ -17,6 +17,7 @@ const toolbarItems = [
 // ]
 
 export default function QuoteToolbar({ dates, setDates, occupancy, setOccupancy, toggleHandler }) {
+    console.log(typeof toggleHandler);
     return (
         <>
             <AbstractToolbar

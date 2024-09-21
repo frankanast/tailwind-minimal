@@ -14,7 +14,8 @@ import AbstractSecondaryToolbar from "../abstract/toolbars/AbstractSecondaryTool
 //     { name: 'Load rates', href: '#', icon: RectangleGroupIcon },
 // ]
 
-export default function QuotePage(toggleHandler) {
+export default function QuotePage({toggleHandler}) {
+    console.log(typeof toggleHandler);
     return (
         <div>
             {isEmpty({hello: 'world'}) ?
