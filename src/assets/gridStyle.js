@@ -26,7 +26,6 @@ const gridStyle = themeQuartz
             sidePanelBorder: false,
             wrapperBorder: false,
             wrapperBorderRadius: 0,
-            widgetContainerHorizontalPadding: "6px",
     });
 
 export default gridStyle;
