@@ -36,7 +36,7 @@ const BasicSolutionCard = ({rows, columns}) => {
 
 
     return (
-        <div className="h-96">
+        <div className="ag-theme-quartz h-96">
             <AgGridReact
                 rowData={rowData}
                 columnDefs={colDefs}
