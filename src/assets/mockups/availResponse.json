@@ -1,0 +1,127 @@
+{
+  "rates": [
+    {
+      "room": "11",
+      "rate": "266",
+      "occupancy": {
+        "ages": [
+          99,
+          99,
+          1
+        ],
+        "pets": 0,
+        "min_age": 4
+      },
+      "amount": 580,
+      "details": {}
+    },
+    {
+      "room": "12",
+      "rate": "266",
+      "occupancy": {
+        "ages": [
+          99,
+          99,
+          1
+        ],
+        "pets": 0,
+        "min_age": 4
+      },
+      "amount": 780,
+      "details": {}
+    },
+    {
+      "room": "5",
+      "rate": "266",
+      "occupancy": {
+        "ages": [
+          99,
+          99,
+          1
+        ],
+        "pets": 0,
+        "min_age": 4
+      },
+      "amount": 780,
+      "details": {}
+    },
+    {
+      "room": "20",
+      "rate": "266",
+      "occupancy": {
+        "ages": [
+          99,
+          99,
+          1
+        ],
+        "pets": 0,
+        "min_age": 4
+      },
+      "amount": 780,
+      "details": {}
+    },
+    {
+      "room": "23",
+      "rate": "266",
+      "occupancy": {
+        "ages": [
+          99,
+          99,
+          1
+        ],
+        "pets": 0,
+        "min_age": 4
+      },
+      "amount": 780,
+      "details": {}
+    },
+    {
+      "room": "27",
+      "rate": "266",
+      "occupancy": {
+        "ages": [
+          99,
+          99,
+          1
+        ],
+        "pets": 0,
+        "min_age": 4
+      },
+      "amount": 780,
+      "details": {}
+    },
+    {
+      "room": "9",
+      "rate": "266",
+      "occupancy": {
+        "ages": [
+          99,
+          99,
+          1
+        ],
+        "pets": 0,
+        "min_age": 4
+      },
+      "amount": 780,
+      "details": {}
+    },
+    {
+      "room": "13",
+      "rate": "266",
+      "occupancy": {
+        "ages": [
+          99,
+          99,
+          1
+        ],
+        "pets": 0,
+        "min_age": 4
+      },
+      "amount": 780,
+      "details": {}
+    }
+  ],
+  "group_by": "loose",
+  "sort_by": "roomasc",
+  "options": []
+}

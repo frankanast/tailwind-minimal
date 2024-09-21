@@ -20,9 +20,6 @@ export default {
           black: colors.black,
           white: colors.white,
           gray: colors.gray,
-          emerald: colors.emerald,
-          //indigo: colors.indigo,
-          //yellow: colors.yellow,
           indigo: {
               '50': '#f4f9f7',
               '100': '#daede4',

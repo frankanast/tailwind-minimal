@@ -1,0 +1,341 @@
+{
+    "settings": {
+    "hello": "world",
+        "ui": {
+        "palette": {
+            "primary": "",
+                "secondary": "",
+                "accent": "",
+                "background": "",
+                "text": "",
+                "info": "",
+                "warning": "",
+                "danger": ""
+        }
+    }
+},
+    "conventions": {
+    "hotel_details": {
+        "name": "Borgo San Felice Resort",
+            "postal_address": "loc. San Felice, snc - 53100 Castelnuovo Berardenga (Siena) - Italy",
+            "tax_number": "",
+            "iata_code": "",
+            "phone": "(+39) 0577 396 538",
+            "google_placeid": "",
+            "coordinates": {
+            "lat": "",
+                "long": ""
+        },
+        "closing_date": "2024-11-4",
+        "reopening_date": "2025-04-15"
+    }
+},
+    "rooms": {
+    "5": {
+        "name": {
+            "it": "Suite Premium",
+                "en": "Suite Premium"
+        },
+        "short_name": {
+            "it": "Suite Premium",
+                "en": "Suite Premium"
+        },
+        "abbr": "SP",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/camere-hotel-5-stelle-chianti/premium-suite",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/5-star-hotel-rooms-tuscany/premium-suite"
+        },
+        "picture": "",
+            "signature_suite": false,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 4
+    },
+    "9": {
+        "name": {
+            "it": "Signature Suite La Loggia",
+                "en": "Signature Suite La Loggia"
+        },
+        "short_name": {
+            "it": "Signature Suite La Loggia",
+                "en": "Signature Suite La Loggia"
+        },
+        "abbr": "LOG",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/signature-suite/suite-loggia",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/signature-suite/loggia-suite"
+        },
+        "picture": "",
+            "signature_suite": true,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 8
+    },
+    "10": {
+        "name": {
+            "it": "Premium Deluxe",
+                "en": "Premium Deluxe"
+        },
+        "short_name": {
+            "it": "Premium Deluxe",
+                "en": "Premium Deluxe"
+        },
+        "abbr": "PD",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/camere-hotel-5-stelle-chianti/premium-deluxe",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/5-star-hotel-rooms-tuscany/premium-deluxe"
+        },
+        "picture": "",
+            "signature_suite": false,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 1
+    },
+    "11": {
+        "name": {
+            "it": "Prestige",
+                "en": "Prestige"
+        },
+        "short_name": {
+            "it": "Prestige",
+                "en": "Prestige"
+        },
+        "abbr": "PRE",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/camere-hotel-5-stelle-chianti/prestige",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/5-star-hotel-rooms-tuscany/prestige"
+        },
+        "picture": "",
+            "signature_suite": false,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 2
+    },
+    "12": {
+        "name": {
+            "it": "Suite",
+                "en": "Suite"
+        },
+        "short_name": {
+            "it": "Suite",
+                "en": "Suite"
+        },
+        "abbr": "ST",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/camere-hotel-5-stelle-chianti/suite",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/5-star-hotel-rooms-tuscany/suite"
+        },
+        "picture": "",
+            "signature_suite": false,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 3
+    },
+    "13": {
+        "name": {
+            "it": "Signature Suite La Legnaia",
+                "en": "Signature Suite La Legnaia"
+        },
+        "short_name": {
+            "it": "Signature Suite La Legnaia",
+                "en": "Signature Suite La Legnaia"
+        },
+        "abbr": "LGN",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/signature-suite/suite-legnaia",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/signature-suite/legnaia-suite"
+        },
+        "picture": "",
+            "signature_suite": true,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 9
+    },
+    "19": {
+        "name": {
+            "it": "Grand Suite",
+                "en": "Grand Suite"
+        },
+        "short_name": {
+            "it": "Grand Suite",
+                "en": "Grand Suite"
+        },
+        "abbr": "GST",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/signature-suite/grand-suite",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/signature-suite/grand-suite"
+        },
+        "picture": "",
+            "signature_suite": true,
+            "villa": false,
+            "virtual_room": true,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 99
+    },
+    "20": {
+        "name": {
+            "it": "Signature Suite La Pieve",
+                "en": "Signature Suite La Pieve"
+        },
+        "short_name": {
+            "it": "Signature Suite La Pieve",
+                "en": "Signature Suite La Pieve"
+        },
+        "abbr": "PVS",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/signature-suite/suite-la-pieve",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/signature-suite/la-pieve-suite"
+        },
+        "picture": "",
+            "signature_suite": true,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 5
+    },
+    "23": {
+        "name": {
+            "it": "Signature Suite L'Uliveta",
+                "en": "Signature Suite L'Uliveta"
+        },
+        "short_name": {
+            "it": "Signature Suite L'Uliveta",
+                "en": "Signature Suite L'Uliveta"
+        },
+        "abbr": "ULI",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.com/dove-dormire-nel-chianti/signature-suite/suite-uliveta",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/signature-suite/uliveta-suite"
+        },
+        "picture": "",
+            "signature_suite": true,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 6
+    },
+    "27": {
+        "name": {
+            "it": "Signature Suite Le Erbe",
+                "en": "Signature Suite Le Erbe"
+        },
+        "short_name": {
+            "it": "Le Erbe",
+                "en": "Le Erbe"
+        },
+        "abbr": "ERB",
+            "description": {
+            "it": "",
+                "en": ""
+        },
+        "url": {
+            "it": "https://www.borgosanfelice.it/dove-dormire-nel-chianti/signature-suite/suite-le-erbe",
+                "en": "https://www.borgosanfelice.com/en/where-to-stay-chianti-tuscany/signature-suite/suite-le-erbe"
+        },
+        "picture": "",
+            "signature_suite": true,
+            "villa": false,
+            "virtual_room": false,
+            "hidden_by_default": false,
+            "last_updated": "1723543481",
+            "priority": 7
+    },
+    "999": {
+        "name": {
+            "it": "Imaginary Suite (NON TOCCARE)",
+                "en": "Imaginary Suite (DO NOT TOUCH)"
+        },
+        "short_name": {
+            "it": "Imaginary (NON TOCCARE)",
+                "en": "Imaginary (DO NOT TOUCH)"
+        },
+        "abbr": "XXX",
+            "description": {
+            "it": "Enjoy the comfort and privacy of this marvellous Suite, that actually only exists in the fervid imagination of the Developer, and merely used as a test value",
+                "en": "Enjoy the comfort and privacy of this marvellous Suite, that actually only exists in the fervid imagination of the Developer, and merely used as a test value"
+        },
+        "url": {
+            "it": "https://www.example.com",
+                "en": "https://www.example.com"
+        },
+        "picture": "",
+            "signature_suite": false,
+            "villa": false,
+            "virtual_room": true,
+            "hidden_by_default": true,
+            "last_updated": "1723543481",
+            "priority": 9999999999999
+    }
+},
+    "rates": {
+    "48": {
+        "name": "Il Grigio Chianti Classico - Il nostro mondo"
+    },
+    "137": {
+        "name": "Viaggia Senza Pensieri"
+    },
+    "142": {
+        "name": "Il Grigio Chianti Classico - Il nostro mondo"
+    },
+    "151": {
+        "name": "Viaggia senza pensieri"
+    },
+    "242": {
+        "name": "Honeymoon Getaway"
+    },
+    "266": {
+        "name": "Sorsi d’Autunno"
+    }
+}
+}
