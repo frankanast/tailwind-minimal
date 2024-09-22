@@ -7,6 +7,7 @@ import QuoteToolbar from "./QuoteToolbar.jsx";
 import QuoteConfigurator from "./QuoteConfigurator.jsx";
 import {Panel, PanelGroup, PanelResizeHandle} from "react-resizable-panels";
 import AbstractSecondaryToolbar from "../abstract/toolbars/AbstractSecondaryToolbar.jsx";
+import QuoteSecondaryToolbar from "./QuoteSecondaryToolbar.jsx";
 
 // const quoteCallsToAction = [
 //     { name: 'Dates and rooms', href: '#', icon: PlayCircleIcon },
@@ -31,7 +32,7 @@ export default function QuotePage({toggleHandler}) {
                     <QuoteToolbar toggleHandler={toggleHandler} />
                     <PanelGroup direction="horizontal">
                         <Panel defaultSize={50} minSize={10} className="h-auto">
-                            <AbstractSecondaryToolbar />
+                            <QuoteSecondaryToolbar />
                             <div className="h-full w-full mt-10 flex flex-col overflow-auto">
                                 <QuoteConfigurator />
                             </div>
