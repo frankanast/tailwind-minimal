@@ -14,12 +14,12 @@ const items = [
 ]
 
 const actions = [
-    { name: 'Show/Hide', href: '#', icon: <EyeIcon />, handler: () => {} },
-    { name: 'Lock/Unlock', href: '#', icon: <LockClosedIcon />, handler: () => {} },
-    { name: 'Discount', href: '#', icon: <PercentBadgeIcon />, handler: () => {} },
-    { name: 'Formula', href: '#', icon: <BeakerIcon />, handler: () => {} },
-    { name: 'Set an alias', href: '#', icon: <PencilIcon />, handler: () => {} },
-    { name: 'Format values', href: '#', icon: <PaintBrushIcon />, handler: () => {} },
+    { name: 'Show/Hide', href: '#', icon: <EyeIcon />, handler: () => {alert("Show")} },
+    { name: 'Lock/Unlock', href: '#', icon: <LockClosedIcon />, handler: () => {alert("Lock")} },
+    { name: 'Discount', href: '#', icon: <PercentBadgeIcon />, handler: () => {alert("Discount")} },
+    { name: 'Formula', href: '#', icon: <BeakerIcon />, handler: () => {alert("Formula")} },
+    { name: 'Set an alias', href: '#', icon: <PencilIcon />, handler: () => {alert("Set")} },
+    { name: 'Format values', href: '#', icon: <PaintBrushIcon />, handler: () => {alert("Format")} },
 ]
 
 export default function QuoteSecondaryToolbar({dataHandler}) {

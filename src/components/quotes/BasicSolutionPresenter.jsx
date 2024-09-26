@@ -1,5 +1,5 @@
 import { AgGridReact } from 'ag-grid-react';
-import {useMemo, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import { themeQuartz, iconSetQuartzLight } from '@ag-grid-community/theming';
 
 // to use myTheme in an application, pass it to the theme grid option
@@ -33,9 +33,7 @@ const brandGridTheme = themeQuartz
         wrapperBorderRadius: 0
     });
 
-// A BasicSolutionCard is responsible for parsing and representing a dataset from our API endpoint for a specific occupancy
-
-const BasicSolutionCard = ({rows, columns}) => {
+const BasicSolutionPresenter = ({data}) => {
     // TODO: In reality, the data is passed as a JSON object (or Javascript object) straight from the endpoint.
     //  It will be responsibility of this component to represent it by dynamically populate rowData and colDefs.
 
@@ -79,4 +77,4 @@ const BasicSolutionCard = ({rows, columns}) => {
     )
 }
 
-export default BasicSolutionCard
+export default BasicSolutionPresenter

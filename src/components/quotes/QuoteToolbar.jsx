@@ -1,13 +1,14 @@
 import AbstractToolbar from "../abstract/toolbars/AbstractToolbar.jsx";
-import IconWithBadge from "../abstract/IconWithBadge.jsx";
 import {UserGroupIcon, RectangleGroupIcon} from "@heroicons/react/24/outline/index.js";
-//import {PhoneIcon, PlayCircleIcon, RectangleGroupIcon} from "@heroicons/react/20/solid/index.js";
 
 const toolbarItems = [
     {component: <input name="check-in" placeholder="Check-in"/>, styleLiteral: "inputGroupLeft"},
     {component: <input name="check-out" placeholder="Check-out" />, styleLiteral: "inputGroupRight"},
-    {component: <IconWithBadge icon={UserGroupIcon} total="99"/>, styleLiteral: "none"},
-    {component: <IconWithBadge icon={RectangleGroupIcon} total="99"/>, styleLiteral: "none"},
+    {component: <UserGroupIcon />, styleLiteral: "iconButton"},
+    {component: <div>1</div>, styleLiteral: "label"},
+    {component: <RectangleGroupIcon />, styleLiteral: "iconButton"},
+    {component: <div>2</div>, styleLiteral: "label"},
+    {component: <button>Load</button>, styleLiteral: "solidButton", handler: () => {}},
 ]
 
 // const quoteCallsToAction = [
@@ -16,8 +17,8 @@ const toolbarItems = [
 //     { name: 'Load rates', href: '#', icon: RectangleGroupIcon },
 // ]
 
-export default function QuoteToolbar({ dates, setDates, occupancy, setOccupancy, toggleHandler }) {
-    console.log(typeof toggleHandler);
+export default function QuoteToolbar({ toggleHandler, loadHandler }) {
+
     return (
         <>
             <AbstractToolbar
