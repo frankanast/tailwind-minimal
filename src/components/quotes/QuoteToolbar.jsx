@@ -9,15 +9,19 @@ import {useQuoteContext} from "./QuoteContext.jsx";
 // ]
 
 export default function QuoteToolbar({ toggleHandler }) {
-    const quoteContext = useQuoteContext()
+    const { occupancy } = useQuoteContext();
+
+    const totalPeople = occupancy.reduce(
+        (acc, curr) => acc + Number(curr.adults) + Number(curr.children), 0
+    );
 
     const toolbarItems = [
         {component: <input name="check-in" placeholder="Check-in"/>, styleLiteral: "inputGroupLeft"},
         {component: <input name="check-out" placeholder="Check-out" />, styleLiteral: "inputGroupRight"},
         {component: <UserGroupIcon />, styleLiteral: "iconButton"},
-        {component: <div>{quoteContext.occupancy.adults || undefined }</div>, styleLiteral: "label"},
+        {component: <div>{totalPeople}</div>, styleLiteral: "label"},
         {component: <RectangleGroupIcon />, styleLiteral: "iconButton"},
-        {component: <div>{quoteContext.occupancy.length || "?"}</div>, styleLiteral: "label"},
+        {component: <div>{occupancy.length || "0"}</div>, styleLiteral: "label"},
         {component: <button>Load</button>, styleLiteral: "solidButton", handler: () => {}},
     ]
 
