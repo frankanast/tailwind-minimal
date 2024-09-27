@@ -12,13 +12,12 @@ const toolbarItems = [
 ]
 
 // const quoteCallsToAction = [
-//     { name: 'Dates and rooms', href: '#', icon: PlayCircleIcon },
+//     { name: 'Dates & Rooms', href: '#', icon: PlayCircleIcon },
 //     { name: 'Details', href: '#', icon: PhoneIcon },
 //     { name: 'Load rates', href: '#', icon: RectangleGroupIcon },
 // ]
 
 export default function QuoteToolbar({ toggleHandler, loadHandler }) {
-
     return (
         <>
             <AbstractToolbar

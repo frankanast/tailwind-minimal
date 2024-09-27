@@ -57,7 +57,7 @@ export default function AbstractToolbar({ items, toggleHandler }) {
 
             <PopoverPanel
                 transition
-                className="absolute inset-x-0 top-full z-40 w-full shadow-lg ring-1 ring-gray-900/5 transition-transform duration-200 ease-out"
+                className="absolute inset-x-0 top-full z-40 w-full shadow-lg ring-1 ring-gray-900/5 transition-transform duration-200 ease-out bg-white"
             >
                 {/* Drawer's content */}
                 <div className="bg-white mx-auto max-w-7xl px-6 py-6 sm:py-10 lg:px-8">

@@ -17,7 +17,9 @@ export default function QuotePage({ toggleHandler }) {
     return (
         <QuoteContext.Provider value={{dates, setDates, occupancy, setOccupancy, rates, setRates}}>
             <div>
-                {isEmpty({hello:"world"}) ? (
+                {isEmpty({rates}) ? (
+                    <>
+                    <QuoteToolbar toggleHandler={toggleHandler} />
                     <div className="flex flex-col">
                         <StateIndicator
                             svg={MagnifyingGlass()}
@@ -25,6 +27,7 @@ export default function QuotePage({ toggleHandler }) {
                             abstract="Get started by searching for new dates."
                         />
                     </div>
+                    </>
                 ) : (
                     <div className="flex flex-col h-screen">
                         <QuoteToolbar toggleHandler={toggleHandler} />
@@ -38,7 +41,7 @@ export default function QuotePage({ toggleHandler }) {
                             <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />
                             <Panel minSize={10}>
                                 <div className="preview-background h-full pt-14 overflow-auto">
-                                    <QuoteRenderer props={{ url: "http://127.0.0.1:8000/test-html" }} />
+                                    <QuoteRenderer props={{ url: "https://programmino-be.onrender.com/test-html" }} />
                                 </div>
                             </Panel>
                         </PanelGroup>
