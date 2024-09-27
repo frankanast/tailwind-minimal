@@ -5,7 +5,8 @@ import {VitePWA} from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
+    publicDir: 'public',
+    plugins: [
       react(),
       svgr(),
       VitePWA({
@@ -22,17 +23,17 @@ export default defineConfig({
               theme_color: '#2e5749',
               icons: [
                   {
-                      src: 'pwa-512x512.png',
+                      src: '/pwa-512x512.png',
                       sizes: '512x512',
                       type: 'image/png'
                   },
                   {
-                      src: 'pwa-64x64.png',
+                      src: '/pwa-64x64.png',
                       sizes: '64x64',
                       type: 'image/png'
                   },
                   {
-                      src: 'apple-touch-icon-180x180.png',
+                      src: '/apple-touch-icon-180x180.png',
                       sizes: '180x180',
                       type: 'image/png',
                       purpose: 'maskable',
