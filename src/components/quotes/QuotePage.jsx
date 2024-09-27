@@ -6,16 +6,11 @@ import QuoteToolbar from "./QuoteToolbar.jsx";
 import QuoteConfigurator from "./QuoteConfigurator.jsx";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import QuoteSecondaryToolbar from "./QuoteSecondaryToolbar.jsx";
-import { QuoteContext } from "./QuoteContext.jsx";
-import {useState} from "react";
+import { QuoteProvider} from "./QuoteContext.jsx";
 
 export default function QuotePage({ toggleHandler }) {
-    const [dates, setDates] = useState({ checkIn: "", checkOut: "" });
-    const [occupancy, setOccupancy] = useState({ adults: 2, children: 0 });
-    const [rates, setRates] = useState([]);
-
     return (
-        <QuoteContext.Provider value={{dates, setDates, occupancy, setOccupancy, rates, setRates}}>
+        <QuoteProvider>
             <div>
                 {isEmpty({hello: "world"}) ? (
                     <>
@@ -48,6 +43,6 @@ export default function QuotePage({ toggleHandler }) {
                     </div>
                 )}
             </div>
-        </QuoteContext.Provider>
+        </QuoteProvider>
     );
 }
