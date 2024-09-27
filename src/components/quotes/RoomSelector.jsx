@@ -1,24 +1,27 @@
-import { PlusIcon, UsersIcon } from '@heroicons/react/20/solid'
+import {EllipsisVerticalIcon, PlusIcon, UsersIcon, XCircleIcon} from '@heroicons/react/20/solid'
 import ChildIcon from '../../assets/child.svg?react'
-
-const items = [
-    { id: 1, text: '2 adults, 1 child'},
-    { id: 2, text: 'Hallo, welt'},
-    { id: 3, text: 'Ciao mondo'},
-    { id: 4, text: 'Salut, monde'},
-    // More items...
-]
+import {nanoid} from "nanoid";
 
 function RoomsList() {
+    const rooms = [
+        {key: nanoid(), adults: 2, children: 1, literal : "2 adults, 1 child"},
+        {key: nanoid(), adults: 2, children: 1, literal : "2 adults, 1 child"},
+    ]
+
     return (
-        <div className="flex-grow rounded-md border border-gray-300 bg-white">
-            <ul role="list" className="divide-y divide-gray-300">
-                {items.map((item) => (
-                    <li key={item.id} className="grow-0 px-6 py-4">
-                        {item.text}
-                    </li>
-                ))}
-            </ul>
+        <div className="flex flex-col max-h-64 overflow-y-auto">
+            {rooms.map((room) => (
+                <div
+                    key={room.key}
+                    className="px-3 py-3 hover:bg-gray-100 text-md h-12"
+                >
+                    <div className="flex justify-between align-baseline *:hover:text-gray-500">
+                        {room.literal}
+                        <XCircleIcon className=" h-5 w-5 text-transparent cursor-pointer" />
+                    </div>
+
+                </div>
+            ))}
         </div>
     )
 }
@@ -26,7 +29,7 @@ function RoomsList() {
 function RoomsInput() {
     return (
         <div>
-            <div className="mt-2 flex rounded-md shadow-sm">
+            <div className="mt-2 flex rounded-md shadow-sm bottom-0">
                 <div className="relative flex flex-grow items-stretch focus-within:z-10">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                         <UsersIcon aria-hidden="true" className="h-5 w-5 text-gray-400"/>
@@ -65,9 +68,9 @@ function RoomsInput() {
 
 export default function RoomSelector() {
     return (
-        <div className="flex flex-col h-full">
-            <RoomsList />
-            <RoomsInput />
+        <div className="flex flex-col h-full justify-between">
+            <RoomsList/>
+            <RoomsInput/>
         </div>
     )
 }

@@ -17,7 +17,7 @@ export default function QuotePage({ toggleHandler }) {
     return (
         <QuoteContext.Provider value={{dates, setDates, occupancy, setOccupancy, rates, setRates}}>
             <div>
-                {isEmpty({rates}) ? (
+                {isEmpty({hello: "world"}) ? (
                     <>
                     <QuoteToolbar toggleHandler={toggleHandler} />
                     <div className="flex flex-col">
