@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import DateRangeInput from "./primitives/DateRangeInput.jsx";
 import DateRangePopover from "./DateRangePopover.jsx";
 
 export default function DateRangePicker() {

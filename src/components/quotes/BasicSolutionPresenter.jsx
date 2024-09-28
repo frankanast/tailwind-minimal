@@ -65,7 +65,7 @@ const BasicSolutionPresenter = ({data}) => {
 
 
     return (
-        <div className="h-96">
+        <div className='h-full'>
             <AgGridReact
                 rowData={rowData}
                 columnDefs={colDefs}
