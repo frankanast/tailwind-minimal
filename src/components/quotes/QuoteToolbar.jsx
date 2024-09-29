@@ -2,13 +2,10 @@ import AbstractToolbar from "../abstract/toolbars/AbstractToolbar.jsx";
 import { UserGroupIcon, RectangleGroupIcon } from "@heroicons/react/24/outline/index.js";
 import { useQuoteContext } from "./QuoteContext.jsx";
 import InputMask from 'react-input-mask';
-import {useContext, useState} from "react";
 import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
 
 export default function QuoteToolbar({ toggleHandler }) {
-    const { occupancy } = useQuoteContext();
-    const { checkInDate, setCheckInDate } = useQuoteContext();
-    const { checkOutDate, setCheckOutDate } = useQuoteContext();
+    const { occupancy, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate } = useQuoteContext();
 
     const totalPeople = occupancy.reduce(
         (acc, curr) => acc + Number(curr.adults) + Number(curr.children), 0
