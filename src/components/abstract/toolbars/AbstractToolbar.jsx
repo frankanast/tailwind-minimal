@@ -6,7 +6,6 @@ import QuoteDrawer from '../../quotes/QuoteDrawer.jsx';
 import {Bars3Icon} from "@heroicons/react/24/outline";
 
 function SidebarToggle({toggleHandler}) {
-    console.log(typeof toggleHandler);
     return (
         <>
             <div onClick={toggleHandler}>

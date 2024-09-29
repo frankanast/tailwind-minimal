@@ -4,17 +4,26 @@ import {nanoid} from "nanoid";
 export const QuoteContext = createContext(undefined);
 
 export function QuoteProvider({ children }) {
-    const [dates, setDates] = useState({ checkIn: "", checkOut: "" });
+    const [checkInDate, setCheckInDate] = useState('');
+    const [checkOutDate, setCheckOutDate] = useState('');
 
     const [occupancy, setOccupancy] = useState([
         {key: nanoid(), adults: 2, children: 0},
-        {key: nanoid(), adults: 2, children: 1},
     ]);
 
     const [rates, setRates] = useState([]);
 
     return (
-        <QuoteContext.Provider value={{dates, setDates, occupancy, setOccupancy, rates, setRates}}>
+        <QuoteContext.Provider value={{
+            checkInDate,
+            setCheckInDate,
+            checkOutDate,
+            setCheckOutDate,
+            occupancy,
+            setOccupancy,
+            rates,
+            setRates
+        }}>
             {children}
         </QuoteContext.Provider>
     );
