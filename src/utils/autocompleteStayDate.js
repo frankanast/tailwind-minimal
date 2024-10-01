@@ -14,7 +14,7 @@ export default function autocompleteStayDate(inputDateString) {
     const monthInput = sanitized.split('-')[1] || undefined
     const yearInput = sanitized.split('-')[2] || undefined
 
-    // Today's time should be 0 as it affects comparisons (and could lead to unexpected results on same-day input)
+    // Today's time should be 0 as it affects comparisons (and could lead to unexpected results)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -32,8 +32,9 @@ export default function autocompleteStayDate(inputDateString) {
     const futureDates = possibleDates.filter(date => date >= today);
     futureDates.sort((a, b) => a - b);
 
-    const closestDate = futureDates.length > 0 ? futureDates[0] : null
+    return futureDates.length > 0 ? futureDates[0] : null  // closest future date to today = best candidate
+    //alert(closestDate)
 
-    return closestDate.toLocaleDateString('en-GB').replace(/(\d{4})$/, year => year.slice(-2))
+    //return closestDate.toLocaleDateString('en-GB').replace(/(\d{4})$/, year => year.slice(-2))
 
 }

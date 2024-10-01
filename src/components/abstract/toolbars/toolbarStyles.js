@@ -1,6 +1,9 @@
 const styles = {
     // iconButton: "p-2.5 h-6 w-6 text-gray-400 hover:text-gray-500",
-    iconButton: "my-2 ml-3 mr-1 h-6 w-6 text-gray-400 hover:text-gray-500",
+    iconButton: "flex flex-row gap-2 h-5 w-auto mx-2 text-gray-400 hover:text-gray-500",
+    iconButtonMiddle: "p-2.5 border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 text-gray-400 hover:text-gray-500",
+    iconButtonRight: "my-2 ml-3 mr-1 h-6 w-6 text-gray-400 hover:text-gray-500",
+    buttonRight: "-ml-px min-w-28 inline-flex items-center text-center border-indigo-800 gap-x-1.5 rounded-r-md px-3 py-2.5 text-sm font-semibold text-gray-200 ring-1 ring-inset ring-indigo-300 bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700",
     label: "py-2.5 mr-3 text-gray-400 truncate",
     link: "cursor-pointer hover:underline hover:decoration-dotted hover:underline-offset-8 p-2.5 text-gray-400 hover:text-yellow-500 truncate",
     solidButton: "h-8 my-1.5 ml-7 px-9 bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-300 active:bg-indigo-700 text-sm leading-5 rounded-full font-semibold text-white",

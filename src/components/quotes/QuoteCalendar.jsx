@@ -1,21 +1,37 @@
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import {
     addMonths,
-    format,
     eachDayOfInterval,
     endOfMonth,
-    startOfMonth,
-    subMonths,
+    format,
     isSameMonth,
     isToday,
-    isWithinInterval
+    isWithinInterval,
+    startOfMonth,
+    subMonths
 } from 'date-fns'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
+import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/20/solid'
 import classNames from "../../utils/classNames.js"
+import {useQuoteContext} from "./QuoteContext.jsx"
 
-export default function EventsCalendar() {
+export default function QuoteCalendar() {
     const [currentMonth, setCurrentMonth] = useState(new Date())
+
+    const { checkInDate, checkOutDate, setCheckInDate, setCheckOutDate } = useQuoteContext()
     const [selectedRange, setSelectedRange] = useState( [null, null])
+
+    useEffect(() => {
+        setSelectedRange([checkInDate, checkOutDate])
+    }, [checkInDate, checkOutDate])
+
+    // Show the month where dates are
+    useEffect(() => {
+        if (checkInDate) {
+            setCurrentMonth(checkInDate) // Show the month of check-in date
+        } else if (checkOutDate) {
+            setCurrentMonth(checkOutDate) // Show the month of check-out date if only it is selected
+        }
+    }, [checkInDate, checkOutDate])
 
     const handlePreviousMonth = () => {
         setCurrentMonth(subMonths(currentMonth, 1))
@@ -26,10 +42,21 @@ export default function EventsCalendar() {
     }
 
     const handleDateClick = (date) => {
-        if (!selectedRange[0] || (selectedRange[0] && selectedRange[1])) {
+        if (!checkInDate || (checkInDate && checkOutDate)) {
+            setCheckInDate(date)
+            setCheckOutDate(null)
             setSelectedRange([date, null])
+
         } else {
-            setSelectedRange([selectedRange[0], date])
+            if (date < checkInDate) {
+                // If the new date is earlier than the current check-in date, invert them
+                setCheckOutDate(checkInDate)
+                setCheckInDate(date)
+                setSelectedRange([date, checkInDate])
+            } else {
+                setCheckOutDate(date)
+                setSelectedRange([checkInDate, date])
+            }
         }
     }
 
@@ -47,9 +74,7 @@ export default function EventsCalendar() {
         const daysAfterCount = 42 - (daysBefore.length + daysInMonth.length)
         const daysAfter = Array.from({ length: daysAfterCount }).map((_, idx) => new Date(nextMonth.getFullYear(), nextMonth.getMonth(), idx + 1))
 
-        const days = [...daysBefore, ...daysInMonth, ...daysAfter]
-
-        return days
+        return [...daysBefore, ...daysInMonth, ...daysAfter]
     }
 
     const renderCalendarDays = (month) => {

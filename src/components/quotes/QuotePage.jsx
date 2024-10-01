@@ -1,5 +1,5 @@
 import MagnifyingGlass from "../../assets/MagnifyingGlass.jsx";
-import StateIndicator from "../abstract/StateIndicator.jsx";
+import EmptyStateIndicator from "../abstract/StateIndicator.jsx";
 import isEmpty from "../../utils/isEmpty.js";
 import QuoteRenderer from "./QuoteRenderer.jsx";
 import QuoteToolbar from "./QuoteToolbar.jsx";
@@ -7,16 +7,17 @@ import QuoteConfigurator from "./QuoteConfigurator.jsx";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import QuoteSecondaryToolbar from "./QuoteSecondaryToolbar.jsx";
 import { QuoteProvider} from "./QuoteContext.jsx";
+import QuoteDrawer from "./QuoteDrawer.jsx";
 
 export default function QuotePage({ toggleHandler }) {
     return (
         <QuoteProvider>
             <div>
-                {isEmpty({hello: "world"}) ? (
+                {isEmpty({hello: 'world'}) ? (
                     <>
-                    <QuoteToolbar toggleHandler={toggleHandler} />
+                    <QuoteToolbar toggleHandler={toggleHandler} drawerItem={<QuoteDrawer />} />
                     <div className="flex flex-col">
-                        <StateIndicator
+                        <EmptyStateIndicator
                             svg={MagnifyingGlass()}
                             headline="No rooms to show"
                             abstract="Get started by searching for new dates."
@@ -25,7 +26,7 @@ export default function QuotePage({ toggleHandler }) {
                     </>
                 ) : (
                     <div className="flex flex-col h-screen">
-                        <QuoteToolbar toggleHandler={toggleHandler} />
+                        <QuoteToolbar toggleHandler={toggleHandler} drawerItem={<QuoteDrawer />} />
                         <PanelGroup direction="horizontal">
                             <Panel defaultSize={50} minSize={10} className="h-auto">
                                 <QuoteSecondaryToolbar />

@@ -33,7 +33,10 @@ export function useQuoteContext() {
     const context = useContext(QuoteContext);
 
     if (context === undefined) {
-        throw new Error('useQuoteContext must be used within a QuoteProvider');
+        // Usually, we would throw an error; but in this project, we have components that conditionally use context (calendar).
+        //throw new Error('useQuoteContext must be used within a QuoteProvider');
+        console.warn("useQuoteContext it's being called from outside a QuoteProvider. Make sure to handle this properly")
+        return null
     }
 
     return context;
