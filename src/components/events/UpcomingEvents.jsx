@@ -2,7 +2,7 @@ import 'react'
 
 export default function UpcomingEvents() {
     return (
-        <div>
+        <div className='w-full'>
             <h2 className="text-base font-semibold leading-6 text-gray-900">Upcoming events</h2>
             <ol className="mt-2 divide-y divide-gray-200 text-sm leading-6 text-gray-500">
                 <li className="py-4 sm:flex">

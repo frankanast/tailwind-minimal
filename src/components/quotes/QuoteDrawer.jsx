@@ -1,12 +1,12 @@
 import RoomSelector from "./RoomSelector.jsx";
-import QuoteCalendar from "./QuoteCalendar.jsx";
+import QuoteDatePicker from "./QuoteDatePicker.jsx";
 
 export default function QuoteDrawer() {
     // 2-months calendar and a room selector in a 3-column grid layout
     return (
         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-0 lg:grid-cols-3 lg:gap-4 xl:gap-8 w-full h-auto bg-white">
             <span className="col-span-2">
-                <QuoteCalendar />
+                <QuoteDatePicker />
             </span>
             <div>
                 <RoomSelector />
