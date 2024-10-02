@@ -11,7 +11,10 @@ export function QuoteProvider({ children }) {
         {key: nanoid(), adults: 2, children: 0},
     ]);
 
-    const [rates, setRates] = useState([]);
+    const [requestData, setRequestData] = useState(undefined)
+    const [manipulatedData, setManipulatedData] = useState(undefined)
+
+    //const [rates, setRates] = useState([]);
 
     return (
         <QuoteContext.Provider value={{
@@ -21,8 +24,10 @@ export function QuoteProvider({ children }) {
             setCheckOutDate,
             occupancy,
             setOccupancy,
-            rates,
-            setRates
+            requestData,
+            setRequestData,
+            manipulatedData,
+            setManipulatedData,
         }}>
             {children}
         </QuoteContext.Provider>
@@ -33,10 +38,7 @@ export function useQuoteContext() {
     const context = useContext(QuoteContext);
 
     if (context === undefined) {
-        // Usually, we would throw an error; but in this project, we have components that conditionally use context (calendar).
-        //throw new Error('useQuoteContext must be used within a QuoteProvider');
-        console.warn("useQuoteContext it's being called from outside a QuoteProvider. Make sure to handle this properly")
-        return null
+        throw new Error('useQuoteContext must be used within a QuoteProvider')
     }
 
     return context;

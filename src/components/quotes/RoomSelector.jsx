@@ -54,7 +54,6 @@ function RoomsInput() {
                         <UsersIcon aria-hidden="true" className="h-5 w-5 text-gray-400"/>
                     </div>
                     <input
-                        autoFocus={true}
                         id="adults"
                         name="adults"
                         type="number"

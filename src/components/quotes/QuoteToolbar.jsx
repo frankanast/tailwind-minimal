@@ -1,15 +1,23 @@
-import { useState, useEffect } from "react";
 import AbstractToolbar from "../abstract/toolbars/AbstractToolbar.jsx";
-import { UserGroupIcon, RectangleGroupIcon } from "@heroicons/react/24/outline/index.js";
-import { useQuoteContext } from "./QuoteContext.jsx";
 import InputMask from 'react-input-mask';
-import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
+import { useState, useEffect } from "react";
+import { useQuoteContext } from "./QuoteContext.jsx";
+import { UserGroupIcon, RectangleGroupIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid/index.js";
 import toolbarStyles from "../abstract/toolbars/toolbarStyles.js";
-import {MagnifyingGlassIcon} from "@heroicons/react/16/solid/index.js";
+import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
 import formatShortDate from "../../utils/formatDateShort.js"
+import {fetchAvailability} from "./availabilityQuery.js";
 
 export default function QuoteToolbar({ toggleHandler, drawerItem }) {
-    const { occupancy, checkInDate, setCheckInDate, checkOutDate, setCheckOutDate } = useQuoteContext();
+    const {
+        occupancy,
+        checkInDate,
+        setCheckInDate,
+        checkOutDate,
+        setCheckOutDate,
+        requestData,
+        setRequestData,
+    } = useQuoteContext();
 
     // Maintain separate states for raw string inputs
     const [checkInInput, setCheckInInput] = useState(checkInDate ? formatShortDate(checkInDate) : "");
@@ -39,6 +47,18 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
         const completedDate = autocompleteStayDate(currentInput);
         setCheckOutDate(completedDate)
     };
+
+    function handleLoad() {
+        fetchAvailability(checkInDate, checkOutDate, occupancy)
+            .then(data => {
+                setRequestData(data);
+                console.log(data);
+            })
+            .catch(error => {
+                alert("Could not fetch rates from the website. Please try again." + error)
+                console.log(error)
+            })
+    }
 
     const toolbarItems = [
         {
@@ -76,7 +96,7 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
                         <UserGroupIcon />{totalPeople}
                     </div>
                 </div>,
-            styleLiteral: "iconButtonMiddle"
+            styleLiteral: "inputIconGroupMiddle"
         },
         {
             component:
@@ -85,15 +105,15 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
                         <RectangleGroupIcon />{occupancy.length || "0"}
                     </div>
                 </div>,
-            styleLiteral: "iconButtonMiddle"
+            styleLiteral: "inputIconGroupMiddle"
         },
         { component:
-                <button>
-                    <MagnifyingGlassIcon className="w-5"/>
+                // <button onClick={() => {alert(`occupancy: ${occupancy} check-in: ${checkInDate.toString()} check-out: ${checkOutDate.toString()}`)}}>
+                <button onClick={handleLoad}>
+                    <MagnifyingGlassIcon className="w-4"/>
                     Load
                 </button>,
-            styleLiteral: "buttonRight",
-            handler: () => {}
+            styleLiteral: "inputGroupButton"
         },
     ];
 
