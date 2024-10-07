@@ -1,7 +1,6 @@
 import 'react'
 import Events from "./Events.jsx";
 
-
 export default function DateRangePopover() {
     return (
         <>

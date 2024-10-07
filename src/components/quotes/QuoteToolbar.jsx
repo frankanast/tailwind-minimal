@@ -2,11 +2,11 @@ import AbstractToolbar from "../abstract/toolbars/AbstractToolbar.jsx";
 import InputMask from 'react-input-mask';
 import { useState, useEffect } from "react";
 import { useQuoteContext } from "./QuoteContext.jsx";
-import { UserGroupIcon, RectangleGroupIcon, MagnifyingGlassIcon } from "@heroicons/react/24/solid/index.js";
+import {UserGroupIcon, RectangleGroupIcon, MagnifyingGlassIcon, ClockIcon} from "@heroicons/react/24/solid/index.js";
 import toolbarStyles from "../abstract/toolbars/toolbarStyles.js";
 import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
 import formatShortDate from "../../utils/formatDateShort.js"
-import {fetchAvailability} from "./availabilityQuery.js";
+
 
 export default function QuoteToolbar({ toggleHandler, drawerItem }) {
     const {
@@ -15,8 +15,9 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
         setCheckInDate,
         checkOutDate,
         setCheckOutDate,
-        requestData,
-        setRequestData,
+        loadRates,    // Get the mutation function from the context
+        isLoading,    // Loading state
+        isError       // Error state
     } = useQuoteContext();
 
     // Maintain separate states for raw string inputs
@@ -49,15 +50,7 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
     };
 
     function handleLoad() {
-        fetchAvailability(checkInDate, checkOutDate, occupancy)
-            .then(data => {
-                setRequestData(data);
-                console.log(data);
-            })
-            .catch(error => {
-                alert("Could not fetch rates from the website. Please try again." + error)
-                console.log(error)
-            })
+        loadRates({ checkInDate, checkOutDate, occupancy });
     }
 
     const toolbarItems = [
@@ -108,10 +101,10 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
             styleLiteral: "inputIconGroupMiddle"
         },
         { component:
-                // <button onClick={() => {alert(`occupancy: ${occupancy} check-in: ${checkInDate.toString()} check-out: ${checkOutDate.toString()}`)}}>
                 <button onClick={handleLoad}>
-                    <MagnifyingGlassIcon className="w-4"/>
-                    Load
+                    {isLoading
+                        ? <><ClockIcon className={"w-4 animate-spin"} /> Loading...</>
+                        : <><MagnifyingGlassIcon className="w-4" /> Load</>}
                 </button>,
             styleLiteral: "inputGroupButton"
         },
