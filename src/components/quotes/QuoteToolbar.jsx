@@ -15,9 +15,10 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
         setCheckInDate,
         checkOutDate,
         setCheckOutDate,
-        loadRates,    // Get the mutation function from the context
-        isLoading,    // Loading state
-        isError       // Error state
+        loadRates,
+        isLoading,
+        isError,
+        fetchedData,
     } = useQuoteContext();
 
     // Maintain separate states for raw string inputs
@@ -50,7 +51,8 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
     };
 
     function handleLoad() {
-        loadRates({ checkInDate, checkOutDate, occupancy });
+        loadRates({ checkInDate, checkOutDate, occupancy })
+        alert(JSON.stringify(fetchedData))
     }
 
     const toolbarItems = [
@@ -104,9 +106,10 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
                 <button onClick={handleLoad}>
                     {isLoading
                         ? <><ClockIcon className={"w-4 animate-spin"} /> Loading...</>
-                        : <><MagnifyingGlassIcon className="w-4" /> Load</>}
+                        : <><MagnifyingGlassIcon className="w-4" /> Load</>
+                    }
                 </button>,
-            styleLiteral: "inputGroupButton"
+            styleLiteral:  "inputGroupButton"
         },
     ];
 

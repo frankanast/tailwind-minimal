@@ -17,6 +17,7 @@ const styles = {
     inputIconGroupMiddle: "border-0 py-2 px-4 text-gray-900 tracking-widest ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
     inputIconGroupRight: "rounded-none rounded-r-md border-0 py-1.5 pl-10 text-gray-900 tracking-widest ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6",
     inputGroupButton: "-ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-indigo-400 hover:bg-indigo-500 bg-indigo-600",
+    inputGroupButtonLoading: "animate-spin -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-indigo-400 hover:bg-indigo-500 bg-indigo-600",
     toggleButton: "h-6 w-6 flex-shrink-0 mr-4 hover:text-yellow-500 hover:animate-bounce cursor-pointer",
     drawerButton: "h-6 w-6 flex-shrink-0 hover:text-yellow-500 hover:animate-bounce cursor-pointer",
     breadcrumbsSeparator: "h-full w-6 flex-shrink-0 text-gray-200",

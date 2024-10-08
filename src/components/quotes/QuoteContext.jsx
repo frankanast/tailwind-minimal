@@ -2,10 +2,12 @@
 import { createContext, useContext, useState } from "react";
 import { nanoid } from "nanoid";
 import {useMutation} from "@tanstack/react-query";
+import formatDateAPI from "../../utils/formatDateAPI.js";
+import formatOccupancyWithAges from "../../utils/formatOccupancyWithAges.js";
 
 export const QuoteContext = createContext(undefined);
 
-const BASE_URL = "https://programmino-be.onrender.com/";
+const BASE_URL = "https://programmino-be.onrender.com/avail/byroom/occasc/";
 
 export function QuoteProvider({ children }) {
     const [checkInDate, setCheckInDate] = useState('');
@@ -15,12 +17,14 @@ export function QuoteProvider({ children }) {
 
     const fetchAvailability = async ({ checkInDate, checkOutDate, occupancy }) => {
         const params = new URLSearchParams({
-            checkIn: checkInDate,
-            checkOut: checkOutDate,
-            occupancy: JSON.stringify(occupancy.map(o => ({ adults: o.adults, children: o.children })))
+            "check_in": formatDateAPI(checkInDate),
+            "check_out": formatDateAPI(checkOutDate),
+            "rooms": formatOccupancyWithAges(occupancy)
         });
 
-        const response = await fetch(`${BASE_URL}availability?${params}`);
+        const url_ = `${BASE_URL}?${params}`
+
+        const response = await fetch(url_);
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -30,9 +34,9 @@ export function QuoteProvider({ children }) {
     };
 
     const { mutate: loadRates, isLoading, isError } = useMutation({
-        mutationFn: fetchAvailability, // Use mutationFn key in v5
+        mutationFn: fetchAvailability,
         onSuccess: (data) => {
-            setFetchedData(data); // Store the fetched data in the context
+            setFetchedData(data);
         },
         onError: (error) => {
             console.error('Error fetching availability:', error);
@@ -48,9 +52,9 @@ export function QuoteProvider({ children }) {
             occupancy,
             setOccupancy,
             fetchedData,
-            loadRates,   // Expose the mutation function
-            isLoading,   // Expose loading state
-            isError      // Expose error state
+            loadRates,
+            isLoading,
+            isError
         }}>
             {children}
         </QuoteContext.Provider>
