@@ -5,36 +5,28 @@ function cartesianProduct(...arrays) {
 }
 
 export default function autocompleteStayDate(inputDateString) {
-    // The logic used here is: get all possible combinations of the given parameters via a classic cartesian products,
-    // and choose the future date closest to today. WIth this algorithm we should cover all the cases.
-
-    //There shouldn't be any non-digits here because InputMask blocks them, but just to be sure...
+    // Sanitize input
     const sanitized = inputDateString.replace(/[^\d-]/g, '')
-    const dayInput = sanitized.split('-')[0] || today.getDate()
-    const monthInput = sanitized.split('-')[1] || undefined
-    const yearInput = sanitized.split('-')[2] || undefined
+    const [dayInput, monthInput, yearInput] = sanitized.split('-');
 
-    // Today's time should be 0 as it affects comparisons (and could lead to unexpected results)
+    // Get today's date in UTC
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const utcToday = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
 
-    const currentMonth = today.getMonth();
-    const currentYear = today.getFullYear();
+    const currentMonth = today.getUTCMonth();
+    const currentYear = today.getUTCFullYear();
 
-    const possibleDays = [dayInput];
-    const possibleMonths = monthInput ? [monthInput - 1] : [currentMonth, currentMonth + 1];
-    const possibleYears = yearInput ? [yearInput] : [currentYear, currentYear + 1];
+    const possibleDays = [parseInt(dayInput) || today.getUTCDate()];
+    const possibleMonths = monthInput ? [parseInt(monthInput) - 1] : [currentMonth, currentMonth + 1];
+    const possibleYears = yearInput ? [2000 + parseInt(yearInput)] : [currentYear, currentYear + 1];
 
-    // Cartesian product to generate all possible date combinations
+    // Generate all possible date combinations using UTC
     const possibleDates = cartesianProduct(possibleDays, possibleMonths, possibleYears)
-        .map(([day, month, year]) => new Date(year, month, day));
+        .map(([day, month, year]) => Date.UTC(year, month, day));
 
-    const futureDates = possibleDates.filter(date => date >= today);
+    const futureDates = possibleDates.filter(date => date >= utcToday);
     futureDates.sort((a, b) => a - b);
 
-    return futureDates.length > 0 ? futureDates[0] : null  // closest future date to today = best candidate
-    //alert(closestDate)
-
-    //return closestDate.toLocaleDateString('en-GB').replace(/(\d{4})$/, year => year.slice(-2))
-
+    // Return the closest future date, or null if no valid dates
+    return futureDates.length > 0 ? new Date(futureDates[0]) : null;
 }

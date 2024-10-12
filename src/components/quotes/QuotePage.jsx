@@ -6,8 +6,8 @@ import QuoteToolbar from "./QuoteToolbar.jsx";
 import QuoteConfigurator from "./QuoteConfigurator.jsx";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import QuoteSecondaryToolbar from "./QuoteSecondaryToolbar.jsx";
+import { QuoteProvider} from "./QuoteContext.jsx";
 import QuoteDrawer from "./QuoteDrawer.jsx";
-import {QuoteProvider} from "./QuoteContext.jsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 export default function QuotePage({ toggleHandler }) {
@@ -17,7 +17,7 @@ export default function QuotePage({ toggleHandler }) {
         <QueryClientProvider client={queryClient}>
             <QuoteProvider>
                 <div>
-                    {isEmpty({}) ? (
+                    {isEmpty({hello: 'world'}) ? (
                         <>
                         <QuoteToolbar toggleHandler={toggleHandler} drawerItem={<QuoteDrawer />} />
                         <div className="flex flex-col">
@@ -41,6 +41,7 @@ export default function QuotePage({ toggleHandler }) {
                                 <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />
                                 <Panel minSize={10}>
                                     <div className="preview-background h-full pt-14 overflow-auto">
+                                        {/*<QuoteRenderer props={{ url: "https://programmino-be.onrender.com/test-html" }} />*/}
                                         <QuoteRenderer />
                                     </div>
                                 </Panel>

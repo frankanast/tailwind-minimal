@@ -1,47 +1,47 @@
-'use client'
-import { createContext, useContext, useState } from "react";
-import { nanoid } from "nanoid";
-import {useMutation} from "@tanstack/react-query";
-import formatDateAPI from "../../utils/formatDateAPI.js";
+import {createContext, useContext, useEffect, useState} from "react";
+import {nanoid} from "nanoid";
+import { useQuery } from "@tanstack/react-query";
 import formatOccupancyWithAges from "../../utils/formatOccupancyWithAges.js";
+import formatDateForBackend from "../../utils/formatDateForBackend.js";
+
+const BACKEND_ROOT = "https://programmino-be.onrender.com";
 
 export const QuoteContext = createContext(undefined);
-
-const BASE_URL = "https://programmino-be.onrender.com/avail/byroom/occasc/";
 
 export function QuoteProvider({ children }) {
     const [checkInDate, setCheckInDate] = useState('');
     const [checkOutDate, setCheckOutDate] = useState('');
-    const [occupancy, setOccupancy] = useState([{ key: nanoid(), adults: 2, children: 0 }]);
-    const [fetchedData, setFetchedData] = useState(null);
 
-    const fetchAvailability = async ({ checkInDate, checkOutDate, occupancy }) => {
-        const params = new URLSearchParams({
-            "check_in": formatDateAPI(checkInDate),
-            "check_out": formatDateAPI(checkOutDate),
-            "rooms": formatOccupancyWithAges(occupancy)
-        });
+    const [occupancy, setOccupancy] = useState([
+        {key: nanoid(), adults: 2, children: 0},
+    ]);
 
-        const url_ = `${BASE_URL}?${params}`
+    const [loadedData, setLoadedData] = useState(undefined)
+    const [manipulatedData, setManipulatedData] = useState(undefined)
 
-        const response = await fetch(url_);
+    const { data: rates, isError, isLoading } = useQuery({
+        queryKey: ["avail", { checkInDate, checkOutDate, occupancy }],
+        queryFn: async () => {
 
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+            // use formatDateForBackend to avoid any issues and unexpected behaviour
+            const url = `${BACKEND_ROOT}/avail/byroom/occasc/?check_in=${formatDateForBackend(checkInDate)}&check_out=${formatDateForBackend(checkOutDate)}&rooms=${formatOccupancyWithAges(occupancy)}`;
 
-        return response.json();
-    };
+            const response = await fetch(url);
 
-    const { mutate: loadRates, isLoading, isError } = useMutation({
-        mutationFn: fetchAvailability,
-        onSuccess: (data) => {
-            setFetchedData(data);
+            if (!response.ok) {
+                throw new Error("Unable to fetch rates due to network issues.");
+            }
+            return await response.json();
         },
-        onError: (error) => {
-            console.error('Error fetching availability:', error);
-        }
+        enabled: !!checkInDate && !!checkOutDate // Only run if check-in/out dates are available
+
     });
+
+    useEffect(() => {
+        if (rates) {
+            setLoadedData(rates)
+        }
+    }, [rates]);
 
     return (
         <QuoteContext.Provider value={{
@@ -51,10 +51,10 @@ export function QuoteProvider({ children }) {
             setCheckOutDate,
             occupancy,
             setOccupancy,
-            fetchedData,
-            loadRates,
+            loadedData,
+            setLoadedData,
             isLoading,
-            isError
+            isError,
         }}>
             {children}
         </QuoteContext.Provider>
@@ -63,8 +63,10 @@ export function QuoteProvider({ children }) {
 
 export function useQuoteContext() {
     const context = useContext(QuoteContext);
+
     if (context === undefined) {
-        throw new Error('useQuoteContext must be used within a QuoteProvider');
+        throw new Error('useQuoteContext must be used within a QuoteProvider')
     }
+
     return context;
 }

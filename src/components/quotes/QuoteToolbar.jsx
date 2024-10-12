@@ -2,58 +2,71 @@ import AbstractToolbar from "../abstract/toolbars/AbstractToolbar.jsx";
 import InputMask from 'react-input-mask';
 import { useState, useEffect } from "react";
 import { useQuoteContext } from "./QuoteContext.jsx";
-import {UserGroupIcon, RectangleGroupIcon, MagnifyingGlassIcon, ClockIcon} from "@heroicons/react/24/solid/index.js";
+import {
+    UserGroupIcon,
+    RectangleGroupIcon,
+    MagnifyingGlassIcon
+} from "@heroicons/react/24/solid/index.js";
 import toolbarStyles from "../abstract/toolbars/toolbarStyles.js";
 import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
 import formatShortDate from "../../utils/formatDateShort.js"
+import LoadingIcon from "../../assets/LoadingIcon.jsx";
 
-
-export default function QuoteToolbar({ toggleHandler, drawerItem }) {
+export default function QuoteToolbar({toggleHandler, drawerItem}) {
     const {
         occupancy,
         checkInDate,
         setCheckInDate,
         checkOutDate,
         setCheckOutDate,
-        loadRates,
+        loadedData,
         isLoading,
         isError,
-        fetchedData,
     } = useQuoteContext();
 
     // Maintain separate states for raw string inputs
     const [checkInInput, setCheckInInput] = useState(checkInDate ? formatShortDate(checkInDate) : "");
     const [checkOutInput, setCheckOutInput] = useState(checkOutDate ? formatShortDate(checkOutDate) : "");
 
-    // Sync the input field when checkInDate or checkOutDate changes
     useEffect(() => {
         setCheckInInput(checkInDate ? formatShortDate(checkInDate) : "");
-    }, [checkInDate]);
+    }, [checkInDate])
 
     useEffect(() => {
         setCheckOutInput(checkOutDate ? formatShortDate(checkOutDate) : "");
-    }, [checkOutDate]);
-
-    const totalPeople = occupancy.reduce(
-        (acc, curr) => acc + Number(curr.adults) + Number(curr.children), 0
-    );
+    }, [checkOutDate])
 
     const handleCheckInBlur = (event) => {
         const currentInput = event.target.value;
         const completedDate = autocompleteStayDate(currentInput);
-        setCheckInDate(completedDate)
+        if (completedDate) {
+            setCheckInDate(completedDate);
+            setCheckInInput(formatShortDate(completedDate));
+        }
     };
 
     const handleCheckOutBlur = (event) => {
         const currentInput = event.target.value;
         const completedDate = autocompleteStayDate(currentInput);
-        setCheckOutDate(completedDate)
+        if (completedDate) {
+            setCheckOutDate(completedDate);
+            setCheckOutInput(formatShortDate(completedDate));
+        }
     };
 
-    function handleLoad() {
-        loadRates({ checkInDate, checkOutDate, occupancy })
-        alert(JSON.stringify(fetchedData))
-    }
+    const totalPeople = occupancy.reduce(
+        (acc, curr) => acc + Number(curr.adults) + Number(curr.children), 0
+    );
+
+    const handleLoad = () => {
+        if (isLoading) {
+            console.log("'Load' clicked while in loading state." + new Date().toDateString() + new Date().toTimeString());
+        } else if (isError) {
+            alert("Unable to fetch rates at this time.");
+        } else {
+            alert(JSON.stringify(loadedData));
+        }
+    };
 
     const toolbarItems = [
         {
@@ -102,14 +115,13 @@ export default function QuoteToolbar({ toggleHandler, drawerItem }) {
                 </div>,
             styleLiteral: "inputIconGroupMiddle"
         },
-        { component:
+        {
+            component:
                 <button onClick={handleLoad}>
-                    {isLoading
-                        ? <><ClockIcon className={"w-4 animate-spin"} /> Loading...</>
-                        : <><MagnifyingGlassIcon className="w-4" /> Load</>
-                    }
+                    {isLoading ? <LoadingIcon /> : <MagnifyingGlassIcon className="w-4" />}
+                    Load
                 </button>,
-            styleLiteral:  "inputGroupButton"
+            styleLiteral: "inputGroupButton"
         },
     ];
 

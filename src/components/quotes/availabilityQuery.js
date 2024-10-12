@@ -13,7 +13,7 @@ const transformOccupancy = (occupancy) => {
 
 // Method to perform the API request using fetch
 export const fetchAvailability = async (checkInDate, checkOutDate, occupancy) => {
-    const baseUrl = 'https://programmino-be.onrender.com/avail/loose/occasc/{cleanup}/';
+    const baseUrl = 'https://programmino-be.onrender.com/avail/loose/occasc/';
 
     // Format dates to yyyy-mm-dd
     const checkIn = checkInDate.toISOString().split('T')[0];

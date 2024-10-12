@@ -11,9 +11,5 @@ export default function formatOccupancyWithAges(occupancies) {
         };
     });
 
-    // Return the query string, combining all occupancy objects as an array
     return `${JSON.stringify(roomsArray)}`;
 }
-
-
-// function convertOccupanciesToQueryString(occupancies) {
