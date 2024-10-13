@@ -41,7 +41,6 @@ export default function QuotePage({ toggleHandler }) {
                                 <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />
                                 <Panel minSize={10}>
                                     <div className="preview-background h-full pt-14 overflow-auto">
-                                        {/*<QuoteRenderer props={{ url: "https://programmino-be.onrender.com/test-html" }} />*/}
                                         <QuoteRenderer />
                                     </div>
                                 </Panel>

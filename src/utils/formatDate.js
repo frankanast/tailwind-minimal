@@ -17,10 +17,10 @@ export default function formatDate(timestamp, language, format) {
 
     const monthShort = date.toLocaleString(supportedLanguages[language], { month: '2-digit', timeZone: 'UTC' });
     const monthLong = date.toLocaleString(supportedLanguages[language], { month: 'long', timeZone: 'UTC' });
-    const day = date.getUTCDate().toString().padStart(2, '0');  // Use UTC
-    const year = date.getUTCFullYear();  // Use UTC
-    const hour = date.getUTCHours();  // Use UTC
-    const minute = date.getUTCMinutes().toString().padStart(2, '0');  // Use UTC
+    const day = date.getUTCDate().toString().padStart(2, '0');
+    const year = date.getUTCFullYear();
+    const hour = date.getUTCHours();
+    const minute = date.getUTCMinutes().toString().padStart(2, '0');
     const hour12 = hour % 12 || 12;
 
     const isPM = hour >= 12;

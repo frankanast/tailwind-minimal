@@ -22,15 +22,15 @@ export function QuoteProvider({ children }) {
     const { data: rates, isError, isLoading } = useQuery({
         queryKey: ["avail", { checkInDate, checkOutDate, occupancy }],
         queryFn: async () => {
-
             // use formatDateForBackend to avoid any issues and unexpected behaviour
-            const url = `${BACKEND_ROOT}/avail/byroom/occasc/?check_in=${formatDateForBackend(checkInDate)}&check_out=${formatDateForBackend(checkOutDate)}&rooms=${formatOccupancyWithAges(occupancy)}`;
+            const url = `${BACKEND_ROOT}/avail/aggrid/?check_in=${formatDateForBackend(checkInDate)}&check_out=${formatDateForBackend(checkOutDate)}&rooms=${formatOccupancyWithAges(occupancy)}`;
 
             const response = await fetch(url);
 
             if (!response.ok) {
                 throw new Error("Unable to fetch rates due to network issues.");
             }
+
             return await response.json();
         },
         enabled: !!checkInDate && !!checkOutDate // Only run if check-in/out dates are available
