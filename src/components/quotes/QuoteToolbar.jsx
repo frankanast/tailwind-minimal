@@ -118,7 +118,7 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
         {
             component:
                 <button onClick={handleLoad}>
-                    {isLoading ? <LoadingIcon /> : <MagnifyingGlassIcon className="w-4" />}
+                    {isLoading ? <LoadingIcon width={5} height={5} /> : <MagnifyingGlassIcon className="w-4" />}
                     Load
                 </button>,
             styleLiteral: "inputGroupButton"

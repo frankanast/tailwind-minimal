@@ -17,7 +17,6 @@ export function QuoteProvider({ children }) {
     ]);
 
     const [loadedData, setLoadedData] = useState(undefined)
-    const [manipulatedData, setManipulatedData] = useState(undefined)
 
     const { data: rates, isError, isLoading } = useQuery({
         queryKey: ["avail", { checkInDate, checkOutDate, occupancy }],

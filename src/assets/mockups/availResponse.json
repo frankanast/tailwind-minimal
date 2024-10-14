@@ -1,127 +1,33 @@
 {
-  "rates": [
+  "checkInDate":"2025-04-25T00:00:00.000Z",
+  "checkOutDate":"2025-04-28T00:00:00.000Z",
+  "loadedData":[
     {
-      "room": "11",
-      "rate": "266",
-      "occupancy": {
-        "ages": [
-          99,
-          99,
-          1
-        ],
-        "pets": 0,
-        "min_age": 4
-      },
-      "amount": 580,
-      "details": {}
+      "key":"SKmdEZh4kic2q9FjYT_8H",
+      "occupancy":{"adults":2,"children":0},
+      "gridData":{
+        "columns":["151","142","242","137","48"],
+        "rows":[
+          {"48":0,"137":0,"142":626.66666666667,"151":551.33333333333,"242":0,"room":"10"},
+          {"48":0,"137":0,"142":823.33333333333,"151":724.66666666667,"242":2149.3333333333,"room":"11"},
+          {"48":1020,"137":898,"142":0,"151":0,"242":2196.6666666667,"room":"12"},
+          {"48":1160,"137":1020.6666666667,"142":0,"151":0,"242":2336.6666666667,"room":"5"},
+          {"48":1586.6666666667,"137":1396.3333333333,"142":0,"151":0,"242":2763.3333333333,"room":"23"}
+        ]
+      }
     },
     {
-      "room": "12",
-      "rate": "266",
-      "occupancy": {
-        "ages": [
-          99,
-          99,
-          1
-        ],
-        "pets": 0,
-        "min_age": 4
-      },
-      "amount": 780,
-      "details": {}
-    },
-    {
-      "room": "5",
-      "rate": "266",
-      "occupancy": {
-        "ages": [
-          99,
-          99,
-          1
-        ],
-        "pets": 0,
-        "min_age": 4
-      },
-      "amount": 780,
-      "details": {}
-    },
-    {
-      "room": "20",
-      "rate": "266",
-      "occupancy": {
-        "ages": [
-          99,
-          99,
-          1
-        ],
-        "pets": 0,
-        "min_age": 4
-      },
-      "amount": 780,
-      "details": {}
-    },
-    {
-      "room": "23",
-      "rate": "266",
-      "occupancy": {
-        "ages": [
-          99,
-          99,
-          1
-        ],
-        "pets": 0,
-        "min_age": 4
-      },
-      "amount": 780,
-      "details": {}
-    },
-    {
-      "room": "27",
-      "rate": "266",
-      "occupancy": {
-        "ages": [
-          99,
-          99,
-          1
-        ],
-        "pets": 0,
-        "min_age": 4
-      },
-      "amount": 780,
-      "details": {}
-    },
-    {
-      "room": "9",
-      "rate": "266",
-      "occupancy": {
-        "ages": [
-          99,
-          99,
-          1
-        ],
-        "pets": 0,
-        "min_age": 4
-      },
-      "amount": 780,
-      "details": {}
-    },
-    {
-      "room": "13",
-      "rate": "266",
-      "occupancy": {
-        "ages": [
-          99,
-          99,
-          1
-        ],
-        "pets": 0,
-        "min_age": 4
-      },
-      "amount": 780,
-      "details": {}
+      "key":"ufghgjfkjfcxhvevidnksjfn",
+      "occupancy":{"adults":2,"children":1},
+      "gridData":{
+        "columns":["151","142"],
+        "rows":[
+          {"142":626.66666666667,"151":551.33333333333,"room":"10"},
+          {"142":823.33333333333,"151":724.66666666667,"room":"11"}
+        ]
+      }
     }
   ],
-  "group_by": "loose",
-  "sort_by": "roomasc",
-  "options": []
+  "isLoading":false,
+  "isError":false
 }
