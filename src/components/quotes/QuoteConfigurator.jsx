@@ -4,11 +4,14 @@ import {AgGridReact} from "ag-grid-react";
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import {useEffect, useState} from "react";
 import occupancyLiteral from "../../utils/occupancyLiteral.js";
+import EmptyStateIndicator from "../abstract/StateIndicator.jsx";
+import MagnifyingGlass from "../../assets/MagnifyingGlass.jsx";
+import LoadingIcon from "../../assets/LoadingIcon.jsx";
 
 const QuoteConfigurator = () => {
     let {
         loadedData,
-        isLoading,
+        isFetching,
     } = useQuoteContext()  // a list of 'occupancy' --> a list of rate grids
 
     const {
@@ -49,15 +52,32 @@ const QuoteConfigurator = () => {
     };
 
     if (!activeGrid) {
-        return <div>Loading...</div>;  // A fallback UI to handle the case when data is not yet loaded
+        // No data (initial state)
+        return (
+            <div className="flex flex-col">
+                <EmptyStateIndicator
+                    svg={MagnifyingGlass()}
+                    headline="No rooms to show"
+                    abstract="Get started by searching for new dates."
+                />
+            </div>
+        )
+    }
+
+    if (isFetching) {
+        return (
+            <div className="mt-8 w-8 mx-auto">
+                <LoadingIcon height={12} width={12} />
+            </div>
+        )
     }
 
     return (
         <>
-            <div className="mt-12">
+            <div className='mt-8'>
                 <div className="flex justify-between bg-white w-full px-4">
                     <h3 className="text-base font-semibold leading-6 text-gray-900">
-                        {/*occupancyLiteral(activeGrid?.occupancy.adults, activeGrid?.occupancy.children)*/}{activeGrid?.id}
+                        {occupancyLiteral(activeGrid?.occupancy.adults, activeGrid?.occupancy.children)}
                     </h3>
 
                     <div className="flex gap-2">

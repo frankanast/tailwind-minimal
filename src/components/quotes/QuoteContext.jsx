@@ -18,7 +18,22 @@ export function QuoteProvider({ children }) {
 
     const [loadedData, setLoadedData] = useState(undefined)
 
-    const { data: rates, isError, isLoading } = useQuery({
+    // Metadata query for room and rate info (name, abbr, etc.)
+    const { data: metadata, isError: isMetadataError } = useQuery({
+        queryKey: ["metadata"],
+        queryFn: async () => {
+            const response = await fetch(`${BACKEND_ROOT}/settings`);
+
+            if (!response.ok) {
+                throw new Error("Unable to fetch metadata due to network issues.");
+            }
+
+            return await response.json();
+        },
+        staleTime: 1000 * 60 * 60 * 2, // Cache metadata for 2 hours
+    });
+
+    const { data: rates, isError, isFetching } = useQuery({
         queryKey: ["avail", { checkInDate, checkOutDate, occupancy }],
         queryFn: async () => {
             // use formatDateForBackend to avoid any issues and unexpected behaviour
@@ -37,10 +52,42 @@ export function QuoteProvider({ children }) {
     });
 
     useEffect(() => {
-        if (rates) {
-            setLoadedData(rates)
+        if (rates && metadata) {
+            const { rooms, rates: rateMetadata } = metadata;
+            const enrichedData = rates.map((rateData) => {
+                const enrichedRows = rateData.rows.map((row) => {
+                    return {
+                        ...row,
+                        roomName: rooms?.[row.room]?.name?.en || row.room,
+                    };
+                });
+
+                const enrichedColumns = rateData.columns.map((column) => {
+                    if (column.field === "room") {
+                        return {
+                            ...column,
+                            field: "roomName", // Update the field to roomName
+                            headerName: "Room", // Keep the headerName the same
+                        };
+                    } else {
+                        return {
+                            ...column,
+                            headerName: rateMetadata?.[column.field]?.name || column.headerName,
+                        };
+                    }
+                });
+
+                return {
+                    ...rateData,
+                    rows: enrichedRows,
+                    columns: enrichedColumns,
+                };
+            });
+
+            setLoadedData(enrichedData);
         }
-    }, [rates]);
+    }, [rates, metadata]);
+
 
     return (
         <QuoteContext.Provider value={{
@@ -52,8 +99,9 @@ export function QuoteProvider({ children }) {
             setOccupancy,
             loadedData,
             setLoadedData,
-            isLoading,
+            isFetching,
             isError,
+            isMetadataError,
         }}>
             {children}
         </QuoteContext.Provider>
