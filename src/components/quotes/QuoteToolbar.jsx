@@ -11,6 +11,7 @@ import toolbarStyles from "../abstract/toolbars/toolbarStyles.js";
 import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
 import formatShortDate from "../../utils/formatDateShort.js"
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
+import groupRatesForPresentation from "../../utils/groupRatesForPresentation.js";
 
 export default function QuoteToolbar({toggleHandler, drawerItem}) {
     const {
@@ -20,7 +21,7 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
         checkOutDate,
         setCheckOutDate,
         loadedData,
-        isLoading,
+        isFetching,
         isError,
     } = useQuoteContext();
 
@@ -59,13 +60,15 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
     );
 
     const handleLoad = () => {
-        if (isLoading) {
+        if (isFetching) {
             console.log("'Load' clicked while in loading state." + new Date().toDateString() + new Date().toTimeString());
         } else if (isError) {
             alert("Unable to fetch rates at this time.");
         } else {
             alert(JSON.stringify(loadedData));
         }
+
+        console.log(JSON.stringify(groupRatesForPresentation(loadedData)));
     };
 
     const toolbarItems = [
@@ -118,7 +121,10 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
         {
             component:
                 <button onClick={handleLoad}>
-                    {isLoading ? <LoadingIcon width={5} height={5} /> : <MagnifyingGlassIcon className="w-4" />}
+                    {isFetching
+                        ? <div className="w-4 my-auto"><LoadingIcon width={5} height={5}/></div>
+                        : <MagnifyingGlassIcon className="w-4" />
+                    }
                     Load
                 </button>,
             styleLiteral: "inputGroupButton"
