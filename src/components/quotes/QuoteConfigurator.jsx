@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import EmptyStateIndicator from "../abstract/StateIndicator.jsx";
 import MagnifyingGlass from "../../assets/MagnifyingGlass.jsx";
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
-import SelectableCardList from "../abstract/SelectableList.jsx";
+import SelectableCardList from "./SelectableList.jsx";
 import cleanUpResponse from "../../utils/cleanUpResponse.js";
 import groupRatesForPresentation from "../../utils/groupRatesForPresentation.js";
 import occupancyLiteral from "../../utils/occupancyLiteral.js";
