@@ -1,6 +1,5 @@
-import { useRatePresenterContext } from "./RatePresenterContext.jsx";
+import { useRatePresenterContext } from './RatePresenterContext.jsx';
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import formatToEuro from "../../utils/formatToEuro.js";
 
 const Card = ({ children, selected }) => {
     const baseClasses = "overflow-hidden rounded-md bg-white px-6 py-4 shadow";
@@ -14,7 +13,7 @@ const SelectableCard = ({ selected, onClick, children }) => {
         <Card selected={selected}>
             <div onClick={onClick} className="cursor-pointer flex justify-between items-center">
                 {children}
-                <EllipsisVerticalIcon className="size-5 text-gray-400" />
+                <EllipsisVerticalIcon className="w-5 h-5 text-gray-400" />
             </div>
         </Card>
     );
@@ -24,12 +23,14 @@ const SelectableTitleCard = ({ room, rates, selected, onClick }) => {
     return (
         <SelectableCard onClick={onClick} selected={selected}>
             <div>
-                <h3 className="text-sm font-semibold">{room}</h3>
-                {rates.map((rate) => (
-                    <p key={rate.rate_id.id} className="text-gray-500">
-                        {`${rate.rate_id.data.abbreviation}: ${formatToEuro(rate.amount)}`}
-                    </p>
-                ))}
+                <h3 className="text-sm font-semibold">{room.data.name.en}</h3>
+                <div className="mt-2">
+                    {rates.map((rate) => (
+                        <p key={rate.id} className="text-gray-500">
+                            {`${rate.data.abbreviation}: €${rate.amount}`}
+                        </p>
+                    ))}
+                </div>
             </div>
         </SelectableCard>
     );
@@ -38,27 +39,29 @@ const SelectableTitleCard = ({ room, rates, selected, onClick }) => {
 const SelectableCardList = () => {
     const { parsedData, selectedRates, toggleRateSelection } = useRatePresenterContext();
 
-    // Flatten parsedData to get the list of rooms (assuming rooms are nested within occupancy data)
-    const contents = Object.values(parsedData).flatMap((occupancy) => occupancy.rooms);
+    // Ensure parsedData is defined and is an array before flattening
+    const rooms = parsedData ? parsedData.flatMap((occupancy) => occupancy.rooms) : [];
+
+    // Ensure selectedRates is defined before using includes
+    const selectedRatesArray = selectedRates || [];
 
     // Function to handle item selection, calling toggleRateSelection from the context
-    const onItemSelected = (uniqueCardId) => {
-        toggleRateSelection(uniqueCardId);
+    const onItemSelected = (roomId) => {
+        toggleRateSelection(roomId);
     };
 
     return (
         <div className="grid gap-4">
-            {contents.map((cardContent) => {
-                const { roomShortName, uniqueCardId, rates } = cardContent; // Use uniqueCardId
-                const isSelected = selectedRates.includes(uniqueCardId);
+            {rooms.map((room) => {
+                const isSelected = selectedRatesArray.includes(room.entity_id);
 
                 return (
                     <SelectableTitleCard
-                        key={uniqueCardId}
-                        room={roomShortName}
-                        rates={rates}
+                        key={room.entity_id}
+                        room={room}
+                        rates={room.rates}
                         selected={isSelected}
-                        onClick={() => onItemSelected(uniqueCardId)} // Call onItemSelected with uniqueCardId
+                        onClick={() => onItemSelected(room.entity_id)}
                     />
                 );
             })}

@@ -2,10 +2,7 @@ import { useState } from 'react';
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import occupancyLiteral from "../../utils/occupancyLiteral.js";
 import {Transition} from "@headlessui/react";
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
-}
+import classNames from "../../utils/classNames.js";
 
 export default function OccupancyTabs() {
     const { parsedData } = useRatePresenterContext()
