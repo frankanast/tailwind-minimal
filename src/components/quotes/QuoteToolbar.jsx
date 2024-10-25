@@ -11,7 +11,6 @@ import toolbarStyles from "../abstract/toolbars/toolbarStyles.js";
 import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
 import formatShortDate from "../../utils/formatDateShort.js"
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
-import groupRatesForPresentation from "../../utils/groupRatesForPresentation.js";
 
 export default function QuoteToolbar({toggleHandler, drawerItem}) {
     const {
@@ -68,7 +67,6 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
             alert(JSON.stringify(loadedData));
         }
 
-        console.log(JSON.stringify(groupRatesForPresentation(loadedData)));
     };
 
     const toolbarItems = [

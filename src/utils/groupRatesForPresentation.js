@@ -1,41 +1,51 @@
-export default function groupRatesForPresentation(response) {
-    // This function groups singular rate entities from the response first by occupancy, then by room
-    /*
-    * Example output:
-    *
-    *
-    *
-    *
-    * */
-    return response.reduce((acc, item) => {
-        const occupancyId = item.occupancy.id;
-        const roomId = item.room_id.id;
+import { nanoid } from 'nanoid';
 
-        const roomShortName = item.room_id.data.short_name.en;
-        const adults = item.occupancy.ages.filter(age => age >= item.occupancy.min_age).length;
-        const children = item.occupancy.ages.filter(age => age < item.occupancy.min_age).length;
+export default function groupRatesForPresentation(elements, metadata) {
+    // "element" ==> a Rate() instance from our API, json formatted. Basically, our data.
+    const groupedData = {};
 
-        if (!acc[occupancyId]) {
-            acc[occupancyId] = {
-                occupancyId,
-                adults,
-                children,
-                rooms: []
+    elements.forEach(entry => {
+        const occupancyKey = entry.occupancy.id;
+        const roomId = entry.room;
+        const rateId = entry.rate;
+        const amount = entry.amount;
+
+        // Extract adults and children from occupancy ages
+        const adults = entry.occupancy.ages.filter(age => age >= entry.occupancy.min_age).length;
+        const children = entry.occupancy.ages.filter(age => age < entry.occupancy.min_age).length;
+
+        if (!groupedData[occupancyKey]) {
+            groupedData[occupancyKey] = {
+                occ_id: occupancyKey,
+                adults: adults,
+                children: children,
+                rooms: {}
             };
         }
 
-        let room = acc[occupancyId].rooms.find(r => r.roomId === roomId);
-        if (!room) {
-            room = {
-                roomId,
-                roomShortName,
+        if (!groupedData[occupancyKey].rooms[roomId]) {
+            groupedData[occupancyKey].rooms[roomId] = {
+                entity_id: nanoid(),
+                entity_position: "",
+                id: roomId,
+                data: metadata.rooms[roomId] || {},
                 rates: []
             };
-            acc[occupancyId].rooms.push(room);
         }
 
-        room.rates.push(item);
+        if (amount !== 0) {
+            groupedData[occupancyKey].rooms[roomId].rates.push({
+                id: rateId,
+                data: metadata.rates[rateId] || [],
+                amount: amount
+            });
+        }
+    });
 
-        return acc;
-    }, {});
+    return Object.values(groupedData).map(occupancy => ({
+        occ_id: occupancy.occ_id,
+        adults: occupancy.adults,
+        children: occupancy.children,
+        rooms: Object.values(occupancy.rooms)
+    }));
 }
