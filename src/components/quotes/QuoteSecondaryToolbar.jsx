@@ -5,8 +5,10 @@
 
 import AbstractSecondaryToolbar from "../abstract/toolbars/AbstractSecondaryToolbar.jsx";
 import {
-    BeakerIcon, EyeIcon, LockClosedIcon, PaintBrushIcon, PencilIcon, PercentBadgeIcon,
+    EyeIcon, LockClosedIcon, PencilIcon, PercentBadgeIcon,
 } from '@heroicons/react/20/solid'
+import {SparklesIcon} from "@heroicons/react/24/outline";
+import FxIcon from "../../assets/FxIcon.jsx";
 
 const items = [
     { name: 'Standard', href: '#', current: false },
@@ -17,12 +19,12 @@ const actions = [
     { name: 'Show/Hide', href: '#', icon: <EyeIcon />, handler: () => {alert("Show")} },
     { name: 'Lock/Unlock', href: '#', icon: <LockClosedIcon />, handler: () => {alert("Lock")} },
     { name: 'Discount', href: '#', icon: <PercentBadgeIcon />, handler: () => {alert("Discount")} },
-    { name: 'Formula', href: '#', icon: <BeakerIcon />, handler: () => {alert("Formula")} },
+    { name: 'Formula', href: '#', icon: <FxIcon />, handler: () => {alert("Formula")} },
     { name: 'Set an alias', href: '#', icon: <PencilIcon />, handler: () => {alert("Set")} },
-    { name: 'Format values', href: '#', icon: <PaintBrushIcon />, handler: () => {alert("Format")} },
+    { name: 'Format values', href: '#', icon: <SparklesIcon />, handler: () => {alert("Format")} },
 ]
 
-export default function QuoteSecondaryToolbar({dataHandler}) {
+export default function QuoteSecondaryToolbar() {
     return (
         <AbstractSecondaryToolbar items={items} actions={actions} />
     )

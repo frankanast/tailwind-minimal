@@ -1,14 +1,23 @@
 import classNames from '/src/utils/classNames.js';
 
-import { CurrencyEuroIcon, CalendarDaysIcon, ChatBubbleOvalLeftIcon, SparklesIcon, QuestionMarkCircleIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
-
-const icons = {
+import {
     CurrencyEuroIcon,
     CalendarDaysIcon,
     ChatBubbleOvalLeftIcon,
     SparklesIcon,
     QuestionMarkCircleIcon,
     Cog6ToothIcon,
+    SwatchIcon
+} from '@heroicons/react/24/outline';
+
+const icons = {
+    CurrencyEuroIcon,
+    CalendarDaysIcon,
+    ChatBubbleOvalLeftIcon,
+    SwatchIcon,
+    QuestionMarkCircleIcon,
+    Cog6ToothIcon,
+    SparklesIcon, // Legacy
 };
 
 export default function NavigationItem({ name, icon, initial, active, onClick }) {

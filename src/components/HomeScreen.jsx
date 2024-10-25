@@ -20,7 +20,7 @@ const navigation = [
     { name: 'Quotes', page: QuotePage, icon: 'CurrencyEuroIcon' },
     { name: 'Events', page: Events, icon: 'CalendarDaysIcon' },
     { name: 'Messages', page: Messages, icon: 'ChatBubbleOvalLeftIcon' },
-    { name: 'Templates', page: Templates, icon: 'SparklesIcon' },
+    { name: 'Templates', page: Templates, icon: 'SwatchIcon' },
     { name: 'Help', page: Help, icon: 'QuestionMarkCircleIcon' },
     { name: 'Settings', page: Settings, icon: 'Cog6ToothIcon' },
 ];
@@ -35,7 +35,7 @@ const superpowers = [
 
 export default function HomeScreen() {
     const [sidebarOpen, setSidebarOpen] = useState(true)
-    const [currentPage, setCurrentPage] = useState('QuotePage');
+    const [currentPage, setCurrentPage] = useState('Quotes');
 
     function toggleSidebar() {
         setSidebarOpen(prev => !prev);
