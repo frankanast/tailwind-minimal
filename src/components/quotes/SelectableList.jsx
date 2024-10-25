@@ -17,7 +17,7 @@ const SelectableCard = ({ selected, onClick, children }) => {
             >
                 {children}
                 {selected && (
-                    <div className="text-green-600">
+                    <div className="text-yellow-600">
                         <span className="text-xl">✔</span>
                     </div>
                 )}
@@ -44,9 +44,14 @@ const RoomCard = ({ room, selected, onClick }) => {
 };
 
 const RoomSelectableCardList = ({ rooms }) => {
-    const { selected, setSelected } = useRatePresenterContext();
+    const { selected = [], setSelected } = useRatePresenterContext();
 
     const onRoomSelected = (entityId) => {
+        if (!Array.isArray(selected)) {
+            console.error("Expected 'selected' to be an array, but got:", selected);
+            return;
+        }
+
         const isSelected = selected.includes(entityId);
         const newSelection = isSelected
             ? selected.filter((id) => id !== entityId)

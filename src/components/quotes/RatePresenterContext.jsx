@@ -16,10 +16,6 @@ export function RatePresenterProvider({ children }) {
         }
     }, [loadedData]);
 
-    const setSelection = (newSelection) => {
-        setSelected(newSelection);
-    };
-
     return (
         <RatePresenterContext.Provider value={{ parsedData, selected, setSelected }}>
             {children}

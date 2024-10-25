@@ -59,8 +59,6 @@ export default function OccupancyTabs() {
                 leaveTo="opacity-0"
             >
                 <div className="mt-4">
-                    {/* Display the selected tab ID as a placeholder for the content */}
-                    {/*<p>Content for Tab ID: {selectedTabId}</p>*/}
                     {/*<pre>{JSON.stringify(parsedData.find(obj => obj.occ_id === selectedTabId), null, 2)}</pre>*/}
                     {selectedTabId && (
                         <RoomSelectableCardList
