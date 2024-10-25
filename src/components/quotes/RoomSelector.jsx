@@ -80,7 +80,11 @@ function RoomsInput() {
                 <button
                     type="button"
                     className="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-white ring-1 ring-inset ring-gray-300 hover:bg-indigo-500 bg-indigo-600"
-                    onClick={() => {addItem(adults, children)}}
+                    onClick={() => {
+                        addItem(adults, children)
+                        setAdults(2)
+                        setChildren(0)
+                    }}
                 >
                     <PlusIcon aria-hidden="true" className="-ml-0.5 h-5 w-5 text-gray-200"/>
                         Add

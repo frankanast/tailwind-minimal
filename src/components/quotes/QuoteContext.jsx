@@ -21,6 +21,10 @@ export function QuoteProvider({ children }) {
         queryFn: async () => {
             const url = `${BACKEND_ROOT}/avail/loose/?check_in=${formatDateForBackend(checkInDate)}&check_out=${formatDateForBackend(checkOutDate)}&rooms=${formatOccupancyWithAges(occupancy)}`;
 
+            console.log("URL: " + url) // TODO ISSUE: request is for 1 adult when 4 is input...
+            console.log("occupancy: " + JSON.stringify(occupancy));
+            console.log("formatOccupancyWithAges: " + JSON.stringify(formatOccupancyWithAges(occupancy)));
+
             const response = await fetch(url);
 
             if (!response.ok) {

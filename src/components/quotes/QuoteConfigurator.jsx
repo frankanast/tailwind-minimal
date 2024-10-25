@@ -3,13 +3,12 @@ import { useEffect, useState } from "react";
 import EmptyStateIndicator from "../abstract/StateIndicator.jsx";
 import MagnifyingGlass from "../../assets/MagnifyingGlass.jsx";
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
-import SelectableCardList from "./SelectableList.jsx";
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import OccupancyTabs from "./OccupancyTabs.jsx";
 
 const QuoteConfigurator = () => {
     let { isFetching } = useQuoteContext();
-    let { parsedData, selection, selected, setSelection } = useRatePresenterContext();
+    let { parsedData } = useRatePresenterContext();
 
     const [activeOccupancy, setActiveOccupancy] = useState(undefined);
 
