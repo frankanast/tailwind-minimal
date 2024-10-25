@@ -1,6 +1,7 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {useQuoteContext} from "./QuoteContext.jsx";
 import groupRatesForPresentation from "../../utils/groupRatesForPresentation.js";
+import cleanUpResponse from "../../utils/cleanUpResponse.js";
 
 export const RatePresenterContext = createContext(undefined);
 
@@ -11,7 +12,7 @@ export function RatePresenterProvider({ children }) {
 
     useEffect(() => {
         if (loadedData) {
-            const parsed = groupRatesForPresentation(loadedData.data, loadedData.metadata);
+            const parsed = groupRatesForPresentation(cleanUpResponse(loadedData.data), loadedData.metadata);
             setParsedData(parsed);
         }
     }, [loadedData]);

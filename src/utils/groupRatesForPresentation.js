@@ -2,6 +2,8 @@ import { nanoid } from 'nanoid';
 
 export default function groupRatesForPresentation(elements, metadata) {
     // "element" ==> a Rate() instance from our API, json formatted. Basically, our data.
+    // for metadata schema, check the /settings endpoint.
+
     const groupedData = {};
 
     elements.forEach(entry => {
@@ -39,6 +41,7 @@ export default function groupRatesForPresentation(elements, metadata) {
                 data: metadata.rates[rateId] || [],
                 amount: amount
             });
+            groupedData[occupancyKey].rooms[roomId].rates.sort((a, b) => a.data.priority - b.data.priority);
         }
     });
 
@@ -46,6 +49,6 @@ export default function groupRatesForPresentation(elements, metadata) {
         occ_id: occupancy.occ_id,
         adults: occupancy.adults,
         children: occupancy.children,
-        rooms: Object.values(occupancy.rooms)
+        rooms: Object.values(occupancy.rooms).sort((a, b) => a.data.priority - b.data.priority),
     }));
 }
