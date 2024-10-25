@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import {useState} from 'react';
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import occupancyLiteral from "../../utils/occupancyLiteral.js";
 import {Transition} from "@headlessui/react";
 import classNames from "../../utils/classNames.js";
+import RoomSelectableCardList from "./SelectableList.jsx";
 
 export default function OccupancyTabs() {
     const { parsedData } = useRatePresenterContext()
@@ -59,8 +60,13 @@ export default function OccupancyTabs() {
             >
                 <div className="mt-4">
                     {/* Display the selected tab ID as a placeholder for the content */}
-                    <p>Content for Tab ID: {selectedTabId}</p>
-                    <pre>{JSON.stringify(parsedData.find(obj => obj.occ_id === selectedTabId), null, 2)}</pre>
+                    {/*<p>Content for Tab ID: {selectedTabId}</p>*/}
+                    {/*<pre>{JSON.stringify(parsedData.find(obj => obj.occ_id === selectedTabId), null, 2)}</pre>*/}
+                    {selectedTabId && (
+                        <RoomSelectableCardList
+                            rooms={parsedData.find(obj => obj.occ_id === selectedTabId)?.rooms || []}
+                        />
+                    )}
                 </div>
             </Transition>
         </div>

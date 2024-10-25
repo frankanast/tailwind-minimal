@@ -9,7 +9,7 @@ import OccupancyTabs from "./OccupancyTabs.jsx";
 
 const QuoteConfigurator = () => {
     let { isFetching } = useQuoteContext();
-    let { parsedData, selection, selected, setSelected } = useRatePresenterContext();
+    let { parsedData, selection, selected, setSelection } = useRatePresenterContext();
 
     const [activeOccupancy, setActiveOccupancy] = useState(undefined);
 
