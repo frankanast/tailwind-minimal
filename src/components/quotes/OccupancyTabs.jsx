@@ -1,13 +1,11 @@
-import {useState} from 'react';
-import {useRatePresenterContext} from "./RatePresenterContext.jsx";
-import occupancyLiteral from "../../utils/occupancyLiteral.js";
 import {Transition} from "@headlessui/react";
+import StandardCardViewList from "./SelectableList.jsx";
 import classNames from "../../utils/classNames.js";
-import RoomSelectableCardList from "./SelectableList.jsx";
+import occupancyLiteral from "../../utils/occupancyLiteral.js";
+import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 
 export default function OccupancyTabs() {
-    const { parsedData } = useRatePresenterContext()
-    const [selectedTabId, setSelectedTabId] = useState(parsedData.length > 0 ? parsedData[0].id : null);
+    const { parsedData, selectedTabId, setSelectedTabId } = useRatePresenterContext()
 
     const handleTabClick = (tabId) => {
         setSelectedTabId(tabId);
@@ -27,7 +25,9 @@ export default function OccupancyTabs() {
                     className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                 >
                     {parsedData.map((occupancy) => (
-                        <option key={occupancy.occ_id} value={occupancy.occ_id}>{occupancyLiteral(occupancy.adults, occupancy.children)}</option>
+                        <option key={occupancy.occ_id} value={occupancy.occ_id}>
+                            {occupancyLiteral(occupancy.adults, occupancy.children)}
+                        </option>
                     ))}
                 </select>
             </div>
@@ -61,7 +61,7 @@ export default function OccupancyTabs() {
                 <div className="mt-4">
                     {/*<pre>{JSON.stringify(parsedData.find(obj => obj.occ_id === selectedTabId), null, 2)}</pre>*/}
                     {selectedTabId && (
-                        <RoomSelectableCardList
+                        <StandardCardViewList
                             rooms={parsedData.find(obj => obj.occ_id === selectedTabId)?.rooms || []}
                         />
                     )}

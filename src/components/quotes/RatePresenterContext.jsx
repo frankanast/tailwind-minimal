@@ -8,17 +8,24 @@ export const RatePresenterContext = createContext(undefined);
 export function RatePresenterProvider({ children }) {
     const { loadedData } = useQuoteContext();
     const [parsedData, setParsedData] = useState({});
-    const [selected, setSelected] = useState([]);
+    const [selectedItems, setSelectedItems] = useState([]);
+    const [selectedTabId, setSelectedTabId] = useState(null);
+
 
     useEffect(() => {
         if (loadedData) {
             const parsed = groupRatesForPresentation(cleanUpResponse(loadedData.data), loadedData.metadata);
             setParsedData(parsed);
+
+            // First occupancy is selected automatically
+            if (parsed && parsed.length > 0) {
+                setSelectedTabId(parsed[0].occ_id);
+            }
         }
     }, [loadedData]);
 
     return (
-        <RatePresenterContext.Provider value={{ parsedData, selected, setSelected }}>
+        <RatePresenterContext.Provider value={{parsedData, selectedItems, setSelectedItems, selectedTabId, setSelectedTabId}}>
             {children}
         </RatePresenterContext.Provider>
     );
