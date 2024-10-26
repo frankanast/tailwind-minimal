@@ -14,27 +14,29 @@ export default function QuotePage({ toggleHandler }) {
     return (
         <QueryClientProvider client={queryClient}>
             <QuoteProvider>
-                <div>
-                    <div className="flex flex-col h-screen">
-                            <QuoteToolbar toggleHandler={toggleHandler} drawerItem={<QuoteDrawer />} />
-                            <PanelGroup direction="horizontal">
-                                <Panel defaultSize={50} minSize={10} className="h-auto">
-                                    <QuoteSecondaryToolbar />
-                                    <div className="h-full w-full mt-10 flex flex-col overflow-auto">
-                                        <RatePresenterProvider>
-                                            <QuoteConfigurator />
-                                        </RatePresenterProvider>
-                                    </div>
-                                </Panel>
-                                <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />
-                                <Panel minSize={10}>
-                                    <div className="preview-background h-full pt-14 overflow-auto">
-                                        <QuoteRenderer />
-                                    </div>
-                                </Panel>
-                            </PanelGroup>
-                        </div>
-                </div>
+                <RatePresenterProvider>
+                    <div>
+                        <div className="flex flex-col h-screen">
+                                <QuoteToolbar toggleHandler={toggleHandler} drawerItem={<QuoteDrawer />} />
+                                <PanelGroup direction="horizontal">
+                                    <Panel defaultSize={50} minSize={10} className="h-auto">
+                                        <QuoteSecondaryToolbar />
+                                        <div className="h-full w-full mt-10 flex flex-col overflow-auto">
+                                            {/*<RatePresenterProvider>*/}
+                                                <QuoteConfigurator />
+                                            {/*</RatePresenterProvider>*/}
+                                        </div>
+                                    </Panel>
+                                    <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />
+                                    <Panel minSize={10}>
+                                        <div className="preview-background h-full pt-14 overflow-auto">
+                                            <QuoteRenderer />
+                                        </div>
+                                    </Panel>
+                                </PanelGroup>
+                            </div>
+                    </div>
+                </RatePresenterProvider>
             </QuoteProvider>
         </QueryClientProvider>
     );

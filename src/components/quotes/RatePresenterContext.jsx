@@ -11,7 +11,6 @@ export function RatePresenterProvider({ children }) {
     const [selectedItems, setSelectedItems] = useState([]);
     const [selectedTabId, setSelectedTabId] = useState(null);
 
-
     useEffect(() => {
         if (loadedData) {
             const parsed = groupRatesForPresentation(cleanUpResponse(loadedData.data), loadedData.metadata);

@@ -41,7 +41,6 @@ const RoomCard = ({ room }) => {
         setSelectedItems(newSelection);
     };
 
-
     return (
         <SelectableCard onClick={handleSelect} selected={isSelected}>
             <div>
