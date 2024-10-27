@@ -2,11 +2,11 @@ import { Fragment } from "react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import classNames from "../../../utils/classNames.js";
 import {BoltIcon, ChevronDownIcon} from "@heroicons/react/20/solid";
-import isEmpty from "../../../utils/isEmpty.js"; // Assuming this is a utility function
+import isEmpty from "../../../utils/isEmpty.js";
 import { nanoid } from "nanoid";
 
-// Dropdown for actions
 export function AbstractSecondaryToolbarActionDropdown({ items }) {
+
     const NoActionsIndicator = () => {
         return (
             <MenuItem>
