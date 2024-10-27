@@ -7,24 +7,39 @@ import AbstractSecondaryToolbar from "../abstract/toolbars/AbstractSecondaryTool
 import {
     EyeIcon, LockClosedIcon, PencilIcon, PercentBadgeIcon,
 } from '@heroicons/react/20/solid'
-import {SparklesIcon} from "@heroicons/react/24/outline";
+import {SparklesIcon, Square2StackIcon} from "@heroicons/react/24/outline";
 import FxIcon from "../../assets/FxIcon.jsx";
-
-const items = [
-    { name: 'Standard', href: '#', current: false },
-    { name: 'Tailored', href: '#', current: false },
-]
-
-const actions = [
-    { name: 'Show/Hide', href: '#', icon: <EyeIcon />, handler: () => {alert("Show")} },
-    { name: 'Lock/Unlock', href: '#', icon: <LockClosedIcon />, handler: () => {alert("Lock")} },
-    { name: 'Discount', href: '#', icon: <PercentBadgeIcon />, handler: () => {alert("Discount")} },
-    { name: 'Formula', href: '#', icon: <FxIcon />, handler: () => {alert("Formula")} },
-    { name: 'Set an alias', href: '#', icon: <PencilIcon />, handler: () => {alert("Set")} },
-    { name: 'Format values', href: '#', icon: <SparklesIcon />, handler: () => {alert("Format")} },
-]
+import {useRatePresenterContext} from "./RatePresenterContext.jsx";
+import SelectAllIcon from "../../assets/SelectAllIcon.jsx";
+import InvertSelectionIcon from "../../assets/InvertSelectionIcon.jsx";
 
 export default function QuoteSecondaryToolbar() {
+    const {selectAll, clearSelection, selectInverse} = useRatePresenterContext()
+
+    const items = [
+        { name: 'Standard', href: '#', current: false },
+        { name: 'Tailored', href: '#', current: false },
+    ]
+
+    const actions = [
+        { name: 'Select all', href: '#', icon: <SelectAllIcon />, handler: selectAll },
+        { name: 'Clear selection', href: '#', icon: <Square2StackIcon />, handler: clearSelection },
+        { name: 'Select inverse', href: '#', icon: <InvertSelectionIcon />, handler: selectInverse },
+
+        { name: 'Show/Hide', href: '#', icon: <EyeIcon />, handler: () => {alert("Show")} },
+        { name: 'Lock/Unlock', href: '#', icon: <LockClosedIcon />, handler: () => {alert("Lock")} },
+        { name: 'Discount', href: '#', icon: <PercentBadgeIcon />, handler: () => {alert("Discount")} },
+        { name: 'Formula', href: '#', icon: <FxIcon />, handler: () => {alert("Formula")} },
+        { name: 'Set an alias', href: '#', icon: <PencilIcon />, handler: () => {alert("Set")} },
+        { name: 'Format values', href: '#', icon: <SparklesIcon />, handler: () => {alert("Format")} },
+    ]
+
+    const selection = [
+        { name: 'Select all', href: '#', icon: <Square2StackIcon />, handler: selectAll },
+        { name: 'Clear selection', href: '#', icon: <Square2StackIcon />, handler: () => {alert("Clear selection")}},
+        { name: 'Select inverse', href: '#', icon: <Square2StackIcon />, handler: () => {alert("Select inverse")}},
+    ]
+
     return (
         <AbstractSecondaryToolbar items={items} actions={actions} />
     )
