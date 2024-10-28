@@ -2,7 +2,7 @@ import QuoteRenderer from "./QuoteRenderer.jsx";
 import QuoteToolbar from "./QuoteToolbar.jsx";
 import QuoteConfigurator from "./QuoteConfigurator.jsx";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import QuoteSecondaryToolbar from "./QuoteSecondaryToolbar.jsx";
+import ConfiguratorToolbar from "./ConfiguratorToolbar.jsx";
 import { QuoteProvider } from "./QuoteContext.jsx";
 import QuoteDrawer from "./QuoteDrawer.jsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
@@ -19,8 +19,8 @@ export default function QuotePage({ toggleHandler }) {
                         <div className="flex flex-col h-screen">
                                 <QuoteToolbar toggleHandler={toggleHandler} drawerItem={<QuoteDrawer />} />
                                 <PanelGroup direction="horizontal">
-                                    <Panel defaultSize={50} minSize={10} className="h-auto">
-                                        <QuoteSecondaryToolbar />
+                                    <Panel defaultSize={33} minSize={10} className="h-auto">
+                                        <ConfiguratorToolbar />
                                         <div className="h-full w-full mt-10 flex flex-col overflow-auto">
                                             {/*<RatePresenterProvider>*/}
                                                 <QuoteConfigurator />
