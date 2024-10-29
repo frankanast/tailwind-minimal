@@ -22,9 +22,7 @@ export default function QuotePage({ toggleHandler }) {
                                     <Panel defaultSize={33} minSize={10} className="h-auto">
                                         <ConfiguratorToolbar />
                                         <div className="h-full w-full mt-10 flex flex-col overflow-auto">
-                                            {/*<RatePresenterProvider>*/}
-                                                <QuoteConfigurator />
-                                            {/*</RatePresenterProvider>*/}
+                                            <QuoteConfigurator />
                                         </div>
                                     </Panel>
                                     <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />

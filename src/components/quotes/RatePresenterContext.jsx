@@ -133,9 +133,15 @@ export function RatePresenterProvider({ children }) {
                             guestCount: occupancy.adults + occupancy.children,
                         }
 
-                        rate.amount = safelyEvaluate(formulaInput, scope, rate.amount);
+                        try {
+                            //TODO: We should notify the UI about any modifications made, this included, and reflect that visually.
+                            rate.amount = safelyEvaluate(formulaInput, scope, rate.amount);
 
-                        //TODO: We should notify the UI about any modifications made, this included, and reflect that visually.
+                        } catch (error) {
+                            console.error("Error evaluating expression:", error);
+
+                        }
+
                     });
                 }
             });
