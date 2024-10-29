@@ -13,7 +13,7 @@ export default function QuoteRenderer() {
         if (parsedData) {
             const sendParsedData = async () => {
                 try {
-                    const response = await fetch('/generate-html', {
+                    const response = await fetch('https://www.programmino-be.onrender.com/generate-html', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ content: parsedData })
