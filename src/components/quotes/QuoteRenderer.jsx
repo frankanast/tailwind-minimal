@@ -1,49 +1,44 @@
 import Iframe from 'react-iframe';
 import { useRatePresenterContext } from './RatePresenterContext.jsx';
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from "react";
 
 export default function QuoteRenderer() {
     // if webpage has no background, without bg-white it'll look transparent.
     const iframeStyle = 'w-10/12 h-full flex flex-col mx-auto mb-0 shadow-lg bg-white';
     const { parsedData } = useRatePresenterContext();
-    const [responseToken, setResponseToken] = useState({ content_url: 'https://example.com' });
+
+    const [iframeUrl, setIframeUrl] = useState("www.example.com");
 
     useEffect(() => {
-        if (!parsedData) {
-            setResponseToken({ content_url: 'https://example.com' });
-            return;
-        }
+        if (parsedData) {
+            const sendParsedData = async () => {
+                try {
+                    const response = await fetch('/generate-html', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ content: parsedData })
+                    });
 
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://programmino-be.onrender.com/render-email', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(parsedData),
-                });
+                    if (!response.ok) {
+                        throw new Error('Failed to send parsedData');
+                    }
 
-                if (response.ok) {
                     const data = await response.json();
-                    setResponseToken(data);
-                } else {
-                    console.error('Failed to fetch content URL:', response.statusText);
-                    setResponseToken({ content_url: 'https://example.com' });
-                }
-            } catch (error) {
-                console.error('Error fetching content URL:', error);
-                setResponseToken({ content_url: 'https://example.com' });
-            }
-        };
+                    const tokenName = data["token-name"];
 
-        fetchData()
-        console.log(responseToken);
+                    setIframeUrl(`/token/${tokenName}`);
+                } catch (error) {
+                    console.error("Error sending parsedData:", error);
+                }
+            };
+
+            sendParsedData();
+        }
     }, [parsedData]);
 
     return (
         <Iframe
-            url={responseToken.content_url}
+            url={iframeUrl}
             id="renderer-iframe"
             className={iframeStyle}
             overflow="auto"
