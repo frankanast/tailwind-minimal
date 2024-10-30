@@ -20,6 +20,7 @@ export default {
           black: colors.black,
           white: colors.white,
           gray: colors.gray,
+          slate: colors.slate,
           indigo: {
               '50': '#f1f8f5',
               '100': '#ddeee5',
@@ -34,7 +35,7 @@ export default {
               '950': '#0e201c',
           },
           yellow: {
-              '50': '#fdf9ef',
+              '50': '#fdfcf7',
               '100': '#f9f0db',
               '200': '#f2dbaf',
               '300': '#ebc686',
@@ -46,6 +47,7 @@ export default {
               '900': '#6e3d20',
               '950': '#3b1d0f',
           },
+
           lavender: {
               '50': '#faf7fd',
               '100': '#f4ecfb',

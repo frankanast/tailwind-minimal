@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 
 export default function QuoteRenderer() {
     // if webpage has no background, without bg-white it'll look transparent.
-    const iframeStyle = 'w-10/12 h-full flex flex-col mx-auto mb-0 shadow-lg bg-white';
+    const iframeStyle = 'h-full w-2/3 flex flex-col mx-auto mb-0 shadow-lg bg-white';
     const { parsedData } = useRatePresenterContext();
 
     const [iframeUrl, setIframeUrl] = useState('');
