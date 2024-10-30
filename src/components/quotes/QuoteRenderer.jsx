@@ -7,16 +7,16 @@ export default function QuoteRenderer() {
     const iframeStyle = 'w-10/12 h-full flex flex-col mx-auto mb-0 shadow-lg bg-white';
     const { parsedData } = useRatePresenterContext();
 
-    const [iframeUrl, setIframeUrl] = useState("www.example.com");
+    const [iframeUrl, setIframeUrl] = useState('');
 
     useEffect(() => {
-        if (parsedData) {
+        if (parsedData.data) {
             const sendParsedData = async () => {
                 try {
-                    const response = await fetch('https://www.programmino-be.onrender.com/generate-html', {
+                    const response = await fetch('https://programmino-be.onrender.com/preview_template/', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ content: parsedData })
+                        body: JSON.stringify({ content: { data: parsedData.data } }),
                     });
 
                     if (!response.ok) {
@@ -24,9 +24,11 @@ export default function QuoteRenderer() {
                     }
 
                     const data = await response.json();
-                    const tokenName = data["token-name"];
+                    const tokenName = data["token"];
 
-                    setIframeUrl(`/token/${tokenName}`);
+                    // setIframeUrl(`https://programmino-be.onrender.com/test-html?userinput=${encodeURIComponent(tokenName) || "Unable to fetch the token."}`);
+                    setIframeUrl(`https://programmino-be.onrender.com/token/${encodeURIComponent(tokenName)}`);
+
                 } catch (error) {
                     console.error("Error sending parsedData:", error);
                 }

@@ -13,9 +13,9 @@ const QuoteConfigurator = () => {
     const [activeOccupancy, setActiveOccupancy] = useState(undefined);
 
     useEffect(() => {
-        if (parsedData && Object.keys(parsedData).length > 0) {
-            const firstOccupancyKey = Object.keys(parsedData)[0];
-            const firstOccupancy = parsedData[firstOccupancyKey];
+        if (parsedData.data && Object.keys(parsedData.data).length > 0) {
+            const firstOccupancyKey = Object.keys(parsedData.data)[0];
+            const firstOccupancy = parsedData.data[firstOccupancyKey];
             setActiveOccupancy({ occupancyKey: firstOccupancy.occ_id, roomsData: firstOccupancy.rooms });
         }
     }, [parsedData]);
