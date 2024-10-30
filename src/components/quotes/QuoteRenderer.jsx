@@ -16,7 +16,7 @@ export default function QuoteRenderer() {
                     const response = await fetch('https://programmino-be.onrender.com/preview_template/', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ content: { data: parsedData.data } }),
+                        body: JSON.stringify({ content: { data: parsedData } }),
                     });
 
                     if (!response.ok) {
