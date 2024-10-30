@@ -1,50 +1,46 @@
 import Iframe from 'react-iframe';
 import { useRatePresenterContext } from './RatePresenterContext.jsx';
-import { useQuery } from "@tanstack/react-query";
+import {useEffect, useState} from "react";
 
 export default function QuoteRenderer() {
-    // If webpage has no background, without bg-white it'll look transparent.
+    // if webpage has no background, without bg-white it'll look transparent.
     const iframeStyle = 'w-10/12 h-full flex flex-col mx-auto mb-0 shadow-lg bg-white';
-
     const { parsedData } = useRatePresenterContext();
 
-    const { data: tokenData, isError, isFetching } = useQuery({
-        queryKey: ["postData", parsedData],
-        queryFn: async () => {
-            const url = `https://programmino-be.onrender.com/render-email/`;
+    const [iframeUrl, setIframeUrl] = useState('');
 
-            const response = await fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(parsedData),
-            });
+    useEffect(() => {
+        if (parsedData.data) {
+            const sendParsedData = async () => {
+                try {
+                    const response = await fetch('https://programmino-be.onrender.com/preview_template/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ content: { data: parsedData.data } }),
+                    });
 
-            if (response.ok) {
-                console.log(JSON.stringify(response));
-            }
+                    if (!response.ok) {
+                        throw new Error('Failed to send parsedData');
+                    }
 
-            if (!response.ok) {
-                throw new Error("Unable to post data due to network issues.");
-            }
+                    const data = await response.json();
+                    const tokenName = data["token"];
 
-            return await response.json();
-        },
-        enabled: !!parsedData, // Only run if parsedData is available
-    });
+                    // setIframeUrl(`https://programmino-be.onrender.com/test-html?userinput=${encodeURIComponent(tokenName) || "Unable to fetch the token."}`);
+                    setIframeUrl(`https://programmino-be.onrender.com/token/${encodeURIComponent(tokenName)}`);
 
-    if (isFetching) {
-        return <div>Loading...</div>;
-    }
+                } catch (error) {
+                    console.error("Error sending parsedData:", error);
+                }
+            };
 
-    if (isError) {
-        return <div>Error loading data...</div>;
-    }
+            sendParsedData();
+        }
+    }, [parsedData]);
 
     return (
         <Iframe
-            url={tokenData?.content_url|| ''}
+            url={iframeUrl}
             id="renderer-iframe"
             className={iframeStyle}
             overflow="auto"

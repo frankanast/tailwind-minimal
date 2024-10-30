@@ -7,7 +7,7 @@ import {evaluate} from 'mathjs';
 export const RatePresenterContext = createContext(undefined);
 
 export function RatePresenterProvider({ children }) {
-    const { loadedData } = useQuoteContext();
+    const { loadedData, checkInDate, checkOutDate, totalPeople, occupancy, los } = useQuoteContext();
     const [parsedData, setParsedData] = useState({});
     const [selectedItems, setSelectedItems] = useState([]);
 
@@ -21,7 +21,18 @@ export function RatePresenterProvider({ children }) {
     useEffect(() => {
         if (loadedData) {
             const parsed = groupRatesForPresentation(cleanUpResponse(loadedData.data), loadedData.metadata);
-            setParsedData(parsed);
+            // setParsedData(parsed); // TODO: Include headers and update all the consumers
+            setParsedData({
+                "created": Date.now(),
+                "user_id": "unknown",  // TODO: Load user ID here when implemented
+                "check-in": checkInDate,
+                "check-out": checkOutDate,
+                "los": los,
+                "occupancy_detail": occupancy,
+                "total_guests": totalPeople,
+                "blastness_url": "...",  // TODO : include Blastness URL from backend...
+                "data": parsed,
+            })
 
             allTabs.current = parsed.map((i) => i.occ_id);
 
@@ -30,11 +41,11 @@ export function RatePresenterProvider({ children }) {
                 setSelectedTabId(parsed[0].occ_id);
             }
         }
-    }, [loadedData]);
+    }, [loadedData, checkInDate, checkOutDate, los, occupancy, totalPeople]);
 
     useEffect(() => {
         if (selectedTabId) {
-            const currentOccupancy = parsedData.find((occ) => occ.occ_id === selectedTabId);
+            const currentOccupancy = parsedData.data.find((occ) => occ.occ_id === selectedTabId);
             if (currentOccupancy) {
                 const items = currentOccupancy.rooms.map((room) => room.entity_id);
                 setAllItemsInCurrentOccupancy(items);
@@ -93,7 +104,7 @@ export function RatePresenterProvider({ children }) {
     // SECTION 1b: Selection across occupancies ('everything')
     function selectEverything() {
         setSelectedItems(
-            parsedData.map(occ => occ.rooms.map(room => room.entity_id)).flat()
+            parsedData.data.map(occ => occ.rooms.map(room => room.entity_id)).flat()
         )
     }
 
@@ -102,7 +113,7 @@ export function RatePresenterProvider({ children }) {
     }
 
     function selectInverseEverything() {
-        const allItems = parsedData.map(occ => occ.rooms.map(room => room.entity_id)).flat()
+        const allItems = parsedData.data.map(occ => occ.rooms.map(room => room.entity_id)).flat()
 
         const itemsToSelect = allItems.filter(
             (item) => !selectedItems.includes(item)
@@ -122,7 +133,7 @@ export function RatePresenterProvider({ children }) {
 
     //SECTION 2: Formulas
     function applyFormula() {
-        parsedData.forEach(occupancy => {
+        parsedData.data.forEach(occupancy => {
             occupancy.rooms.forEach(room => {
                 if (selectedItems.includes(room.entity_id)) {
                     room.rates.forEach(rate => {

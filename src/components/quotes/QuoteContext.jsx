@@ -1,8 +1,9 @@
-import {createContext, useContext, useEffect, useRef, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import { nanoid } from "nanoid";
 import { useQuery } from "@tanstack/react-query";
 import formatOccupancyWithAges from "../../utils/formatOccupancyWithAges.js";
 import formatDateForBackend from "../../utils/formatDateForBackend.js";
+import daysBetweenDates from "../../utils/daysBetweenDates.js";
 
 const BACKEND_ROOT = "https://programmino-be.onrender.com";
 
@@ -15,6 +16,21 @@ export function QuoteProvider({ children }) {
     const [occupancy, setOccupancy] = useState([
         { key: nanoid(), adults: 2, children: 0 },
     ]);
+
+    const [totalPeople, setTotalPeople] = useState(2);
+    useEffect(() => {
+        const total = occupancy.reduce(
+            (acc, curr) => acc + Number(curr.adults) + Number(curr.children),
+            0
+        );
+        setTotalPeople(total);
+    }, [occupancy]);
+
+    const [los, setLos] = useState([0]);
+    useEffect(() => {
+        setLos(daysBetweenDates(checkOutDate, checkInDate))
+
+    }, [checkOutDate, checkInDate]);
 
     const { data: loadedData, isError, isFetching } = useQuery({
         queryKey: ["avail", { checkInDate, checkOutDate, occupancy }],
@@ -38,8 +54,10 @@ export function QuoteProvider({ children }) {
             setCheckInDate,
             checkOutDate,
             setCheckOutDate,
+            los,
             occupancy,
             setOccupancy,
+            totalPeople,
             loadedData,
             isFetching,
             isError,

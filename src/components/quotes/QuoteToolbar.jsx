@@ -14,11 +14,12 @@ import LoadingIcon from "../../assets/LoadingIcon.jsx";
 
 export default function QuoteToolbar({toggleHandler, drawerItem}) {
     const {
-        occupancy,
         checkInDate,
         setCheckInDate,
         checkOutDate,
         setCheckOutDate,
+        occupancy,
+        totalPeople,
         loadedData,
         isFetching,
         isError,
@@ -53,10 +54,6 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
             setCheckOutInput(formatShortDate(completedDate));
         }
     };
-
-    const totalPeople = occupancy.reduce(
-        (acc, curr) => acc + Number(curr.adults) + Number(curr.children), 0
-    );
 
     const handleLoad = () => {
         if (isFetching) {

@@ -24,7 +24,7 @@ export default function OccupancyTabs() {
                     onChange={(e) => handleTabClick(e.target.value)}
                     className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
                 >
-                    {parsedData.map((occupancy) => (
+                    {parsedData.data.map((occupancy) => (
                         <option key={occupancy.occ_id} value={occupancy.occ_id}>
                             {occupancyLiteral(occupancy.adults, occupancy.children)}
                         </option>
@@ -33,7 +33,7 @@ export default function OccupancyTabs() {
             </div>
             <div className="hidden sm:block">
                 <nav aria-label="Tabs" className="flex space-x-4">
-                    {parsedData.map((tab) => (
+                    {parsedData.data.map((tab) => (
                         <button
                             key={tab.occ_id}
                             onClick={() => handleTabClick(tab.occ_id)}
@@ -62,7 +62,7 @@ export default function OccupancyTabs() {
                     {/*<pre>{JSON.stringify(parsedData.find(obj => obj.occ_id === selectedTabId), null, 2)}</pre>*/}
                     {selectedTabId && (
                         <StandardCardViewList
-                            rooms={parsedData.find(obj => obj.occ_id === selectedTabId)?.rooms || []}
+                            rooms={parsedData.data.find(obj => obj.occ_id === selectedTabId)?.rooms || []}
                         />
                     )}
                 </div>
