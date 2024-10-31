@@ -6,22 +6,23 @@ import classNames from "../../utils/classNames.js";
 import formatToEuro from "../../utils/formatToEuro.js";
 import {EllipsisVerticalIcon, TagIcon, EyeSlashIcon} from "@heroicons/react/24/outline/index.js";
 
-const Card = ({ children, selected }) => {
+const Card = ({ children, selected, edited }) => {
     const baseClasses = "overflow-hidden rounded-md bg-white px-6 py-4 shadow";
     const selectedClasses = selected ? "ring-2 ring-inset ring-yellow-400 bg-yellow-50" : "";
-    const className = `${baseClasses} ${selectedClasses}`;
+    const editedClasses = selected ? "text-lavender-700 bg-lavender-50" : "";
+    const className = `${baseClasses} ${selectedClasses} ${editedClasses}`;
     return <div className={className}>{children}</div>;
 };
 
-const SelectableCard = ({ selected, onClick, children }) => {
+const SelectableCard = ({ selected, edited, onClick, children }) => {
     return (
-        <Card selected={selected}>
+        <Card selected={selected} edited={edited}>
             <div
                 onClick={onClick}
                 className="cursor-pointer flex justify-between items-center"
             >
                 {children}
-                <span className={classNames('size-5', selected ? 'text-yellow-600' : 'text-gray-400')}>
+                <span className={classNames('size-5', selected ? 'text-yellow-600' : 'text-gray-400', edited ? 'text-lavender-800' : 'text-gray-400')}>
                     <EllipsisVerticalIcon />
                 </span>
 
@@ -31,8 +32,9 @@ const SelectableCard = ({ selected, onClick, children }) => {
 };
 
 const RoomCard = ({ room }) => {
-    const {selectedItems, setSelectedItems} = useRatePresenterContext();
+    const {selectedItems, setSelectedItems, editedEntities } = useRatePresenterContext();
     const isSelected = selectedItems.includes(room.entity_id);
+    const isEdited = editedEntities.includes(room.entity_id);
 
     const handleSelect = () => {
         const newSelection = isSelected
@@ -42,7 +44,7 @@ const RoomCard = ({ room }) => {
     };
 
     return (
-        <SelectableCard onClick={handleSelect} selected={isSelected}>
+        <SelectableCard onClick={handleSelect} selected={isSelected} edited={isEdited}>
             <div>
                 <h1 className="text-lg text-gray-700 font-semibold">{room.data.name.en}</h1>
                 <div className="text-sm text-gray-500 space-y-2">

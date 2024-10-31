@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 export default function QuoteRenderer() {
     // if webpage has no background, without bg-white it'll look transparent.
     const iframeStyle = 'h-full w-2/3 flex flex-col mx-auto mb-0 shadow-lg bg-white';
-    const { parsedData } = useRatePresenterContext();
+    const { parsedData, editedEntities } = useRatePresenterContext();
 
     const [iframeUrl, setIframeUrl] = useState('');
 
@@ -33,10 +33,9 @@ export default function QuoteRenderer() {
                     console.error("Error sending parsedData:", error);
                 }
             };
-
-            sendParsedData();
+            sendParsedData()
         }
-    }, [parsedData]);
+    }, [parsedData, editedEntities]);
 
     return (
         <Iframe

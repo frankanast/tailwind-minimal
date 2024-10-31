@@ -1,8 +1,8 @@
-import {createContext, useContext, useEffect, useRef, useState} from "react";
-import {useQuoteContext} from "./QuoteContext.jsx";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { useQuoteContext } from "./QuoteContext.jsx";
 import groupRatesForPresentation from "../../utils/groupRatesForPresentation.js";
 import cleanUpResponse from "../../utils/cleanUpResponse.js";
-import {evaluate} from 'mathjs';
+import { evaluate } from 'mathjs';
 
 export const RatePresenterContext = createContext(undefined);
 
@@ -10,35 +10,38 @@ export function RatePresenterProvider({ children }) {
     const { loadedData, checkInDate, checkOutDate, totalPeople, occupancy, los } = useQuoteContext();
     const [parsedData, setParsedData] = useState({});
     const [selectedItems, setSelectedItems] = useState([]);
+    const [editedEntities, setEditedEntities] = useState([]);
 
     const allTabs = useRef([]);
     const [selectedTabId, setSelectedTabId] = useState(null);
     const [allItemsInCurrentOccupancy, setAllItemsInCurrentOccupancy] = useState([]);
 
-    const [formulaDialogIsOpen, setFormulaDialogIsOpen] = useState(false)
-    const [formulaInput, setFormulaInput] = useState('')
+    const [formulaDialogIsOpen, setFormulaDialogIsOpen] = useState(false);
+    const [formulaInput, setFormulaInput] = useState('');
+
+    function createParsedData(loadedData) {
+        const parsed = groupRatesForPresentation(cleanUpResponse(loadedData.data), loadedData.metadata);
+        return {
+            "created": Date.now(),
+            "user_id": "unknown",
+            "check-in": checkInDate,
+            "check-out": checkOutDate,
+            "los": los,
+            "occupancy_detail": occupancy,
+            "total_guests": totalPeople,
+            "blastness_url": "...",
+            "data": parsed,
+        };
+    }
 
     useEffect(() => {
         if (loadedData) {
-            const parsed = groupRatesForPresentation(cleanUpResponse(loadedData.data), loadedData.metadata);
-            // setParsedData(parsed); // TODO: Include headers and update all the consumers
-            setParsedData({
-                "created": Date.now(),
-                "user_id": "unknown",  // TODO: Load user ID here when implemented
-                "check-in": checkInDate,
-                "check-out": checkOutDate,
-                "los": los,
-                "occupancy_detail": occupancy,
-                "total_guests": totalPeople,
-                "blastness_url": "...",  // TODO : include Blastness URL from backend...
-                "data": parsed,
-            })
+            const newParsedData = createParsedData(loadedData);
+            setParsedData(newParsedData);
+            allTabs.current = newParsedData.data.map((i) => i.occ_id);
 
-            allTabs.current = parsed.map((i) => i.occ_id);
-
-            // First occupancy is selected automatically
-            if (parsed && parsed.length > 0) {
-                setSelectedTabId(parsed[0].occ_id);
+            if (newParsedData.data && newParsedData.data.length > 0) {
+                setSelectedTabId(newParsedData.data[0].occ_id);
             }
         }
     }, [loadedData, checkInDate, checkOutDate, los, occupancy, totalPeople]);
@@ -53,86 +56,60 @@ export function RatePresenterProvider({ children }) {
         }
     }, [selectedTabId, parsedData]);
 
-    // If the user enters an empty formula et similia, mathjs considers it as a "set to 0/null".
-    // Although this is technically correct, and makes sense to a programmer's mindset, it is misleading for the user
-    // and also very risky since we are dealing with money here. For this reason, when user inputs nothing,
-    // we will just multiply by 1 (therefore, no variation)
     function safelyEvaluate(expression, scope, fallbackValue) {
         if (!expression || expression.trim() === '') {
-            return evaluate(`rateAmount * 1`, scope || {rateAmount: fallbackValue});
+            return evaluate(`rateAmount * 1`, scope || { rateAmount: fallbackValue });
         }
 
         try {
-            return evaluate(expression, scope || {rateAmount: fallbackValue});
+            return evaluate(expression, scope || { rateAmount: fallbackValue });
         } catch (error) {
             console.error("Error evaluating expression:", error);
-            return 0
+            return fallbackValue;
         }
     }
 
-    // SECTION 1a: Selection actions within current occupancy
-    function selectAll() {
-        setSelectedItems((prevSelectedItems) => [
-            ...prevSelectedItems.filter((item) => !allItemsInCurrentOccupancy.includes(item)),
-            ...allItemsInCurrentOccupancy
-        ]);
-    }
+    function updateSelection(action) {
+        setSelectedItems((prevSelectedItems) => {
+            const allItems = parsedData.data.map(occ => occ.rooms.map(room => room.entity_id)).flat();
+            const currentOccupancyItems = allItemsInCurrentOccupancy;
+            let itemsToSelect = [], itemsToDeselect = [];
 
-    function clearSelection() {
-        setSelectedItems((prevSelectedItems) =>
-            prevSelectedItems.filter((item) => !allItemsInCurrentOccupancy.includes(item))
-        );
-    }
+            switch (action) {
+                case 'all':
+                    return [...prevSelectedItems.filter((item) => !currentOccupancyItems.includes(item)), ...currentOccupancyItems];
 
-    function selectInverse() {
-        const itemsToSelect = allItemsInCurrentOccupancy.filter(
-            (item) => !selectedItems.includes(item)
-        );
+                case 'none':
+                    return prevSelectedItems.filter((item) => !currentOccupancyItems.includes(item));
 
-        const itemsToDeselect = selectedItems.filter(
-            (item) => allItemsInCurrentOccupancy.includes(item)
-        );
+                case 'inverse':
+                    itemsToSelect = currentOccupancyItems.filter((item) => !selectedItems.includes(item));
+                    itemsToDeselect = selectedItems.filter((item) => currentOccupancyItems.includes(item));
+                    break;
 
-        setSelectedItems((prevSelectedItems) =>
-            [
+                case 'everything':
+                    return allItems;
+
+                case 'nothing':
+                    return [];
+
+                case 'inverseEverything':
+                    itemsToSelect = allItems.filter((item) => !selectedItems.includes(item));
+                    itemsToDeselect = selectedItems.filter((item) => allItems.includes(item));
+                    break;
+
+                default:
+                    return prevSelectedItems;
+            }
+
+            return [
                 ...prevSelectedItems.filter((item) => !itemsToDeselect.includes(item)),
                 ...itemsToSelect,
-            ]
-        );
+            ];
+        });
     }
 
-    // SECTION 1b: Selection across occupancies ('everything')
-    function selectEverything() {
-        setSelectedItems(
-            parsedData.data.map(occ => occ.rooms.map(room => room.entity_id)).flat()
-        )
-    }
-
-    function selectNothing() {
-        setSelectedItems([])
-    }
-
-    function selectInverseEverything() {
-        const allItems = parsedData.data.map(occ => occ.rooms.map(room => room.entity_id)).flat()
-
-        const itemsToSelect = allItems.filter(
-            (item) => !selectedItems.includes(item)
-        );
-
-        const itemsToDeselect = selectedItems.filter(
-            (item) => allItems.includes(item)
-        );
-
-        setSelectedItems((prevSelectedItems) =>
-            [
-                ...prevSelectedItems.filter((item) => !itemsToDeselect.includes(item)),
-                ...itemsToSelect,
-            ]
-        );
-    }
-
-    //SECTION 2: Formulas
-    function applyFormula() {
+    function applyRateVariation(formula, additionalScope = {}) {
         parsedData.data.forEach(occupancy => {
             occupancy.rooms.forEach(room => {
                 if (selectedItems.includes(room.entity_id)) {
@@ -142,42 +119,66 @@ export function RatePresenterProvider({ children }) {
                             adultsCount: occupancy.adults,
                             childrenCount: occupancy.children,
                             guestCount: occupancy.adults + occupancy.children,
-                        }
+                            los: los,
+                            ...additionalScope,
+                        };
 
                         try {
-                            //TODO: We should notify the UI about any modifications made, this included, and reflect that visually.
-                            rate.amount = safelyEvaluate(formulaInput, scope, rate.amount);
-
+                            rate.amount = safelyEvaluate(formula, scope, rate.amount);
                         } catch (error) {
                             console.error("Error evaluating expression:", error);
-
                         }
-
                     });
+                    setEditedEntities((prevEdits) => [...prevEdits, room.entity_id]);
                 }
             });
         });
     }
 
+    function restore() {
+        const newParsedData = createParsedData(loadedData);
+        setParsedData(newParsedData);
+        allTabs.current = newParsedData.data.map((i) => i.occ_id);
+    }
+
+    function deleteSelectedEntities() {
+        const updatedData = parsedData.data.map(occupancy => {
+            const updatedRooms = occupancy.rooms.filter(room => !selectedItems.includes(room.entity_id));
+            return {
+                ...occupancy,
+                rooms: updatedRooms
+            };
+        });
+
+        setParsedData({
+            ...parsedData,
+            data: updatedData,
+        });
+
+        // Clear selection after deletion
+        setSelectedItems([]);
+    }
+
+
     return (
         <RatePresenterContext.Provider value={{
             parsedData,
+            editedEntities,
             selectedItems,
             setSelectedItems,
             selectedTabId,
             setSelectedTabId,
             allItemsInCurrentOccupancy,
-            selectAll,
-            clearSelection,
-            selectInverse,
-            selectEverything,
-            selectNothing,
-            selectInverseEverything,
+            updateSelection,
             formulaDialogIsOpen,
             setFormulaDialogIsOpen,
             formulaInput,
             setFormulaInput,
-            applyFormula,
+            applyFormula: () => applyRateVariation(formulaInput),
+            applyNetRateWorld: () => applyRateVariation("(rateAmount / 1.1) - 10%"),
+            applyNetRateItaly: () => applyRateVariation("((rateAmount / 1.1) - 10%) - 22%"),
+            deleteSelectedEntities,
+            restore,
         }}>
             {children}
         </RatePresenterContext.Provider>

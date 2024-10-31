@@ -26,17 +26,16 @@ import SelectEverythingIcon from "../../assets/SelectEverythingIcon.jsx";
 
 export default function ConfiguratorToolbar() {
     const {
-        selectAll,
-        clearSelection,
-        selectInverse,
-        selectEverything,
-        selectNothing,
-        selectInverseEverything,
+        updateSelection,
         formulaDialogIsOpen,
         setFormulaDialogIsOpen,
         applyFormula,
         formulaInput,
         setFormulaInput,
+        applyNetRateItaly,
+        applyNetRateWorld,
+        restore,
+        deleteSelectedEntities,
     } = useRatePresenterContext();
 
     const handleOpenFormulaDialog = () => {
@@ -52,6 +51,22 @@ export default function ConfiguratorToolbar() {
         setFormulaInput(event.target.value);
     };
 
+    const handleRestore = () => {
+        restore()
+    }
+
+    const handleNetRateItaly = () => {
+        applyNetRateItaly()
+    }
+
+    const handleNetRateWorld = () => {
+        applyNetRateWorld()
+    }
+
+    const handleDelete = () => {
+        deleteSelectedEntities()
+    }
+
     const modes = [
         { name: 'Standard', href: '#', current: false },
         { name: 'Tailored', href: '#', current: false },
@@ -64,15 +79,15 @@ export default function ConfiguratorToolbar() {
             items: [
                 [
                     { name: 'Formula...', href: '#', icon: <FxIcon />, handler: handleOpenFormulaDialog },
-                    { name: 'Net rate (world)', href: '#', icon: <DocumentCurrencyDollarIcon />, handler: handleOpenFormulaDialog },
-                    { name: 'Net rate (Italia)', href: '#', icon: <DocumentCurrencyEuroIcon />, handler: handleOpenFormulaDialog },
+                    { name: 'Net rate (world)', href: '#', icon: <DocumentCurrencyDollarIcon />, handler: handleNetRateWorld },
+                    { name: 'Net rate (Italia)', href: '#', icon: <DocumentCurrencyEuroIcon />, handler: handleNetRateItaly },
                 ],
                 [
-                    { name: 'Delete', href: '#', icon: <BackspaceIcon />, handler: () => {alert("Delete")} },
+                    { name: 'Delete', href: '#', icon: <BackspaceIcon />, handler: handleDelete },
                     { name: 'Format...', href: '#', icon: <SparklesIcon />, handler: () => {alert("Format")} },
                 ],
                 [
-                    { name: 'Restore', href: '#', icon: <ArrowUturnLeftIcon />, handler: () => {alert("Restore")} },
+                    { name: 'Restore', href: '#', icon: <ArrowUturnLeftIcon />, handler: handleRestore },
                 ]
             ]
         },
@@ -81,14 +96,14 @@ export default function ConfiguratorToolbar() {
             icon: <CursorArrowRaysIcon />,
             items: [
                 [
-                    { name: 'Select all', href: '#', icon: <SelectAllIcon />, handler: selectAll },
-                    { name: 'Clear selection', href: '#', icon: <Square2StackIcon />, handler: clearSelection },
-                    { name: 'Invert selection', href: '#', icon: <InvertSelectionIcon />, handler: selectInverse },
+                    { name: 'Select all', href: '#', icon: <SelectAllIcon />, handler: () => {updateSelection('all')} },
+                    { name: 'Clear selection', href: '#', icon: <Square2StackIcon />, handler: () => {updateSelection('none')} },
+                    { name: 'Invert selection', href: '#', icon: <InvertSelectionIcon />, handler: () => {updateSelection('inverse')} },
                 ],
                 [
-                    { name: 'Select everything', href: '#', icon: <SelectEverythingIcon />, handler: selectEverything },
-                    { name: 'Select nothing', href: '#', icon: <SelectNothingIcon />, handler: selectNothing },
-                    { name: 'Invert everything', href: '#', icon: <InvertEverythingIcon />, handler: selectInverseEverything },
+                    { name: 'Select everything', href: '#', icon: <SelectEverythingIcon />, handler: () => {updateSelection('everything')} },
+                    { name: 'Select nothing', href: '#', icon: <SelectNothingIcon />, handler: () => {updateSelection('nothing')} },
+                    { name: 'Invert everything', href: '#', icon: <InvertEverythingIcon />, handler: () => {updateSelection('inverseEverything')} },
                 ]
             ]
         }
