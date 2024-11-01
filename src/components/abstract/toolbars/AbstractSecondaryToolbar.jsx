@@ -1,11 +1,7 @@
-import PropTypes from "prop-types";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import classNames from "../../../utils/classNames.js";
 import isEmpty from "../../../utils/isEmpty.js";
 import { nanoid } from "nanoid";
-import {ArrowDownIcon} from "@heroicons/react/16/solid/index.js";
 
-// Abstracted Dropdown Component
 function AbstractDropdown({ title, icon, items }) {
     const NoActionsIndicator = () => (
         <MenuItem>
@@ -16,10 +12,10 @@ function AbstractDropdown({ title, icon, items }) {
     );
 
     return (
-        <Menu as="div" className="relative inline-block text-left justify-center">
+        <Menu as="div" className="relative inline-block text-left justify-center px-3">
             <div>
-                <MenuButton className="w-full justify-center align-middle gap-x-1.5">
-                    <div className="flex h-7 w-auto p-1 px-3 my-1 items-center border-none rounded-full font-semibold text-gray-600 ring-1 ring-inset ring-gray-300 hover:text-indigo-600 hover:bg-indigo-200 gap-1">
+                <MenuButton className="w-full justify-center align-middle">
+                    <div className="flex items-center h-9 font-semibold text-gray-500 hover:text-indigo-700 hover:bg-indigo-200 gap-1">
                         <span className="size-4">{icon}</span>
                         <span className="text-sm">{title}</span>
                     </div>
@@ -52,7 +48,7 @@ function AbstractDropdown({ title, icon, items }) {
                                     </a>
                                 </MenuItem>
                             ))}
-                            {index < items.length - 1 && <div className="border-t border-gray-200 my-1"></div>}
+                            {index < items.length - 1 && <div></div>}
                         </div>
                     ))
                 )}
@@ -61,113 +57,20 @@ function AbstractDropdown({ title, icon, items }) {
     );
 }
 
-AbstractDropdown.propTypes = {
-    title: PropTypes.string.isRequired,
-    icon: PropTypes.element,
-    items: PropTypes.arrayOf(
-        PropTypes.oneOfType([
-            PropTypes.shape({
-                name: PropTypes.string.isRequired,
-                href: PropTypes.string,
-                icon: PropTypes.element,
-                handler: PropTypes.func,
-            }),
-            PropTypes.arrayOf(
-                PropTypes.shape({
-                    name: PropTypes.string.isRequired,
-                    href: PropTypes.string,
-                    icon: PropTypes.element,
-                    handler: PropTypes.func,
-                })
-            ),
-        ])
-    ).isRequired,
-};
 
-// Main toolbar component
-export default function AbstractSecondaryToolbar({ modes, actions }) {
+export default function AbstractSecondaryToolbar({ actions }) {
     return (
         <div>
-            {/* Mobile-dedicated layout. */}
-            <div className="sm:hidden">
-                <select
-                    id="tabs"
-                    name="tabs"
-                    defaultValue={modes.find((tab) => tab.current)?.name || ""}
-                    className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-                >
-                    {/*Rendering modes: standard, tailored */}
-                    {modes.map((item) => (
-                        <option key={item.name}>{item.name?.toUpperCase()}</option>
-                    ))}
-                </select>
-                {actions && actions.map((action) => (
-                    <AbstractDropdown key={nanoid()} title={action.title} icon={action.icon} items={action.items} />
-                ))}
-            </div>
-
-            {/* Desktop-dedicated layout. */}
-            <div className="hidden bg-indigo-100 sm:block ">
-                <nav className="flex space-x-4">
-                    {/*Rendering modes: standard, tailored */}
-                    {modes.map((item) => (
-                        <a
-                            key={item.name}
-                            href={item.href}
-                            className={classNames(
-                                item.current
-                                    ? "bg-gray-200 text-gray-800"
-                                    : "text-gray-600 hover:text-indigo-600",
-                                "rounded-md px-[20px] py-2 text-sm font-medium"
-                            )}
-                        >
-                            {item.name}
-                        </a>
-                    ))}
-
-                    {/*spacer div*/}
-                    <div className="flex-grow" />
-
-                    {/*Rendering dropdown buttons w/ actions*/}
+            <div className="bg-indigo-100 block">
+                <nav className="flex">
                     {actions && actions.map((action) => (
                         <AbstractDropdown key={nanoid()} title={action.title} icon={action.icon} items={action.items} />
                     ))}
+                    {/*spacer div*/}
+                    {/*<div className="flex-grow" />*/}
+
                 </nav>
             </div>
         </div>
     );
 }
-
-AbstractSecondaryToolbar.propTypes = {
-    modes: PropTypes.arrayOf(
-        PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            href: PropTypes.string,
-            current: PropTypes.bool,
-        })
-    ).isRequired,
-    actions: PropTypes.arrayOf(
-        PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            icon: PropTypes.element,
-            items: PropTypes.arrayOf(
-                PropTypes.oneOfType([
-                    PropTypes.shape({
-                        name: PropTypes.string.isRequired,
-                        href: PropTypes.string,
-                        icon: PropTypes.element,
-                        handler: PropTypes.func,
-                    }),
-                    PropTypes.arrayOf(
-                        PropTypes.shape({
-                            name: PropTypes.string.isRequired,
-                            href: PropTypes.string,
-                            icon: PropTypes.element,
-                            handler: PropTypes.func,
-                        })
-                    ),
-                ])
-            ).isRequired,
-        })
-    ).isRequired,
-};

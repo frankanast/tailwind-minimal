@@ -3,10 +3,7 @@ import { useRatePresenterContext } from './RatePresenterContext.jsx';
 import {useEffect, useState} from "react";
 
 export default function QuoteRenderer() {
-    // if webpage has no background, without bg-white it'll look transparent.
-    const iframeStyle = 'h-full w-2/3 flex flex-col mx-auto mb-0 shadow-lg bg-white';
     const { parsedData, editedEntities } = useRatePresenterContext();
-
     const [iframeUrl, setIframeUrl] = useState('');
 
     useEffect(() => {
@@ -41,7 +38,9 @@ export default function QuoteRenderer() {
         <Iframe
             url={iframeUrl}
             id="renderer-iframe"
-            className={iframeStyle}
+            // if webpage has no background, without bg-white it'll look weirdly transparent. Padding simulates a page's margins.
+            // margin top set on parent component (padding top), to avoid weird overflow.
+            className='h-full w-9/12 flex flex-col mx-auto mb-0 px-10 pt-10 shadow-lg bg-white'
             overflow="auto"
             display="block"
             position="relative"

@@ -27,7 +27,7 @@ export default function QuotePage({ toggleHandler }) {
                                     </Panel>
                                     <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />
                                     <Panel minSize={10}>
-                                        <div className="preview-background h-full pt-28 overflow-auto">
+                                        <div className="preview-background h-full pt-20 overflow-auto">
                                             <QuoteRenderer />
                                         </div>
                                     </Panel>

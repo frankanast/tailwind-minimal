@@ -10,7 +10,7 @@ import {
     XMarkIcon,
     SparklesIcon,
     DocumentCurrencyEuroIcon,
-    DocumentCurrencyDollarIcon, ArrowUturnLeftIcon, BackspaceIcon
+    DocumentCurrencyDollarIcon, ArrowUturnLeftIcon, BackspaceIcon, ScissorsIcon, QueueListIcon, DocumentIcon
 } from '@heroicons/react/20/solid'
 
 import {Square2StackIcon} from "@heroicons/react/24/outline";
@@ -67,12 +67,17 @@ export default function ConfiguratorToolbar() {
         deleteSelectedEntities()
     }
 
-    const modes = [
-        { name: 'Standard', href: '#', current: false },
-        { name: 'Tailored', href: '#', current: false },
-    ]
-
     const toolbarItems = [
+        {
+            title: 'Modes',
+            icon: <DocumentIcon />,
+            items: [
+                [
+                    { name: 'Standard', href: '#', icon: <QueueListIcon />, handler: () => {alert("Standard")} },
+                    { name: 'Tailored', href: '#', icon: <ScissorsIcon />, handler: () => {alert("Tailored")} },
+                ],
+            ]
+        },
         {
             title: 'Actions',
             icon: <BoltIcon />,
@@ -111,7 +116,7 @@ export default function ConfiguratorToolbar() {
 
     return (
         <>
-            <AbstractSecondaryToolbar modes={modes} actions={toolbarItems}/>
+            <AbstractSecondaryToolbar actions={toolbarItems}/>
 
             <Transition.Root show={formulaDialogIsOpen} as={Fragment}>
                 <Dialog as="div" className="relative z-10" onClose={handleFormulaSubmit}>
