@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import isEmpty from "../../../utils/isEmpty.js";
 import { nanoid } from "nanoid";
+import {Fragment, useState} from "react";
 
 function AbstractDropdown({ title, icon, items }) {
     const NoActionsIndicator = () => (
@@ -10,6 +11,7 @@ function AbstractDropdown({ title, icon, items }) {
               </div>
         </MenuItem>
     );
+
 
     return (
         <Menu as="div" className="relative inline-block text-left justify-center px-3">
@@ -23,7 +25,7 @@ function AbstractDropdown({ title, icon, items }) {
             </div>
 
             <MenuItems
-                className="absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                className="absolute z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
             >
                 {isEmpty(items) ? (
                     <div className="py-1">
@@ -39,16 +41,30 @@ function AbstractDropdown({ title, icon, items }) {
                                         className="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
                                         onClick={item.handler}
                                     >
-                                        {item.icon && (
+                                        {/*{item.icon && (*/}
+                                        {/*    <span className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500">*/}
+                                        {/*        {item.icon}*/}
+                                        {/*    </span>*/}
+                                        {/*)}*/}
+                                        {/*{item.name}*/}
+                                        <div className="flex gap-1">
                                             <span className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500">
-                                                {item.icon}
+                                                {item.icon || <Fragment />}
                                             </span>
-                                        )}
-                                        {item.name}
+                                            <div className="flex-grow">
+                                                {item.name}
+                                            </div>
+                                            <span>
+                                                {item.shortcutLabel
+                                                    ? <span className="invisible hover:visible text-black">Esc</span>
+                                                    : <Fragment />
+                                                }
+                                            </span>
+
+                                        </div>
                                     </a>
                                 </MenuItem>
                             ))}
-                            {index < items.length - 1 && <div></div>}
                         </div>
                     ))
                 )}
@@ -56,7 +72,6 @@ function AbstractDropdown({ title, icon, items }) {
         </Menu>
     );
 }
-
 
 export default function AbstractSecondaryToolbar({ actions }) {
     return (
@@ -66,9 +81,6 @@ export default function AbstractSecondaryToolbar({ actions }) {
                     {actions && actions.map((action) => (
                         <AbstractDropdown key={nanoid()} title={action.title} icon={action.icon} items={action.items} />
                     ))}
-                    {/*spacer div*/}
-                    {/*<div className="flex-grow" />*/}
-
                 </nav>
             </div>
         </div>

@@ -9,7 +9,7 @@ import {EllipsisVerticalIcon, TagIcon, EyeSlashIcon} from "@heroicons/react/24/o
 const Card = ({ children, selected, edited }) => {
     const baseClasses = "overflow-hidden rounded-md bg-white px-6 py-4 shadow";
     const selectedClasses = selected ? "ring-2 ring-inset ring-yellow-400 bg-yellow-50" : "";
-    const editedClasses = selected ? "text-lavender-700 bg-lavender-50" : "";
+    const editedClasses = "text-lavender-600";
     const className = `${baseClasses} ${selectedClasses} ${editedClasses}`;
     return <div className={className}>{children}</div>;
 };

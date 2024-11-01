@@ -163,9 +163,10 @@ export function RatePresenterProvider({ children }) {
     return (
         <RatePresenterContext.Provider value={{
             parsedData,
-            editedEntities,
             selectedItems,
             setSelectedItems,
+            editedEntities,
+            setEditedEntities,
             selectedTabId,
             setSelectedTabId,
             allItemsInCurrentOccupancy,

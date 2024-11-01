@@ -73,8 +73,8 @@ export default function ConfiguratorToolbar() {
             icon: <DocumentIcon />,
             items: [
                 [
-                    { name: 'Standard', href: '#', icon: <QueueListIcon />, handler: () => {alert("Standard")} },
-                    { name: 'Tailored', href: '#', icon: <ScissorsIcon />, handler: () => {alert("Tailored")} },
+                    { name: 'Standard', href: '#', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {alert("Standard")} },
+                    { name: 'Tailored', href: '#', icon: <ScissorsIcon />, shortcutLabel: "", handler: () => {alert("Tailored")} },
                 ],
             ]
         },
@@ -83,16 +83,16 @@ export default function ConfiguratorToolbar() {
             icon: <BoltIcon />,
             items: [
                 [
-                    { name: 'Formula...', href: '#', icon: <FxIcon />, handler: handleOpenFormulaDialog },
-                    { name: 'Net rate (world)', href: '#', icon: <DocumentCurrencyDollarIcon />, handler: handleNetRateWorld },
-                    { name: 'Net rate (Italia)', href: '#', icon: <DocumentCurrencyEuroIcon />, handler: handleNetRateItaly },
+                    { name: 'Formula...', href: '#', icon: <FxIcon />, shortcutLabel: "F", handler: handleOpenFormulaDialog },
+                    { name: 'Net rate (world)', href: '#', icon: <DocumentCurrencyDollarIcon />, shortcutLabel: "", handler: handleNetRateWorld },
+                    { name: 'Net rate (Italia)', href: '#', icon: <DocumentCurrencyEuroIcon />, shortcutLabel: "", handler: handleNetRateItaly },
                 ],
                 [
-                    { name: 'Delete', href: '#', icon: <BackspaceIcon />, handler: handleDelete },
-                    { name: 'Format...', href: '#', icon: <SparklesIcon />, handler: () => {alert("Format")} },
+                    { name: 'Delete', href: '#', icon: <BackspaceIcon />, shortcutLabel: "⌂", handler: handleDelete },
+                    { name: 'Format...', href: '#', icon: <SparklesIcon />, shortcutLabel: "", handler: () => {alert("Format")} },
                 ],
                 [
-                    { name: 'Restore', href: '#', icon: <ArrowUturnLeftIcon />, handler: handleRestore },
+                    { name: 'Restore', href: '#', icon: <ArrowUturnLeftIcon />, shortcutLabel: "", handler: handleRestore },
                 ]
             ]
         },
@@ -101,14 +101,14 @@ export default function ConfiguratorToolbar() {
             icon: <CursorArrowRaysIcon />,
             items: [
                 [
-                    { name: 'Select all', href: '#', icon: <SelectAllIcon />, handler: () => {updateSelection('all')} },
-                    { name: 'Clear selection', href: '#', icon: <Square2StackIcon />, handler: () => {updateSelection('none')} },
-                    { name: 'Invert selection', href: '#', icon: <InvertSelectionIcon />, handler: () => {updateSelection('inverse')} },
+                    { name: 'Select all', href: '#', icon: <SelectAllIcon />, shortcutLabel: "A", handler: () => {updateSelection('all')} },
+                    { name: 'Clear selection', href: '#', icon: <Square2StackIcon />, shortcutLabel: "Esc", handler: () => {updateSelection('none')} },
+                    { name: 'Invert selection', href: '#', icon: <InvertSelectionIcon />, shortcutLabel: "I", handler: () => {updateSelection('inverse')} },
                 ],
                 [
-                    { name: 'Select everything', href: '#', icon: <SelectEverythingIcon />, handler: () => {updateSelection('everything')} },
-                    { name: 'Select nothing', href: '#', icon: <SelectNothingIcon />, handler: () => {updateSelection('nothing')} },
-                    { name: 'Invert everything', href: '#', icon: <InvertEverythingIcon />, handler: () => {updateSelection('inverseEverything')} },
+                    { name: 'Select everything', href: '#', icon: <SelectEverythingIcon />, shortcutLabel: "⇧A", handler: () => {updateSelection('everything')} },
+                    { name: 'Select nothing', href: '#', icon: <SelectNothingIcon />, shortcutLabel: "⇧Esc", handler: () => {updateSelection('nothing')} },
+                    { name: 'Invert everything', href: '#', icon: <InvertEverythingIcon />, shortcutLabel: "⇧I", handler: () => {updateSelection('inverseEverything')} },
                 ]
             ]
         }
@@ -119,7 +119,7 @@ export default function ConfiguratorToolbar() {
             <AbstractSecondaryToolbar actions={toolbarItems}/>
 
             <Transition.Root show={formulaDialogIsOpen} as={Fragment}>
-                <Dialog as="div" className="relative z-10" onClose={handleFormulaSubmit}>
+                <Dialog as="div" className="relative z-50" onClose={handleFormulaSubmit}>
                     <Transition.Child
                         as={Fragment}
                         enter="ease-out duration-300"
@@ -156,28 +156,47 @@ export default function ConfiguratorToolbar() {
                                     </div>
                                     <div className="sm:flex sm:items-start">
                                         <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                            <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                                                Enter a formula
+                                            <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-600">
+                                                <FxIcon className="inline-flex size-7 text-gray-600"/>
+                                                Formula Editor
                                             </Dialog.Title>
-                                            <div className="mt-2">
-                                                <input
-                                                    type="text"
-                                                    className="w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-                                                    placeholder="ex: rateAmount - 10%"
-                                                    value={formulaInput}
-                                                    onChange={handleFormulaInputChange}
-                                                />
+                                            <div className="mt-2 min-w-0 flex-1">
+
+                                                <form action="#" className="relative">
+                                                    <label htmlFor="apply-on">Apply on</label>
+                                                    <input
+                                                        type="text"
+                                                        id="apply-on"
+                                                        className="w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                                                        placeholder="ex: rateAmount - 10%"
+                                                        value={formulaInput}
+                                                        onChange={handleFormulaInputChange}
+                                                    />
+
+                                                    <div className="h-7"/>
+
+                                                    <label htmlFor="formula-edit">Formula</label>
+                                                    <input
+                                                        type="text"
+                                                        id="formula-edit"
+                                                        className="w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+                                                        placeholder="ex: rateAmount - 10%"
+                                                        value={formulaInput}
+                                                        onChange={handleFormulaInputChange}
+                                                    />
+
+                                                    <button
+                                                        type="button"
+                                                        className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                                                        onClick={handleFormulaSubmit}
+                                                    >
+                                                        Apply
+                                                    </button>
+
+                                                </form>
+
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                                        <button
-                                            type="button"
-                                            className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                                            onClick={handleFormulaSubmit}
-                                        >
-                                            Apply
-                                        </button>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>
