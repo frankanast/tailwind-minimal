@@ -16,8 +16,6 @@ import {
     QueueListIcon,
     DocumentIcon,
 } from '@heroicons/react/20/solid'
-import {Fragment} from "react";
-import {Transition} from "@headlessui/react";
 
 import {Square2StackIcon} from "@heroicons/react/24/outline";
 import FxIcon from "../../assets/FxIcon.jsx";
@@ -28,16 +26,14 @@ import InvertEverythingIcon from "../../assets/InvertEverythingIcon.jsx";
 import SelectNothingIcon from "../../assets/SelectNothingIcon.jsx";
 import SelectEverythingIcon from "../../assets/SelectEverythingIcon.jsx";
 import FormulaDialog from "./FormulaDialog.jsx";
-import FormulaDialogTest from "./FormulaDialogTest.jsx";
+import {FormulaEditorProvider} from "./FormulaEditorContext.jsx";
 
 export default function ConfiguratorToolbar() {
     const {
         updateSelection,
+        formulaDialogIsOpen,
         setFormulaDialogIsOpen,
         applyFormula,
-        formulaInput,
-        setFormulaInput,
-        formulaDialogIsOpen,
         applyNetRateItaly,
         applyNetRateWorld,
         restore,
@@ -123,30 +119,11 @@ export default function ConfiguratorToolbar() {
     return (
         <>
             <AbstractSecondaryToolbar actions={toolbarItems}/>
-            {/*<Transition.Root show={formulaDialogIsOpen} as={Fragment}>*/}
-            {/*    <Transition.Child*/}
-            {/*        as={Fragment}*/}
-            {/*        enter="ease-out duration-300"*/}
-            {/*        enterFrom="opacity-0"*/}
-            {/*        enterTo="opacity-100"*/}
-            {/*        leave="ease-in duration-200"*/}
-            {/*        leaveFrom="opacity-100"*/}
-            {/*        leaveTo="opacity-0"*/}
-            {/*    >*/}
-            {/*        <FormulaDialog*/}
-            {/*            onClose={handleCloseFormulaDialog}*/}
-            {/*            formulaInput={formulaInput}*/}
-            {/*            handleFormulaInputChange={(e) => setFormulaInput(e.target.value)}*/}
-            {/*            handleFormulaSubmit={handleFormulaSubmit}*/}
-            {/*        />*/}
-            {/*    </Transition.Child>*/}
-            {/*</Transition.Root>*/}
-            {formulaDialogIsOpen && (
-                <FormulaDialogTest
-
-                />
-            )}
-
+            <FormulaEditorProvider>
+                {formulaDialogIsOpen && (
+                    <FormulaDialog />
+                )}
+            </FormulaEditorProvider>
         </>
 
     )

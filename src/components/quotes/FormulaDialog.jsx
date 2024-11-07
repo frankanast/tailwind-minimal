@@ -1,147 +1,151 @@
-import {Dialog, Listbox, ListboxButton, ListboxOption, ListboxOptions} from "@headlessui/react";
-import {useEffect, useState} from "react";
-import {CheckIcon, CodeBracketIcon, XMarkIcon} from "@heroicons/react/20/solid/index.js";
+'use client'
+import {
+    Dialog,
+    DialogBackdrop,
+    DialogPanel,
+    DialogTitle,
+} from '@headlessui/react'
+import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import FxIcon from "../../assets/FxIcon.jsx";
-import validateFormula from "../../utils/validateFormula.js";
-import {nanoid} from "nanoid";
+import {CodeBracketIcon} from '@heroicons/react/20/solid'
+import {useFormulaEditorContext} from "./FormulaEditorContext.jsx";
 
+function PresetFormulaList() {
+    const {formulaPresets} = useFormulaEditorContext();
 
-function FormulaPresetsMenu({ formulaPresets }) {
     return (
-        // <Listbox value={selected} onChange={setSelected}>
-        <Listbox >
-            <div className="relative">
-                <ListboxButton>
-                    <FxIcon className="inline-flex size-5 text-gray-400" />
-                </ListboxButton>
-
-                <ListboxOptions
-                    transition
-                    className="absolute right-0 z-10 mt-2 w-72 origin-top-right divide-y divide-gray-200 overflow-hidden rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:data-[leave]:opacity-0 data-[leave]:transition data-[leave]:duration-100 data-[leave]:ease-in"
-                >
-                    {formulaPresets.map((preset) => (
-                        <ListboxOption
-                            key={preset.id}
-                            value={preset.id}
-                            className="group cursor-default select-none p-4 text-sm text-gray-900 data-[focus]:bg-indigo-600 data-[focus]:text-white"
-                        >
-                            <div className="flex flex-col">
-                                <div className="flex justify-between">
-                                    <p className="font-normal group-data-[selected]:font-semibold">{preset.name}</p>
-                                        <span className="text-indigo-600 group-data-[focus]:text-white [.group:not([data-selected])_&]:hidden">
-                                            <CheckIcon aria-hidden="true" className="h-5 w-5" />
-                                        </span>
-                                </div>
-                                <p className="mt-2 text-gray-500 group-data-[focus]:text-indigo-200">{preset.description}</p>
-                            </div>
-                        </ListboxOption>
-                    ))}
-                </ListboxOptions>
-            </div>
-        </Listbox>
+        <ul role="list" className="divide-y divide-slate-200 overflow-scroll h-96">
+            {formulaPresets.map((preset) => (
+                <li key={preset.id} className="flex items-center justify-between pl-3 py-3 hover:bg-slate-200 select-none cursor-pointer">
+                    <div className="min-w-0">
+                        <div className="flex items-start gap-x-3">
+                            <p className="text-sm/6 font-semibold text-gray-900">{preset.name}</p>
+                        </div>
+                        <div className="mt-1 flex items-center gap-x-2 text-xs/5 text-gray-500">
+                            <p className="whitespace-nowrap">
+                                {preset.description}
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            ))}
+        </ul>
     )
 }
 
-const FormulaDialog = ({ onClose, formulaInput, handleFormulaInputChange, handleFormulaSubmit }) => {
-    const fakeScope = {
-        // "Real" scope is computed at mapping time, for each rate element.
-        // During validation operations, we use fake values. We don't care of the result, we need to check the syntax.
-        // The fake value is 1 because it's the one that is not likely to generate errors (0 could raise a division by 0 error, for example).
-        rateAmount: 1,
-        adultsCount: 1,
-        childrenCount: 1,
-        guestCount: 1,
-        los: 1,
-    };
+function FormulaEditForm() {
+    return(
+        <form className="flex flex-col relative gap-7 w-full">
+            <div className="flex flex-col space-y-5">
+                <div>
+                    <label htmlFor="apply-on">Apply on</label>
+                    <input
+                        type="text"
+                        id="apply-on"
+                        className="w-full rounded-md border-gray-300 focus:border-slate-500 focus:ring-slate-500"
+                        onChange={() => {
+                        }}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="new-name">New name</label>
+                    <input
+                        type="text"
+                        id="new-name"
+                        className="w-full rounded-md border-gray-300 focus:border-slate-500 focus:ring-slate-500"
+                        onChange={() => {
+                        }}
+                    />
+                </div>
+            </div>
+            <div>
+                <label htmlFor="formula-edit">Formula</label>
+                <div
+                    className='w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 bg-gray-800'>
+                <textarea
+                    id="formula-edit"
+                    className="w-full h-40 border-none rounded-t-md bg-gray-800 font-mono font-semibold text-gray-300"
+                    style={{resize: 'none'}}
+                    placeholder="ex: rateAmount - 10%"
+                    value={''}
+                    onChange={() => {}}
+                />
+                    <div className="flex justify-end w-full h-8 px-3 gap-3 border-none rounded-b-md bg-gray-800 text-gray-400">
+                        {/* TODO : Add validator + char counter code */}
+                        <CodeBracketIcon className="inline-flex size-5 text-gray-400"/>
+                        {/*<>*/}
+                        {/*    {(formulaIsValid)*/}
+                        {/*        ?*/}
+                        {/*        <CheckIcon className="inline-flex size-5 text-indigo-400"/>*/}
+                        {/*        : <XMarkIcon*/}
+                        {/*            className="inline-flex size-5 text-chestnut-400"/>*/}
+                        {/*    }*/}
+                        {/*</>*/}
+                    </div>
+                </div>
+            </div>
+        </form>
+    )
+}
 
-    const formulaPresets = [
-        // TODO: When Authentication will be implemented and metadata will be exposed by a context,
-        // formulaPresets will be consumed from there (so it can be customized for each client according to corporate needs)
-        {id: nanoid(), name: "Repeating Guest", description: "Repeating Guest (min 4 stays): 5% discount.", expression: "rateAmount - 5%"},
-        {id: nanoid(), name: "Loyalty Guest", description: "Repeating Guest (min 4 stays): 10% discount.", expression: "rateAmount - 10%"},
-        {id: nanoid(), name: "10% Discount", description: "Preferential rate: 10% reduction on nightly rate.", expression: "rateAmount - 10%"},
-        {id: nanoid(), name: "No Breakfast", description: "Rates net breakfast quota.", expression: "rateAmount - (38 * adults)"},
-        {id: nanoid(), name: "Net VAT", description: "Rate Amount, net 10% VAT.", expression: "rateAmount / 1.1"},
-    ]
+export default function FormulaDialog() {
+    const {formulaDialogIsOpen, setFormulaDialogIsOpen} = useRatePresenterContext()
+    const {formulaPresets} = useFormulaEditorContext()
 
-    const variables = Object.keys(fakeScope)
-
-    const [formulaIsValid, setFormulaIsValid] = useState(true);
-    // useEffect(() => {
-    //     if (!formulaInput) {
-    //         return true
-    //
-    //     } else {
-    //         setFormulaIsValid(validateFormula(formulaInput, fakeScope));
-    //     }
-    // }, [formulaInput]);
+    function handleClose() {
+        setFormulaDialogIsOpen(false);
+    }
 
     return (
-        <Dialog as="div" className="relative z-50" onClose={onClose}>
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-            <div className="fixed inset-0 z-10 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-                    <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                        <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
-                            <button
-                                type="button"
-                                className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none"
-                                onClick={handleFormulaSubmit}
-                            >
-                                <span className="sr-only">Close</span>
-                                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                            </button>
-                        </div>
-                        <div>
-                            <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                                <Dialog.Title as="h3" className="text-lg font-medium mb-6 leading-6 text-gray-600">
-                                    Formula Editor
-                                </Dialog.Title>
-                                <div className="mt-2 min-w-0">
-                                    <form className="flex flex-col relative gap-7 w-full">
-                                        <div>
-                                            <label htmlFor="apply-on">Apply on</label>
-                                            <input
-                                                type="text"
-                                                id="apply-on"
-                                                className="w-full rounded-md border-gray-300 focus:border-slate-500 focus:ring-slate-500"
-                                                onChange={() => {
-                                                }}
-                                            />
+        <Dialog open={formulaDialogIsOpen} onClose={handleClose} className="relative z-50">
+            <DialogBackdrop
+                transition
+                className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in"
+            />
+
+            <div className="fixed inset-0 z-50 w-screen overflow-y-auto">
+                <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                    <DialogPanel
+                        transition
+                        className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-4xl sm:p-6 data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
+                    >
+                        <div className="sm:flex sm:items-start">
+                            <div className="mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-200 sm:mx-0 sm:h-10 sm:w-10">
+                                <FxIcon className="h-6 w-6 text-slate-600" />
+                            </div>
+                            <div className="mt-3 w-full text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
+                                    Formula editor
+                                </DialogTitle>
+                                <div className="mt-2">
+                                    <div className="flex flex-row gap-7">
+                                        <FormulaEditForm />
+                                        <div className="mt-4 h-fit">
+                                            <PresetFormulaList />
                                         </div>
-                                        <div>
-                                            <label htmlFor="formula-edit">Formula</label>
-                                            <div className='w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 bg-gray-800'>
-                                                            <textarea
-                                                                id="formula-edit"
-                                                                className="w-full h-40 border-none rounded-t-md bg-gray-800 font-mono font-semibold text-gray-300"
-                                                                style={{resize: 'none'}}
-                                                                placeholder="ex: rateAmount - 10%"
-                                                                value={formulaInput}
-                                                                onChange={handleFormulaInputChange}
-                                                            />
-                                                <div className="flex justify-end w-full h-8 px-3 gap-3 border-none rounded-b-md font-mono bg-gray-800 text-gray-400">
-                                                    {/*<FxIcon className="inline-flex size-5 text-gray-400"/>*/}
-                                                    <FormulaPresetsMenu formulaPresets={formulaPresets} />
-                                                    <CodeBracketIcon className="inline-flex size-5 text-gray-400"/>
-                                                    <>
-                                                        {(formulaIsValid)
-                                                            ? <CheckIcon className="inline-flex size-5 text-indigo-400" />
-                                                            : <XMarkIcon className="inline-flex size-5 text-chestnut-400" />
-                                                        }
-                                                    </>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </Dialog.Panel>
+                        <div className="mt-5 sm:ml-10 sm:mt-4 sm:flex sm:pl-4 flex justify-end">
+                            <button
+                                type="button"
+                                onClick={() => alert("Apply")}
+                                className="inline-flex w-full justify-center rounded-md bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 sm:w-auto"
+                            >
+                                Apply
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => alert("Cancel")}
+                                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-3 sm:mt-0 sm:w-auto"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </DialogPanel>
                 </div>
             </div>
         </Dialog>
-    );
-};
-
-export default FormulaDialog
+    )
+}
