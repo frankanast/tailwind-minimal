@@ -32,11 +32,10 @@ export function QuoteProvider({ children }) {
 
     }, [checkOutDate, checkInDate]);
 
-    const { data: loadedData, isError, isFetching } = useQuery({
+    const { data: loadedData, isError, isFetching, refetch } = useQuery({
         queryKey: ["avail", { checkInDate, checkOutDate, occupancy }],
         queryFn: async () => {
             const url = `${BACKEND_ROOT}/avail/loose/?check_in=${formatDateForBackend(checkInDate)}&check_out=${formatDateForBackend(checkOutDate)}&rooms=${formatOccupancyWithAges(occupancy)}`;
-
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -61,6 +60,7 @@ export function QuoteProvider({ children }) {
             loadedData,
             isFetching,
             isError,
+            refetch,
         }}>
             {children}
         </QuoteContext.Provider>

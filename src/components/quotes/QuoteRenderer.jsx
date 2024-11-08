@@ -23,7 +23,6 @@ export default function QuoteRenderer() {
                     const data = await response.json();
                     const tokenName = data["token"];
 
-                    // setIframeUrl(`https://programmino-be.onrender.com/test-html?userinput=${encodeURIComponent(tokenName) || "Unable to fetch the token."}`);
                     setIframeUrl(`https://programmino-be.onrender.com/token/${encodeURIComponent(tokenName)}`);
 
                 } catch (error) {

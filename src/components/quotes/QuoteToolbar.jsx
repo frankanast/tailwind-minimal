@@ -23,6 +23,7 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
         loadedData,
         isFetching,
         isError,
+        refetch,
     } = useQuoteContext();
 
     // Maintain separate states for raw string inputs
@@ -66,6 +67,10 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
 
     };
 
+    const handleFetchClick = () => {
+        refetch()
+    };
+
     const toolbarItems = [
         {
             component: (
@@ -75,7 +80,7 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
                     autoComplete="off"
                     mask="99-99-99"
                     value={checkInInput}
-                    onChange={(e) => setCheckInInput(e.target.value)} // Handle input as raw string
+                    onChange={(e) => setCheckInInput(e.target.value)}
                     onBlur={handleCheckInBlur}
                 />
             ),
@@ -89,7 +94,7 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
                     autoComplete="off"
                     mask="99-99-99"
                     value={checkOutInput}
-                    onChange={(e) => setCheckOutInput(e.target.value)} // Handle input as raw string
+                    onChange={(e) => setCheckOutInput(e.target.value)}
                     onBlur={handleCheckOutBlur}
                 />
             ),
@@ -115,7 +120,7 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
         },
         {
             component:
-                <button onClick={handleLoad}>
+                <button onClick={handleFetchClick}>
                     {isFetching
                         ? <div className="w-4 my-auto"><LoadingIcon width={5} height={5}/></div>
                         : <MagnifyingGlassIcon className="w-4" />

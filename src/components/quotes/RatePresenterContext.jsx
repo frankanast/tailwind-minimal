@@ -155,7 +155,6 @@ export function RatePresenterProvider({ children }) {
             data: updatedData,
         });
 
-        // Clear selection after deletion
         setSelectedItems([]);
     }
 
@@ -175,7 +174,7 @@ export function RatePresenterProvider({ children }) {
             setFormulaDialogIsOpen,
             formulaInput,
             setFormulaInput,
-            applyFormula: () => applyRateVariation(formulaInput),
+            applyRateVariation,
             applyNetRateWorld: () => applyRateVariation("(rateAmount / 1.1) - 10%"),
             applyNetRateItaly: () => applyRateVariation("((rateAmount / 1.1) - 10%) - 22%"),
             deleteSelectedEntities,

@@ -100,8 +100,8 @@ function FormulaEditForm() {
 }
 
 export default function FormulaDialog() {
-    const {formulaDialogIsOpen, setFormulaDialogIsOpen} = useRatePresenterContext()
-    const {formulaPresets, setFormulaInput} = useFormulaEditorContext()
+    const {formulaDialogIsOpen, setFormulaDialogIsOpen, applyRateVariation} = useRatePresenterContext()
+    const {formulaPresets, formulaInput, setFormulaInput} = useFormulaEditorContext()
 
     function handleClose() {
         setFormulaDialogIsOpen(false);
@@ -110,6 +110,11 @@ export default function FormulaDialog() {
     const handlePresetSelect = (expression) => {
         setFormulaInput((prevFormula) => prevFormula + expression);
     };
+
+    const handleApplyRate = () => {
+        applyRateVariation(formulaInput);
+        handleClose()
+    }
 
     return (
         <Dialog open={formulaDialogIsOpen} onClose={handleClose} className="relative z-50">
@@ -145,14 +150,14 @@ export default function FormulaDialog() {
                         <div className="mt-5 sm:ml-10 sm:mt-4 sm:flex sm:pl-4 flex justify-end">
                             <button
                                 type="button"
-                                onClick={() => alert("Apply")}
+                                onClick={handleApplyRate}
                                 className="inline-flex w-full justify-center rounded-md bg-slate-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-500 sm:w-auto"
                             >
                                 Apply
                             </button>
                             <button
                                 type="button"
-                                onClick={() => alert("Cancel")}
+                                onClick={handleClose}
                                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:ml-3 sm:mt-0 sm:w-auto"
                             >
                                 Cancel
