@@ -1,13 +1,21 @@
-import {parse, evaluate} from 'mathjs';
+import {evaluate} from "mathjs";
 
-export default function validateFormula(formula, scope={}) {
+export default function validateFormula(expression, scope) {
+    const fakeScope = {
+        rateAmount: 1,
+        adults: 1,
+        children: 1,
+        totalGuests: 1,
+        los: 1,
+    };
+
     try {
-        const node = parse(formula);
-        node.evaluate(scope);
+        const finalScope = scope ? { ...fakeScope, ...scope } : fakeScope;
+        evaluate(expression, finalScope);
+        return true
 
-        return true;
     } catch (error) {
-        console.log("Error evaluating formula:", error)
-        return false;
+        console.log("User input invalid formula: ", error)
+        return false
     }
 }

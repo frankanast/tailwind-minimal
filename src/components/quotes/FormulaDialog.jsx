@@ -7,16 +7,24 @@ import {
 } from '@headlessui/react'
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import FxIcon from "../../assets/FxIcon.jsx";
-import {CodeBracketIcon} from '@heroicons/react/20/solid'
+import {CheckIcon, CodeBracketIcon, XMarkIcon} from '@heroicons/react/20/solid'
 import {useFormulaEditorContext} from "./FormulaEditorContext.jsx";
 
-function PresetFormulaList() {
+function PresetFormulaList({onPresetSelect}) {
     const {formulaPresets} = useFormulaEditorContext();
+
+    const handleClick = (preset) => {
+        onPresetSelect(preset.expression);
+    };
 
     return (
         <ul role="list" className="divide-y divide-slate-200 overflow-scroll h-96">
             {formulaPresets.map((preset) => (
-                <li key={preset.id} className="flex items-center justify-between pl-3 py-3 hover:bg-slate-200 select-none cursor-pointer">
+                <li
+                    key={preset.id}
+                    className="flex items-center justify-between pl-3 py-3 hover:bg-slate-200 select-none cursor-pointer"
+                    onClick={() => handleClick(preset)}
+                >
                     <div className="min-w-0">
                         <div className="flex items-start gap-x-3">
                             <p className="text-sm/6 font-semibold text-gray-900">{preset.name}</p>
@@ -34,6 +42,12 @@ function PresetFormulaList() {
 }
 
 function FormulaEditForm() {
+    const {formulaInput, setFormulaInput, formulaIsValid, formulaError} = useFormulaEditorContext()
+
+    const handleInputChange = (event) => {
+        setFormulaInput(event.target.value);
+    };
+
     return(
         <form className="flex flex-col relative gap-7 w-full">
             <div className="flex flex-col space-y-5">
@@ -43,8 +57,6 @@ function FormulaEditForm() {
                         type="text"
                         id="apply-on"
                         className="w-full rounded-md border-gray-300 focus:border-slate-500 focus:ring-slate-500"
-                        onChange={() => {
-                        }}
                     />
                 </div>
                 <div>
@@ -53,8 +65,7 @@ function FormulaEditForm() {
                         type="text"
                         id="new-name"
                         className="w-full rounded-md border-gray-300 focus:border-slate-500 focus:ring-slate-500"
-                        onChange={() => {
-                        }}
+                        onChange={() => {}}
                     />
                 </div>
             </div>
@@ -64,23 +75,23 @@ function FormulaEditForm() {
                     className='w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 bg-gray-800'>
                 <textarea
                     id="formula-edit"
-                    className="w-full h-40 border-none rounded-t-md bg-gray-800 font-mono font-semibold text-gray-300"
-                    style={{resize: 'none'}}
+                    className="w-full h-40 border-none rounded-t-md bg-gray-800 font-mono font-semibold text-gray-300 resize-none"
                     placeholder="ex: rateAmount - 10%"
-                    value={''}
-                    onChange={() => {}}
+                    value={formulaInput}
+                    onChange={handleInputChange}
                 />
-                    <div className="flex justify-end w-full h-8 px-3 gap-3 border-none rounded-b-md bg-gray-800 text-gray-400">
-                        {/* TODO : Add validator + char counter code */}
+                    <div className="flex flex-row-reverse justify-start items-center w-full h-8 px-3 pb-2 gap-3 border-none rounded-b-md bg-gray-800 text-gray-400">
                         <CodeBracketIcon className="inline-flex size-5 text-gray-400"/>
-                        {/*<>*/}
-                        {/*    {(formulaIsValid)*/}
-                        {/*        ?*/}
-                        {/*        <CheckIcon className="inline-flex size-5 text-indigo-400"/>*/}
-                        {/*        : <XMarkIcon*/}
-                        {/*            className="inline-flex size-5 text-chestnut-400"/>*/}
-                        {/*    }*/}
-                        {/*</>*/}
+                        <span>{formulaInput?.length}</span>
+                        <>
+                            {formulaIsValid
+                                ? <CheckIcon className="inline-flex size-5 text-indigo-400"/>
+                                : <XMarkIcon className="inline-flex size-5 text-chestnut-400"/>
+                            }
+                        </>
+                        <span>
+                            {formulaError}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -90,11 +101,15 @@ function FormulaEditForm() {
 
 export default function FormulaDialog() {
     const {formulaDialogIsOpen, setFormulaDialogIsOpen} = useRatePresenterContext()
-    const {formulaPresets} = useFormulaEditorContext()
+    const {formulaPresets, setFormulaInput} = useFormulaEditorContext()
 
     function handleClose() {
         setFormulaDialogIsOpen(false);
     }
+
+    const handlePresetSelect = (expression) => {
+        setFormulaInput((prevFormula) => prevFormula + expression);
+    };
 
     return (
         <Dialog open={formulaDialogIsOpen} onClose={handleClose} className="relative z-50">
@@ -121,7 +136,7 @@ export default function FormulaDialog() {
                                     <div className="flex flex-row gap-7">
                                         <FormulaEditForm />
                                         <div className="mt-4 h-fit">
-                                            <PresetFormulaList />
+                                            <PresetFormulaList onPresetSelect={handlePresetSelect}/>
                                         </div>
                                     </div>
                                 </div>
