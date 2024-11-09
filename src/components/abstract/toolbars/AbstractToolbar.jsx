@@ -15,7 +15,6 @@ function SidebarToggle({toggleHandler}) {
 }
 
 export default function AbstractToolbar({ items, drawerItem, toggleHandler }) {
-    console.log(drawerItem)
     return (
         <Popover className="sticky isolate flex justify-between top-0 z-50 h-16 shrink-0 border-b border-gray-200 bg-white shadow-sm">
             <div className="flex min-w-full flex-none gap-x-6 px-4 text-sm text-gray-400">

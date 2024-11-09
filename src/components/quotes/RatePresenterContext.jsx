@@ -9,10 +9,11 @@ export const RatePresenterContext = createContext(undefined);
 export function RatePresenterProvider({ children }) {
     const { loadedData, checkInDate, checkOutDate, totalPeople, occupancy, los } = useQuoteContext();
     const [parsedData, setParsedData] = useState({});
+    const allTabs = useRef([]);
+
     const [selectedItems, setSelectedItems] = useState([]);
     const [editedEntities, setEditedEntities] = useState([]);
 
-    const allTabs = useRef([]);
     const [selectedTabId, setSelectedTabId] = useState(null);
     const [allItemsInCurrentOccupancy, setAllItemsInCurrentOccupancy] = useState([]);
 
@@ -109,7 +110,7 @@ export function RatePresenterProvider({ children }) {
         });
     }
 
-    function applyRateVariation(formula, additionalScope = {}) {
+    function applyRateVariation(formula, additionalScope = {}, target = undefined) {
         parsedData.data.forEach(occupancy => {
             occupancy.rooms.forEach(room => {
                 if (selectedItems.includes(room.entity_id)) {
@@ -124,7 +125,17 @@ export function RatePresenterProvider({ children }) {
                         };
 
                         try {
-                            rate.amount = safelyEvaluate(formula, scope, rate.amount);
+                            if (!target) {
+                                // If no target is provided, formula is applied on all rates...
+                                rate.amount = safelyEvaluate(formula, scope, rate.amount);
+
+                            } else {
+                                // ...otherwise, if targets are provided, we only apply the formula on the provided rates.
+                                if (target.includes(rate.id)) {
+                                    rate.amount = safelyEvaluate(formula, scope, rate.amount);
+                                }
+                            }
+
                         } catch (error) {
                             console.error("Error evaluating expression:", error);
                         }
