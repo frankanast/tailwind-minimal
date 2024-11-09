@@ -30,7 +30,9 @@ export function FormulaEditorProvider({ children }) {
 
     const allRooms = useRef([]);
     const allRates = useRef([]);
+
     const [selectedRateOptions, setSelectedRateOptions] = useState([])
+    const [newName, setNewName] = useState(undefined);
 
     let {parsedData} = useRatePresenterContext()
 
@@ -77,6 +79,8 @@ export function FormulaEditorProvider({ children }) {
             setSelectedRateOptions,
             allRooms,
             allRates,
+            newName,
+            setNewName,
         }}>
             {children}
         </FormulaEditorContext.Provider>

@@ -110,7 +110,7 @@ export function RatePresenterProvider({ children }) {
         });
     }
 
-    function applyRateVariation(formula, additionalScope = {}, target = undefined) {
+    function applyRateVariation(formula, additionalScope = {}, target = undefined, newName = undefined) {
         parsedData.data.forEach(occupancy => {
             occupancy.rooms.forEach(room => {
                 if (selectedItems.includes(room.entity_id)) {
@@ -127,12 +127,16 @@ export function RatePresenterProvider({ children }) {
                         try {
                             if (!target) {
                                 // If no target is provided, formula is applied on all rates...
-                                rate.amount = safelyEvaluate(formula, scope, rate.amount);
+                                rate.amount = safelyEvaluate(formula, scope, rate.amount)
+                                rate.data.name = newName || rate.data.name
+                                rate.data.public_name.en = newName || rate.data.public_name?.en
 
                             } else {
                                 // ...otherwise, if targets are provided, we only apply the formula on the provided rates.
                                 if (target.includes(rate.id)) {
-                                    rate.amount = safelyEvaluate(formula, scope, rate.amount);
+                                    rate.amount = safelyEvaluate(formula, scope, rate.amount)
+                                    rate.data.name = newName || rate.data.name
+                                    rate.data.public_name.en = newName || rate.data.public_name?.en
                                 }
                             }
 

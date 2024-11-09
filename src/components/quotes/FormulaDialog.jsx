@@ -3,14 +3,13 @@ import {
     Dialog,
     DialogBackdrop,
     DialogPanel,
-    DialogTitle, Menu, MenuButton, MenuItem, MenuItems,
+    DialogTitle, Popover,
 } from '@headlessui/react'
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import FxIcon from "../../assets/FxIcon.jsx";
-import {CheckIcon, ChevronUpDownIcon, CodeBracketIcon, XMarkIcon} from '@heroicons/react/20/solid'
+import {CheckIcon, ChevronUpDownIcon, XMarkIcon} from '@heroicons/react/20/solid'
 import {useFormulaEditorContext} from "./FormulaEditorContext.jsx";
 import BoxIcon from "../../assets/BoxIcon.jsx";
-import {Fragment} from "react";
 
 function PresetFormulaList({onPresetSelect}) {
     const {formulaPresets} = useFormulaEditorContext();
@@ -44,64 +43,79 @@ function PresetFormulaList({onPresetSelect}) {
 }
 
 function RateSelectionDropdown() {
-    const {allRates} = useFormulaEditorContext();
-    const {selectedRateOptions, setSelectedRateOptions} = useFormulaEditorContext();
+    const { allRates } = useFormulaEditorContext();
+    const { selectedRateOptions, setSelectedRateOptions } = useFormulaEditorContext();
 
     const handleCheckboxChange = (rateId) => {
         setSelectedRateOptions((prevSelected) =>
             prevSelected.includes(rateId)
                 ? prevSelected.filter((id) => id !== rateId)
                 : [...prevSelected, rateId]
-        )
-    }
+        );
+    };
 
     return (
         <div className="relative mt-2">
-            <Menu>
-                <MenuButton
-                    className="relative w-full cursor-default rounded-md bg-white py-2 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-500"
-                >
-                    {`${selectedRateOptions?.length > 0 ? `(${selectedRateOptions?.length}) ` : ""} Apply on...`}
-                    <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                        <ChevronUpDownIcon aria-hidden="true" className="h-5 w-5 text-gray-400"/>
-                    </span>
-                </MenuButton>
-                <MenuItems
-                    className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none data-[closed]:data-[leave]:opacity-0 data-[leave]:transition data-[leave]:duration-100 data-[leave]:ease-in"
-                >
-                    <div className="">
-                        {allRates.current.map((rate) => (
-                            <MenuItem
-                                key={rate.id}
-                                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-slate-300"
-                            >
-                                <div className="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        id={rate.id}
-                                        checked={selectedRateOptions.includes(rate.id)}
-                                        onChange={() => handleCheckboxChange(rate.id)}
-                                        className="h-4 w-4 rounded border-gray-300 text-slate-600 focus:ring-slate-500"
-                                    />
-                                    <label htmlFor={rate.id} className="ml-3 block truncate font-normal group-data-[selected]:font-semibold">
-                                        {rate.is_package ? <BoxIcon className="inline mr-1 h-4 w-4 text-gray-500"/> : <Fragment />}{rate.name}
-                                    </label>
-                                </div>
-                            </MenuItem>
-                        ))}
-                    </div>
-                </MenuItems>
-            </Menu>
+            <Popover>
+                {({ open }) => (
+                    <>
+                        <Popover.Button
+                            className="relative w-full cursor-default rounded-md bg-white py-2 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-500"
+                        >
+                            Apply on...
+                            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <div className="h-5 w-5 text-sm text-center rounded-md bg-gray-300 text-white">{selectedRateOptions.length}</div>
+                                <ChevronUpDownIcon aria-hidden="true" className="h-5 w-5 text-gray-300" />
+                            </span>
+                        </Popover.Button>
+                        <Popover.Panel
+                            className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        >
+                            <div>
+                                {allRates.current.map((rate) => (
+                                    <div
+                                        key={rate.id}
+                                        className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-slate-300 hover:bg-slate-200"
+                                    >
+                                        <div className="flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                id={rate.id}
+                                                checked={selectedRateOptions.includes(rate.id)}
+                                                onChange={() => handleCheckboxChange(rate.id)}
+                                                className="h-4 w-4 rounded border-gray-300 text-slate-600 focus:ring-slate-500"
+                                            />
+                                            <label
+                                                htmlFor={rate.id}
+                                                className="ml-3 block truncate font-normal group-data-[selected]:font-semibold"
+                                            >
+                                                {rate.is_package ? (
+                                                    <BoxIcon className="inline mr-1 h-4 w-4 text-gray-500" />
+                                                ) : null}
+                                                {rate.name}
+                                            </label>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </Popover.Panel>
+                    </>
+                )}
+            </Popover>
         </div>
-    )
+    );
 }
 
 function FormulaEditForm() {
-    const {formulaInput, setFormulaInput, formulaIsValid, formulaError} = useFormulaEditorContext()
+    const {formulaInput, setFormulaInput, formulaIsValid, formulaError, newName, setNewName} = useFormulaEditorContext()
 
-    const handleInputChange = (event) => {
+    const handleFormulaChange = (event) => {
         setFormulaInput(event.target.value);
     };
+
+    const handleNewNameChange = (event) => {
+        setNewName(event.target.value)
+    }
 
     return(
         <form className="flex flex-col relative gap-7 grow">
@@ -115,7 +129,8 @@ function FormulaEditForm() {
                         id="new-name"
                         placeholder="New name"
                         className="w-full rounded-md border-gray-300 focus:border-slate-500 focus:ring-slate-500"
-                        onChange={() => {}}
+                        value={newName}
+                        onChange={handleNewNameChange}
                     />
                 </div>
             </div>
@@ -126,7 +141,7 @@ function FormulaEditForm() {
                         className="w-full h-40 border-none rounded-t-md bg-gray-800 font-mono font-semibold text-gray-300 resize-none"
                         placeholder="ex: rateAmount - 10%"
                         value={formulaInput}
-                        onChange={handleInputChange}
+                        onChange={handleFormulaChange}
                     />
                     <div className="flex justify-end items-center w-full h-8 px-3 pb-2 gap-3 border-none rounded-b-md bg-gray-800 text-gray-400">
                         <span>{formulaInput?.length}</span>
@@ -145,7 +160,7 @@ function FormulaEditForm() {
 
 export default function FormulaDialog() {
     const {formulaDialogIsOpen, setFormulaDialogIsOpen, applyRateVariation} = useRatePresenterContext()
-    const {formulaInput, setFormulaInput, selectedRateOptions} = useFormulaEditorContext()
+    const {formulaInput, setFormulaInput, selectedRateOptions, newName} = useFormulaEditorContext()
 
     function handleClose() {
         setFormulaDialogIsOpen(false);
@@ -156,7 +171,7 @@ export default function FormulaDialog() {
     };
 
     const handleApplyRate = () => {
-        applyRateVariation(formulaInput, {}, selectedRateOptions);
+        applyRateVariation(formulaInput, {}, selectedRateOptions, newName);
         handleClose()
     }
 
