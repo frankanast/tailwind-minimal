@@ -5,12 +5,11 @@ import {
     DialogPanel,
 } from '@headlessui/react'
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
-import {useQuoteContext} from "./QuoteContext.jsx";
+import {useFormatDialogContext} from "./FormatDialogContext.jsx";
 
 export default function FormatDialog() {
-    // Hide-show rates (even the ones not available, private sales...), Hide-show rooms (even the ones not available, virtual rooms...)
     const {formatDialogIsOpen, setFormatDialogIsOpen} = useRatePresenterContext();
-    const {loadedData} = useQuoteContext();
+    const {loadedData} = useFormatDialogContext()
 
     function handleClose() {
         setFormatDialogIsOpen(false);

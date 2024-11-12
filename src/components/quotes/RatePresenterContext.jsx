@@ -10,7 +10,7 @@ export function RatePresenterProvider({ children }) {
     const { loadedData, checkInDate, checkOutDate, totalPeople, occupancy, los } = useQuoteContext();
     const [parsedData, setParsedData] = useState({});
     const allTabs = useRef([]);
-    // const allRates = useRef([]);
+    const allRates = useRef([]);
 
     const [selectedItems, setSelectedItems] = useState([]);
     const [editedEntities, setEditedEntities] = useState([]);
@@ -102,29 +102,28 @@ export function RatePresenterProvider({ children }) {
     }
 
     // Update allRates
-    // TODO: We comment this because we have two endpoints which returns ALL possible rates and rooms (even the ones not available).
-    // useEffect(() => {
-    //     if (parsedData && parsedData.data) {
-    //         allRates.current = []
-    //
-    //         const rates = []
-    //         parsedData.data.forEach(item => {
-    //             item.rooms.forEach(room => {
-    //                 room.rates.forEach(rate => {
-    //                     rates.push({
-    //                         id: rate.id,
-    //                         name: rate.data.name,
-    //                         is_package: rate.data.is_package
-    //                     });
-    //                 });
-    //             });
-    //         });
-    //
-    //         allRates.current = rates.filter((rate, index, self) =>
-    //             index === self.findIndex((r) => r.id === rate.id)
-    //         );
-    //     }
-    // }, [parsedData]);
+    useEffect(() => {
+        if (parsedData && parsedData.data) {
+            allRates.current = []
+
+            const rates = []
+            parsedData.data.forEach(item => {
+                item.rooms.forEach(room => {
+                    room.rates.forEach(rate => {
+                        rates.push({
+                            id: rate.id,
+                            name: rate.data.name,
+                            is_package: rate.data.is_package
+                        });
+                    });
+                });
+            });
+
+            allRates.current = rates.filter((rate, index, self) =>
+                index === self.findIndex((r) => r.id === rate.id)
+            );
+        }
+    }, [parsedData]);
 
     function safelyEvaluate(expression, scope, fallbackValue) {
         if (!expression || expression.trim() === '') {
@@ -206,6 +205,7 @@ export function RatePresenterProvider({ children }) {
     return (
         <RatePresenterContext.Provider value={{
             parsedData,
+            allRates,
             selectedItems,
             setSelectedItems,
             editedEntities,

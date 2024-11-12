@@ -51,6 +51,14 @@ export default function ConfiguratorToolbar() {
     const handleDelete = useCallback(() => deleteSelectedEntities(), [deleteSelectedEntities]);
 
     // Keyboard shortcuts
+    /*
+    * A : SELECT ALL
+    * ESC : CLEAR SELECTION
+    * I : INVERT
+    * MAIUSC + selection: APPLY ON EVERYTHING
+    * BACKSPACE: DELETE ENTITY/IES
+    * F : FORMULA
+    * */
     const keyActions = useCallback((event) => {
         if (event.key === "A" && event.shiftKey) {
             updateSelection("everything");
@@ -60,23 +68,28 @@ export default function ConfiguratorToolbar() {
             updateSelection("nothing");
             event.preventDefault();
 
-        } else if (event.key === "Escape") {
-            updateSelection("none");
-            event.preventDefault();
-
         } else if (event.key === "I" && event.shiftKey) {
             updateSelection("inverseEverything");
             event.preventDefault();
 
-        } else if (event.key === "I") {
+        } else if (event.key === "a") {
+            updateSelection("all");
+            event.preventDefault();
+
+        } else if (event.key === "Escape" && !formulaDialogIsOpen && !formatDialogIsOpen) {
+            // When a dialog is open, Escape should dismiss the dialog
+            updateSelection("none");
+            event.preventDefault();
+        }
+         else if (event.key === "i") {
             updateSelection("inverse");
             event.preventDefault();
 
-        } else if (event.key === "F") {
+        } else if (event.key === "f" && event.shiftKey) {
             handleOpenFormulaDialog();
             event.preventDefault();
 
-        } else if (event.key === "D") {
+        } else if (event.key === "Delete") {
             handleDelete();
             event.preventDefault();
         }
