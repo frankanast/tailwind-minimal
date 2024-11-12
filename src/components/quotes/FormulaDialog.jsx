@@ -8,7 +8,7 @@ import {
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import FxIcon from "../../assets/FxIcon.jsx";
 import {CheckIcon, ChevronUpDownIcon, XMarkIcon} from '@heroicons/react/20/solid'
-import {useFormulaEditorContext} from "./FormulaEditorContext.jsx";
+import {useFormulaEditorContext} from "./FormulaDialogContext.jsx";
 import BoxIcon from "../../assets/BoxIcon.jsx";
 
 function PresetFormulaList({onPresetSelect}) {
@@ -43,7 +43,7 @@ function PresetFormulaList({onPresetSelect}) {
 }
 
 function RateSelectionDropdown() {
-    const { allRates } = useFormulaEditorContext();
+    const { allRates } = useRatePresenterContext();
     const { selectedRateOptions, setSelectedRateOptions } = useFormulaEditorContext();
 
     const handleCheckboxChange = (rateId) => {

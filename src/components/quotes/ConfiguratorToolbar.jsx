@@ -16,58 +16,79 @@ import {
     QueueListIcon,
     DocumentIcon,
 } from '@heroicons/react/20/solid'
-
+import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import {Square2StackIcon} from "@heroicons/react/24/outline";
 import FxIcon from "../../assets/FxIcon.jsx";
-import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import SelectAllIcon from "../../assets/SelectAllIcon.jsx";
 import InvertSelectionIcon from "../../assets/InvertSelectionIcon.jsx";
 import InvertEverythingIcon from "../../assets/InvertEverythingIcon.jsx";
 import SelectNothingIcon from "../../assets/SelectNothingIcon.jsx";
 import SelectEverythingIcon from "../../assets/SelectEverythingIcon.jsx";
 import FormulaDialog from "./FormulaDialog.jsx";
-import {FormulaEditorProvider} from "./FormulaEditorContext.jsx";
+import FormatDialog from "./FormatDialog.jsx";
+import {FormulaDialogProvider} from "./FormulaDialogContext.jsx";
+import {FormatDialogProvider} from "./FormatDialogContext.jsx";
+import {useCallback, useEffect} from "react";
 
 export default function ConfiguratorToolbar() {
     const {
         updateSelection,
         formulaDialogIsOpen,
         setFormulaDialogIsOpen,
-        applyFormula,
+        formatDialogIsOpen,
+        setFormatDialogIsOpen,
         applyNetRateItaly,
         applyNetRateWorld,
         restore,
         deleteSelectedEntities,
     } = useRatePresenterContext();
 
-    const handleOpenFormulaDialog = () => {
-        setFormulaDialogIsOpen(true);
-    };
+    const handleOpenFormulaDialog = useCallback(() => setFormulaDialogIsOpen(true), [setFormulaDialogIsOpen]);
+    const handleOpenFormatDialog = useCallback(() => setFormatDialogIsOpen(true), [setFormatDialogIsOpen]);
+    const handleRestore = useCallback(() => restore(), [restore]);
+    const handleNetRateItaly = useCallback(() => applyNetRateItaly(), [applyNetRateItaly]);
+    const handleNetRateWorld = useCallback(() => applyNetRateWorld(), [applyNetRateWorld]);
+    const handleDelete = useCallback(() => deleteSelectedEntities(), [deleteSelectedEntities]);
 
-    const handleCloseFormulaDialog = () => {
-        setFormulaDialogIsOpen(false);
-    };
+    // Keyboard shortcuts
+    const keyActions = useCallback((event) => {
+        if (event.key === "A" && event.shiftKey) {
+            updateSelection("everything");
+            event.preventDefault();
 
-    const handleFormulaSubmit = () => {
-        applyFormula()
-        setFormulaDialogIsOpen(false);
-    }
+        } else if (event.key === "Escape" && event.shiftKey) {
+            updateSelection("nothing");
+            event.preventDefault();
 
-    const handleRestore = () => {
-        restore()
-    }
+        } else if (event.key === "Escape") {
+            updateSelection("none");
+            event.preventDefault();
 
-    const handleNetRateItaly = () => {
-        applyNetRateItaly()
-    }
+        } else if (event.key === "I" && event.shiftKey) {
+            updateSelection("inverseEverything");
+            event.preventDefault();
 
-    const handleNetRateWorld = () => {
-        applyNetRateWorld()
-    }
+        } else if (event.key === "I") {
+            updateSelection("inverse");
+            event.preventDefault();
 
-    const handleDelete = () => {
-        deleteSelectedEntities()
-    }
+        } else if (event.key === "F") {
+            handleOpenFormulaDialog();
+            event.preventDefault();
+
+        } else if (event.key === "D") {
+            handleDelete();
+            event.preventDefault();
+        }
+    }, [updateSelection, handleOpenFormulaDialog, handleDelete]);
+
+
+    useEffect(() => {
+        window.addEventListener("keydown", keyActions);
+        return () => {
+            window.removeEventListener("keydown", keyActions);
+        };
+    }, [keyActions]);
 
     const toolbarItems = [
         {
@@ -75,8 +96,8 @@ export default function ConfiguratorToolbar() {
             icon: <DocumentIcon />,
             items: [
                 [
-                    { name: 'Standard', href: '#', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {alert("Standard")} },
-                    { name: 'Tailored', href: '#', icon: <ScissorsIcon />, shortcutLabel: "", handler: () => {alert("Tailored")} },
+                    { name: 'Standard', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {alert("Standard")} },
+                    { name: 'Tailored', icon: <ScissorsIcon />, shortcutLabel: "", handler: () => {alert("Tailored")} },
                 ],
             ]
         },
@@ -85,16 +106,16 @@ export default function ConfiguratorToolbar() {
             icon: <BoltIcon />,
             items: [
                 [
-                    { name: 'Formula...', href: '#', icon: <FxIcon />, shortcutLabel: "F", handler: handleOpenFormulaDialog },
-                    { name: 'Net rate (world)', href: '#', icon: <DocumentCurrencyDollarIcon />, shortcutLabel: "", handler: handleNetRateWorld },
-                    { name: 'Net rate (Italia)', href: '#', icon: <DocumentCurrencyEuroIcon />, shortcutLabel: "", handler: handleNetRateItaly },
+                    { name: 'Formula...', icon: <FxIcon />, shortcutLabel: "F", handler: handleOpenFormulaDialog },
+                    { name: 'Net rate (world)', icon: <DocumentCurrencyDollarIcon />, shortcutLabel: "", handler: handleNetRateWorld },
+                    { name: 'Net rate (Italia)', icon: <DocumentCurrencyEuroIcon />, shortcutLabel: "", handler: handleNetRateItaly },
                 ],
                 [
-                    { name: 'Delete', href: '#', icon: <BackspaceIcon />, shortcutLabel: "⌂", handler: handleDelete },
-                    { name: 'Format...', href: '#', icon: <SparklesIcon />, shortcutLabel: "", handler: () => {alert("Format")} },
+                    { name: 'Format...', icon: <SparklesIcon />, shortcutLabel: "", handler: handleOpenFormatDialog },
+                    { name: 'Delete', icon: <BackspaceIcon />, shortcutLabel: "⌂", handler: handleDelete },
                 ],
                 [
-                    { name: 'Restore', href: '#', icon: <ArrowUturnLeftIcon />, shortcutLabel: "", handler: handleRestore },
+                    { name: 'Restore', icon: <ArrowUturnLeftIcon />, shortcutLabel: "", handler: handleRestore },
                 ]
             ]
         },
@@ -103,14 +124,14 @@ export default function ConfiguratorToolbar() {
             icon: <CursorArrowRaysIcon />,
             items: [
                 [
-                    { name: 'Select all', href: '#', icon: <SelectAllIcon />, shortcutLabel: "A", handler: () => {updateSelection('all')} },
-                    { name: 'Clear selection', href: '#', icon: <Square2StackIcon />, shortcutLabel: "Esc", handler: () => {updateSelection('none')} },
-                    { name: 'Invert selection', href: '#', icon: <InvertSelectionIcon />, shortcutLabel: "I", handler: () => {updateSelection('inverse')} },
+                    { name: 'Select all', icon: <SelectAllIcon />, shortcutLabel: "A", handler: () => {updateSelection('all')} },
+                    { name: 'Clear selection', icon: <Square2StackIcon />, shortcutLabel: "Esc", handler: () => {updateSelection('none')} },
+                    { name: 'Invert selection', icon: <InvertSelectionIcon />, shortcutLabel: "I", handler: () => {updateSelection('inverse')} },
                 ],
                 [
-                    { name: 'Select everything', href: '#', icon: <SelectEverythingIcon />, shortcutLabel: "⇧A", handler: () => {updateSelection('everything')} },
-                    { name: 'Select nothing', href: '#', icon: <SelectNothingIcon />, shortcutLabel: "⇧Esc", handler: () => {updateSelection('nothing')} },
-                    { name: 'Invert everything', href: '#', icon: <InvertEverythingIcon />, shortcutLabel: "⇧I", handler: () => {updateSelection('inverseEverything')} },
+                    { name: 'Select everything', icon: <SelectEverythingIcon />, shortcutLabel: "⇧A", handler: () => {updateSelection('everything')} },
+                    { name: 'Select nothing', icon: <SelectNothingIcon />, shortcutLabel: "⇧Esc", handler: () => {updateSelection('nothing')} },
+                    { name: 'Invert everything', icon: <InvertEverythingIcon />, shortcutLabel: "⇧I", handler: () => {updateSelection('inverseEverything')} },
                 ]
             ]
         }
@@ -119,11 +140,16 @@ export default function ConfiguratorToolbar() {
     return (
         <>
             <AbstractSecondaryToolbar actions={toolbarItems}/>
-            <FormulaEditorProvider>
-                {formulaDialogIsOpen && (
-                    <FormulaDialog />
-                )}
-            </FormulaEditorProvider>
+            <FormulaDialogProvider>
+                <FormatDialogProvider>
+                    {formulaDialogIsOpen && (
+                        <FormulaDialog />
+                    )}
+                    {formatDialogIsOpen && (
+                        <FormatDialog />
+                    )}
+                </FormatDialogProvider>
+            </FormulaDialogProvider>
         </>
 
     )

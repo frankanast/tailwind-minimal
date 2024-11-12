@@ -10,6 +10,7 @@ export function RatePresenterProvider({ children }) {
     const { loadedData, checkInDate, checkOutDate, totalPeople, occupancy, los } = useQuoteContext();
     const [parsedData, setParsedData] = useState({});
     const allTabs = useRef([]);
+    // const allRates = useRef([]);
 
     const [selectedItems, setSelectedItems] = useState([]);
     const [editedEntities, setEditedEntities] = useState([]);
@@ -18,6 +19,8 @@ export function RatePresenterProvider({ children }) {
     const [allItemsInCurrentOccupancy, setAllItemsInCurrentOccupancy] = useState([]);
 
     const [formulaDialogIsOpen, setFormulaDialogIsOpen] = useState(false);
+    const [formatDialogIsOpen, setFormatDialogIsOpen] = useState(false);
+
     const [formulaInput, setFormulaInput] = useState('');
 
     function createParsedData(loadedData) {
@@ -57,18 +60,6 @@ export function RatePresenterProvider({ children }) {
         }
     }, [selectedTabId, parsedData]);
 
-    function safelyEvaluate(expression, scope, fallbackValue) {
-        if (!expression || expression.trim() === '') {
-            return evaluate(`rateAmount * 1`, scope || { rateAmount: fallbackValue });
-        }
-
-        try {
-            return evaluate(expression, scope || { rateAmount: fallbackValue });
-        } catch (error) {
-            console.error("Error evaluating expression:", error);
-            return fallbackValue;
-        }
-    }
 
     function updateSelection(action) {
         setSelectedItems((prevSelectedItems) => {
@@ -108,6 +99,44 @@ export function RatePresenterProvider({ children }) {
                 ...itemsToSelect,
             ];
         });
+    }
+
+    // Update allRates
+    // TODO: We comment this because we have two endpoints which returns ALL possible rates and rooms (even the ones not available).
+    // useEffect(() => {
+    //     if (parsedData && parsedData.data) {
+    //         allRates.current = []
+    //
+    //         const rates = []
+    //         parsedData.data.forEach(item => {
+    //             item.rooms.forEach(room => {
+    //                 room.rates.forEach(rate => {
+    //                     rates.push({
+    //                         id: rate.id,
+    //                         name: rate.data.name,
+    //                         is_package: rate.data.is_package
+    //                     });
+    //                 });
+    //             });
+    //         });
+    //
+    //         allRates.current = rates.filter((rate, index, self) =>
+    //             index === self.findIndex((r) => r.id === rate.id)
+    //         );
+    //     }
+    // }, [parsedData]);
+
+    function safelyEvaluate(expression, scope, fallbackValue) {
+        if (!expression || expression.trim() === '') {
+            return evaluate(`rateAmount * 1`, scope || { rateAmount: fallbackValue });
+        }
+
+        try {
+            return evaluate(expression, scope || { rateAmount: fallbackValue });
+        } catch (error) {
+            console.error("Error evaluating expression:", error);
+            return fallbackValue;
+        }
     }
 
     function applyRateVariation(formula, additionalScope = {}, target = undefined, newName = undefined) {
@@ -187,6 +216,8 @@ export function RatePresenterProvider({ children }) {
             updateSelection,
             formulaDialogIsOpen,
             setFormulaDialogIsOpen,
+            formatDialogIsOpen,
+            setFormatDialogIsOpen,
             formulaInput,
             setFormulaInput,
             applyRateVariation,
