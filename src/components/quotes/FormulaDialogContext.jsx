@@ -50,7 +50,7 @@ export function FormulaDialogProvider({ children }) {
     );
 }
 
-export function useFormulaEditorContext() {
+export function useFormulaDialogContext() {
     const context = useContext(FormulaDialogContext);
     if (context === undefined) {
         throw new Error('useFormulaEditorContext must be used within a FormulaEditorProvider');

@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {useQuoteContext} from "./QuoteContext.jsx";
+import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 
 export const FormatDialogContext = createContext(undefined);
 
@@ -11,20 +12,6 @@ export function FormatDialogProvider({ children }) {
 
     const [formatDialogIsOpen, setFormatDialogIsOpen] = useState(false);
     const {loadedData} = useQuoteContext();
-
-    const [hiddenRates, setHiddenRates] = useState([]);
-    const [hiddenRooms, setHiddenRooms] = useState([]);
-
-    // Remove hidden rooms/rates
-    useEffect(() => {
-        hiddenRates.map((rate) => {
-            loadedData.forEach(obj => {
-                if (obj.rate === rate) {
-                    obj.amount = 0;
-                }
-            });
-        })
-    }, [loadedData, hiddenRates]);
 
     return (
         <FormatDialogContext.Provider value={{

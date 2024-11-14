@@ -22,6 +22,7 @@ export function RatePresenterProvider({ children }) {
     const [formatDialogIsOpen, setFormatDialogIsOpen] = useState(false);
 
     const [formulaInput, setFormulaInput] = useState('');
+    const [hiddenRates, setHiddenRates] = useState([]);
 
     function createParsedData(loadedData) {
         const parsed = groupRatesForPresentation(cleanUpResponse(loadedData.data), loadedData.metadata);
@@ -178,6 +179,20 @@ export function RatePresenterProvider({ children }) {
         });
     }
 
+    function deleteRates() {
+        parsedData.data.forEach(occupancy => {
+            occupancy.rooms.forEach(room => {
+                if (selectedItems.includes(room.entity_id)) {
+                    room.rates = room.rates.filter(rate => {
+                        return !hiddenRates.includes(rate.id);
+                    });
+
+                    setEditedEntities(prevEdits => [...prevEdits, room.entity_id]);
+                }
+            });
+        });
+    }
+
     function restore() {
         const newParsedData = createParsedData(loadedData);
         setParsedData(newParsedData);
@@ -206,6 +221,8 @@ export function RatePresenterProvider({ children }) {
         <RatePresenterContext.Provider value={{
             parsedData,
             allRates,
+            hiddenRates,
+            setHiddenRates,
             selectedItems,
             setSelectedItems,
             editedEntities,
@@ -224,6 +241,7 @@ export function RatePresenterProvider({ children }) {
             applyNetRateWorld: () => applyRateVariation("(rateAmount / 1.1) - 10%"),
             applyNetRateItaly: () => applyRateVariation("((rateAmount / 1.1) - 10%) - 22%"),
             deleteSelectedEntities,
+            deleteRates,
             restore,
         }}>
             {children}
