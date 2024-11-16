@@ -9,8 +9,11 @@ export const RatePresenterContext = createContext(undefined);
 export function RatePresenterProvider({ children }) {
     const { loadedData, checkInDate, checkOutDate, totalPeople, occupancy, los } = useQuoteContext();
     const [parsedData, setParsedData] = useState({});
+
     const allTabs = useRef([]);
     const allRates = useRef([]);
+
+    const [isOnStandardMode, setIsOnStandardMode] = useState(true)
 
     const [selectedItems, setSelectedItems] = useState([]);
     const [editedEntities, setEditedEntities] = useState([]);
@@ -220,6 +223,8 @@ export function RatePresenterProvider({ children }) {
     return (
         <RatePresenterContext.Provider value={{
             parsedData,
+            isOnStandardMode,
+            setIsOnStandardMode,
             allRates,
             hiddenRates,
             setHiddenRates,

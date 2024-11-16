@@ -1,12 +1,12 @@
 import QuoteRenderer from "./QuoteRenderer.jsx";
 import QuoteToolbar from "./QuoteToolbar.jsx";
-import QuoteConfigurator from "./QuoteConfigurator.jsx";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import ConfiguratorToolbar from "./ConfiguratorToolbar.jsx";
 import { QuoteProvider } from "./QuoteContext.jsx";
 import QuoteDrawer from "./QuoteDrawer.jsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {RatePresenterProvider} from "./RatePresenterContext.jsx";
+import Configurator from "./Configurator.jsx";
 
 export default function QuotePage({ toggleHandler }) {
     const queryClient = new QueryClient();
@@ -22,7 +22,8 @@ export default function QuotePage({ toggleHandler }) {
                                     <Panel defaultSize={33} minSize={10} className="h-auto">
                                         <ConfiguratorToolbar />
                                         <div className="h-full w-full mt-10 flex flex-col overflow-auto">
-                                            <QuoteConfigurator />
+                                            {/*<QuoteStandardConfigurator />*/}
+                                            <Configurator />
                                         </div>
                                     </Panel>
                                     <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />

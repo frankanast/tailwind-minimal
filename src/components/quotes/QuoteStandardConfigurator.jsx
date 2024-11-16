@@ -6,7 +6,7 @@ import LoadingIcon from "../../assets/LoadingIcon.jsx";
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import OccupancyTabs from "./OccupancyTabs.jsx";
 
-const QuoteConfigurator = () => {
+const QuoteStandardConfigurator = () => {
     let { isFetching } = useQuoteContext();
     let { parsedData } = useRatePresenterContext();
 
@@ -47,4 +47,4 @@ const QuoteConfigurator = () => {
     );
 };
 
-export default QuoteConfigurator;
+export default QuoteStandardConfigurator;

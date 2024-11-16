@@ -1,4 +1,4 @@
-// This is an implementation of AbstractSecondaryToolbar for QuoteConfigurator.
+// This is an implementation of AbstractSecondaryToolbar for QuoteStandardConfigurator.
 // It takes a setter method as a prop, while each functionality is included in the component file
 // (we don't want this to be reusable).
 // The dataset contains row data from an AG grid that needs to be manipulated.
@@ -41,6 +41,8 @@ export default function ConfiguratorToolbar() {
         applyNetRateWorld,
         restore,
         deleteSelectedEntities,
+        isOnStandardMode,
+        setIsOnStandardMode,
     } = useRatePresenterContext();
 
     const handleOpenFormulaDialog = useCallback(() => setFormulaDialogIsOpen(true), [setFormulaDialogIsOpen]);
@@ -49,6 +51,14 @@ export default function ConfiguratorToolbar() {
     const handleNetRateItaly = useCallback(() => applyNetRateItaly(), [applyNetRateItaly]);
     const handleNetRateWorld = useCallback(() => applyNetRateWorld(), [applyNetRateWorld]);
     const handleDelete = useCallback(() => deleteSelectedEntities(), [deleteSelectedEntities]);
+
+    function switchToStandard() {
+        setIsOnStandardMode(true)
+    }
+
+    function switchToTailored() {
+        setIsOnStandardMode(false)
+    }
 
     // Keyboard shortcuts
     const keyActions = useCallback((event) => {
@@ -70,7 +80,6 @@ export default function ConfiguratorToolbar() {
                 event.preventDefault();
 
             } else if (event.key === "Escape") {
-                // When a dialog is open, Escape should dismiss the dialog
                 updateSelection("none");
                 event.preventDefault();
 
@@ -100,11 +109,12 @@ export default function ConfiguratorToolbar() {
     const toolbarItems = [
         {
             title: 'Modes',
-            icon: <DocumentIcon />,
+            // icon: <DocumentIcon />,
+            icon: isOnStandardMode ? <QueueListIcon /> : <ScissorsIcon />,
             items: [
                 [
-                    { name: 'Standard', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {alert("Standard")} },
-                    { name: 'Tailored', icon: <ScissorsIcon />, shortcutLabel: "", handler: () => {alert("Tailored")} },
+                    { name: 'Standard', icon: <QueueListIcon />, shortcutLabel: "", handler: switchToStandard },
+                    { name: 'Tailored', icon: <ScissorsIcon />, shortcutLabel: "", handler: switchToTailored },
                 ],
             ]
         },
