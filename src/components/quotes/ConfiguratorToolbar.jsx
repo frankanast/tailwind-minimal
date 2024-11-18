@@ -14,10 +14,15 @@ import {
     BackspaceIcon,
     ScissorsIcon,
     QueueListIcon,
-    DocumentIcon,
+    GlobeAltIcon,
+    ArrowTopRightOnSquareIcon,
+    DocumentDuplicateIcon,
+    EnvelopeIcon,
+    StarIcon,
+    SwatchIcon
 } from '@heroicons/react/20/solid'
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
-import {Square2StackIcon} from "@heroicons/react/24/outline";
+import {Square2StackIcon, } from "@heroicons/react/24/outline";
 import FxIcon from "../../assets/FxIcon.jsx";
 import SelectAllIcon from "../../assets/SelectAllIcon.jsx";
 import InvertSelectionIcon from "../../assets/InvertSelectionIcon.jsx";
@@ -28,7 +33,10 @@ import FormulaDialog from "./FormulaDialog.jsx";
 import FormatDialog from "./FormatDialog.jsx";
 import {FormulaDialogProvider} from "./FormulaDialogContext.jsx";
 import {FormatDialogProvider} from "./FormatDialogContext.jsx";
-import {useCallback, useEffect} from "react";
+import {Fragment, useCallback, useEffect} from "react";
+import {useQuoteContext} from "./QuoteContext.jsx";
+import UkFlagIcon from "../../assets/UkFlagIcon.jsx";
+import ItalyFlagIcon from "../../assets/ItalyFlagIcon.jsx";
 
 export default function ConfiguratorToolbar() {
     const {
@@ -44,6 +52,8 @@ export default function ConfiguratorToolbar() {
         isOnStandardMode,
         setIsOnStandardMode,
     } = useRatePresenterContext();
+
+    const {loadedData} = useQuoteContext()
 
     const handleOpenFormulaDialog = useCallback(() => setFormulaDialogIsOpen(true), [setFormulaDialogIsOpen]);
     const handleOpenFormatDialog = useCallback(() => setFormatDialogIsOpen(true), [setFormatDialogIsOpen]);
@@ -108,32 +118,13 @@ export default function ConfiguratorToolbar() {
 
     const toolbarItems = [
         {
-            title: 'Modes',
-            // icon: <DocumentIcon />,
+            title: 'View',
             icon: isOnStandardMode ? <QueueListIcon /> : <ScissorsIcon />,
             items: [
                 [
                     { name: 'Standard', icon: <QueueListIcon />, shortcutLabel: "", handler: switchToStandard },
                     { name: 'Tailored', icon: <ScissorsIcon />, shortcutLabel: "", handler: switchToTailored },
                 ],
-            ]
-        },
-        {
-            title: 'Actions',
-            icon: <BoltIcon />,
-            items: [
-                [
-                    { name: 'Formula...', icon: <FxIcon />, shortcutLabel: "F", handler: handleOpenFormulaDialog },
-                    { name: 'Net rate (world)', icon: <DocumentCurrencyDollarIcon />, shortcutLabel: "", handler: handleNetRateWorld },
-                    { name: 'Net rate (Italia)', icon: <DocumentCurrencyEuroIcon />, shortcutLabel: "", handler: handleNetRateItaly },
-                ],
-                [
-                    { name: 'Format...', icon: <SparklesIcon />, shortcutLabel: "", handler: handleOpenFormatDialog },
-                    { name: 'Delete', icon: <BackspaceIcon />, shortcutLabel: "⌂", handler: handleDelete },
-                ],
-                [
-                    { name: 'Restore', icon: <ArrowUturnLeftIcon />, shortcutLabel: "", handler: handleRestore },
-                ]
             ]
         },
         {
@@ -151,12 +142,60 @@ export default function ConfiguratorToolbar() {
                     { name: 'Invert everything', icon: <InvertEverythingIcon />, shortcutLabel: "⇧I", handler: () => {updateSelection('inverseEverything')} },
                 ]
             ]
-        }
+        },
+        {
+            title: 'Edit',
+            icon: <BoltIcon />,
+            items: [
+                [
+                    { name: 'Formula...', icon: <FxIcon />, shortcutLabel: "F", handler: handleOpenFormulaDialog },
+                    { name: 'Net rate (world)', icon: <DocumentCurrencyDollarIcon />, shortcutLabel: "", handler: handleNetRateWorld },
+                    { name: 'Net rate (Italia)', icon: <DocumentCurrencyEuroIcon />, shortcutLabel: "", handler: handleNetRateItaly },
+                ],
+                [
+                    { name: 'Format...', icon: <SparklesIcon />, shortcutLabel: "", handler: handleOpenFormatDialog },
+                    { name: 'Delete', icon: <BackspaceIcon />, shortcutLabel: "⌂", handler: handleDelete },
+                ],
+                [
+                    { name: 'Restore', icon: <ArrowUturnLeftIcon />, shortcutLabel: "", handler: handleRestore },
+                ]
+            ]
+        },
+        {
+            title: 'Letter',
+            icon: <EnvelopeIcon />,
+            items: [
+                [
+                    { name: 'Italian', icon: <ItalyFlagIcon />, handler: () => {} },
+                    { name: 'English', icon: <UkFlagIcon />, handler: () => {} },
+                ],
+                [
+                    { name: 'Favorite Templ. 1', icon: <StarIcon />, handler: () => {} },
+                    { name: 'Favorite Templ. 2', icon: <StarIcon />, handler: () => {} },
+                    { name: 'Favorite Templ. 3', icon: <StarIcon />, handler: () => {} },
+                    { name: 'Select Template...', icon: <SwatchIcon />, handler: () => {} },
+                ],
+            ]
+        },
+        {
+            title: 'Navigation',
+            icon: <GlobeAltIcon />,
+            items: [
+                [
+                    { name: 'Copy content', icon: <DocumentDuplicateIcon />, handler: () => {} },
+                    { name: 'Copy plain text', icon: <DocumentDuplicateIcon />, handler: () => {} },
+                ],
+                [
+                    { name: 'Open preview...', icon: <ArrowTopRightOnSquareIcon />, handler: () => {} },
+                    { name: 'Open website...', icon: <GlobeAltIcon />, handler: () => {} },
+                ],
+            ]
+        },
     ]
 
     return (
         <>
-            <AbstractSecondaryToolbar actions={toolbarItems}/>
+            {loadedData ? <AbstractSecondaryToolbar actions={toolbarItems} /> : <Fragment />}
             <FormulaDialogProvider>
                 <FormatDialogProvider>
                     {formulaDialogIsOpen && (

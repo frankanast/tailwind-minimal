@@ -2,6 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import isEmpty from "../../../utils/isEmpty.js";
 import { nanoid } from "nanoid";
 import {Fragment} from "react";
+import classNames from "../../../utils/classNames.js";
 
 function AbstractDropdown({ title, icon, items }) {
     const NoActionsIndicator = () => (
@@ -68,10 +69,12 @@ function AbstractDropdown({ title, icon, items }) {
     );
 }
 
-export default function AbstractSecondaryToolbar({ actions }) {
+export default function AbstractSecondaryToolbar({ actions, className }) {
+    const style = classNames("bg-indigo-100 block", className)
+
     return (
         <div>
-            <div className="bg-indigo-100 block">
+            <div className={style}>
                 <nav className="flex">
                     {actions && actions.map((action) => (
                         <AbstractDropdown key={nanoid()} title={action.title} icon={action.icon} items={action.items} />

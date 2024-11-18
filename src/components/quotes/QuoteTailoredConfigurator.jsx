@@ -4,8 +4,6 @@ import {
     PlusIcon,
 } from '@heroicons/react/20/solid'
 import {Fragment} from "react";
-import classNames from "../../utils/classNames.js";
-import occupancyLiteral from "../../utils/occupancyLiteral.js";
 import AddSolutionBox from "./AddSolutionBox.jsx";
 
 const solutions = {
@@ -30,7 +28,11 @@ function TailoredSolutionCard() {
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <div className="sm:flex sm:space-x-5">
                         <div>
-                            <p className="text-xl font-bold text-gray-900 sm:text-2xl">{solutions.name}</p>
+                            <input
+                                className="text-gray-700 font-semibold py-0 pl-0 border border-px border-transparent hover:border-gray-300 focus:ring-indigo-700"
+                                value={solutions.name}
+                            />
+
                             <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                                 {/*STATS SECTION */}
                                 <div className="mt-2 flex items-center text-sm text-gray-500">
@@ -48,23 +50,26 @@ function TailoredSolutionCard() {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-5 flex justify-center sm:mt-0">
-                        <div
-                            className="flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                        >
-                            Add
-                        </div>
+
+                    {/* Entity operations */}
+                    <div className="flex gap-3">
+
                     </div>
                 </div>
+
                 {/*ROOMS SECTION*/}
                 <div className="flex gap-4 mt-7">
                     {solutions.badge ? solutions.badge : <Fragment/>}
                     <div className="flex flex-col">
                         <div className="font-medium">Premium Deluxe</div>
                         <div className="flex gap-3">
-                            <div className="border border-px border-gray-400 text-gray-700 rounded-md px-2">2 adults
+                            <div
+                                className="border border-px border-gray-400 text-gray-700 rounded-md px-2 select-none cursor-pointer">
+                                2 adults
                             </div>
-                            <div className="border border-px border-gray-400 text-gray-700 rounded-md px-2">Il Grigio,
+                            <div
+                                className="border border-px border-gray-400 text-gray-700 rounded-md px-2 select-none cursor-pointer">Il
+                                Grigio,
                                 Travel Without Worries
                             </div>
                         </div>
@@ -77,14 +82,24 @@ function TailoredSolutionCard() {
                     <div className="flex flex-col">
                         <div className="font-medium">Suite</div>
                         <div className="flex gap-3">
-                            <div className="border border-px border-gray-400 text-gray-700 rounded-md px-2">2 adults, 1
+                            <div
+                                className="border border-px border-gray-400 text-gray-700 rounded-md px-2 select-none cursor-pointer">2
+                                adults, 1
                                 child
                             </div>
-                            <div className="border border-px border-gray-400 text-gray-700 rounded-md px-2">Il Grigio,
+                            <div
+                                className="border border-px border-gray-400 text-gray-700 rounded-md px-2 select-none cursor-pointer">
+                                Il Grigio,
                                 Travel Without Worries
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div
+                    className="flex items-center justify-center rounded-md bg-white mt-7 px-3 py-2 text-sm font-semibold text-gray-900 border border-1 border-gray-300 hover:border-gray-400 border-dashed shadow-sm hover:bg-gray-50 cursor-pointer"
+                >
+                    <PlusIcon className="size-5 text-gray-500"/>
                 </div>
             </div>
         </div>
@@ -94,13 +109,6 @@ function TailoredSolutionCard() {
 export default function QuoteTailoredConfigurator() {
     return (
         <div className="flex flex-col px-3 gap-7 overflow-auto">
-            {/*<div>*/}
-            {/*    <nav className="flex space-x-4 justify-end">*/}
-            {/*        <button className='bg-indigo-700 text-white rounded-md px-3 py-2 text-sm font-medium'>*/}
-            {/*            Add solution*/}
-            {/*        </button>*/}
-            {/*    </nav>*/}
-            {/*</div>*/}
             <TailoredSolutionCard/>
             <AddSolutionBox />
         </div>

@@ -18,12 +18,11 @@ export default function QuotePage({ toggleHandler }) {
                     <div>
                         <div className="flex flex-col h-screen">
                                 <QuoteToolbar toggleHandler={toggleHandler} drawerItem={<QuoteDrawer />} />
+                                <ConfiguratorToolbar />  {/* Only visible if there is data */}
                                 <PanelGroup direction="horizontal">
                                     <Panel defaultSize={33} minSize={10} className="h-auto">
-                                        <ConfiguratorToolbar />
                                         <div className="h-full w-full mt-10 flex flex-col overflow-auto">
-                                            {/*<QuoteStandardConfigurator />*/}
-                                            <Configurator />
+                                            <Configurator /> {/*QuoteStandardConfigurator or QuoteTailoredConfigurator*/}
                                         </div>
                                     </Panel>
                                     <PanelResizeHandle className="w-1 bg-gray-200 hover:bg-gray-400" />
