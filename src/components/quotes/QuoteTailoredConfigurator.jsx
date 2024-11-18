@@ -50,11 +50,6 @@ function TailoredSolutionCard() {
                             </div>
                         </div>
                     </div>
-
-                    {/* Entity operations */}
-                    <div className="flex gap-3">
-
-                    </div>
                 </div>
 
                 {/*ROOMS SECTION*/}
