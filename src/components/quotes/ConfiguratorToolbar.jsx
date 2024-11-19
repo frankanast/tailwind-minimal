@@ -37,10 +37,8 @@ import {Fragment, useCallback, useEffect} from "react";
 import {useQuoteContext} from "./QuoteContext.jsx";
 import UkFlagIcon from "../../assets/UkFlagIcon.jsx";
 import ItalyFlagIcon from "../../assets/ItalyFlagIcon.jsx";
-import {useQuotePreviewContext} from "./QuotePreviewContext.jsx";
 
 export default function ConfiguratorToolbar() {
-    const {loadedData} = useQuoteContext()
     const {
         updateSelection,
         formulaDialogIsOpen,
@@ -55,11 +53,7 @@ export default function ConfiguratorToolbar() {
         setIsOnStandardMode,
     } = useRatePresenterContext();
 
-    const {
-        copyHtmlContent,
-        copyTextContent,
-        openPreviewLink,
-    } = useQuotePreviewContext()
+    const {loadedData} = useQuoteContext()
 
     const handleOpenFormulaDialog = useCallback(() => setFormulaDialogIsOpen(true), [setFormulaDialogIsOpen]);
     const handleOpenFormatDialog = useCallback(() => setFormatDialogIsOpen(true), [setFormatDialogIsOpen]);
@@ -188,11 +182,11 @@ export default function ConfiguratorToolbar() {
             icon: <GlobeAltIcon />,
             items: [
                 [
-                    { name: 'Copy content', icon: <DocumentDuplicateIcon />, handler: copyHtmlContent},
-                    { name: 'Copy plain text', icon: <DocumentDuplicateIcon />, handler: copyTextContent},
+                    { name: 'Copy content', icon: <DocumentDuplicateIcon />, handler: () => {} },
+                    { name: 'Copy plain text', icon: <DocumentDuplicateIcon />, handler: () => {} },
                 ],
                 [
-                    { name: 'Open preview...', icon: <ArrowTopRightOnSquareIcon />, handler: openPreviewLink },
+                    { name: 'Open preview...', icon: <ArrowTopRightOnSquareIcon />, handler: () => {} },
                     { name: 'Open website...', icon: <GlobeAltIcon />, handler: () => {} },
                 ],
             ]

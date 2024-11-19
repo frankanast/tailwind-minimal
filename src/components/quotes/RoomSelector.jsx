@@ -1,9 +1,9 @@
 import {PlusIcon, UsersIcon, XCircleIcon} from '@heroicons/react/20/solid'
+import ChildIcon from '../../assets/images/child.svg?react'
 import {useQuoteContext} from "./QuoteContext.jsx";
 import occupancyLiteral from "../../utils/occupancyLiteral.js";
 import {nanoid} from "nanoid";
 import {useState} from "react";
-import ToddlerIcon from "../../assets/ToddlerIcon.jsx";
 
 
 function RoomsList() {
@@ -65,7 +65,7 @@ function RoomsInput() {
                 </div>
                 <div className="relative flex flex-grow items-stretch focus-within:z-10">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                        <ToddlerIcon className="-ml-0.5 h-5 w-5 text-gray-400"/>
+                        <ChildIcon aria-hidden="true" className="h-5 w-5"/>
                     </div>
                     <input
                         id="children"
@@ -86,7 +86,7 @@ function RoomsInput() {
                         setChildren(0)
                     }}
                 >
-                    <PlusIcon className="-ml-0.5 h-5 w-5 text-gray-200"/>
+                    <PlusIcon aria-hidden="true" className="-ml-0.5 h-5 w-5 text-gray-200"/>
                         Add
                 </button>
             </div>
