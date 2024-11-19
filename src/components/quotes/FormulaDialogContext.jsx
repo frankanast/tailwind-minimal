@@ -21,12 +21,12 @@ export function FormulaDialogProvider({ children }) {
     const [formulaIsValid, setFormulaIsValid] = useState(true);
     const [formulaError, setFormulaError] = useState(undefined)
 
-
     const [selectedRateOptions, setSelectedRateOptions] = useState([])
     const [newName, setNewName] = useState(undefined);
 
     useEffect(() => {
         setFormulaIsValid(validateFormula(formulaInput, setFormulaError))
+
     }, [formulaInput]);
 
     return (

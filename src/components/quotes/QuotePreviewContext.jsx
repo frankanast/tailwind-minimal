@@ -1,6 +1,7 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
 import {copyHTMLToClipboard, copyTextToClipboard} from "../../utils/copyToClipboard.js";
+import {useQuoteContext} from "./QuoteContext.jsx";
 
 export const QuotePreviewContext = createContext(undefined);
 
@@ -12,6 +13,8 @@ export function QuotePreviewProvider({ children }) {
     const [template, setTemplate] = useState("default")
 
     const { parsedData, editedEntities } = useRatePresenterContext()
+    const { websiteUrl } = useQuoteContext()
+
 
     useEffect(() => {
         // Load preview URL
@@ -98,6 +101,14 @@ export function QuotePreviewProvider({ children }) {
         }
     }
 
+    const openWebsiteLink = () => {
+        if (websiteUrl) {
+            window.open(websiteUrl, "_blank")
+        } else {
+            alert("Unable to open the booking engine page, please report this to the developer.")
+        }
+    }
+
     return (
         <QuotePreviewContext.Provider value={{
             language,
@@ -108,6 +119,7 @@ export function QuotePreviewProvider({ children }) {
             copyHtmlContent,
             copyTextContent,
             openPreviewLink,
+            openWebsiteLink,
         }}>
             {children}
         </QuotePreviewContext.Provider>

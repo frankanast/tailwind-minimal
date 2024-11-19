@@ -12,6 +12,7 @@ export const QuoteContext = createContext(undefined);
 export function QuoteProvider({ children }) {
     const [checkInDate, setCheckInDate] = useState('');
     const [checkOutDate, setCheckOutDate] = useState('');
+    const [websiteUrl, setWebsiteUrl] = useState("")
 
     const [occupancy, setOccupancy] = useState([
         { key: nanoid(), adults: 2, children: 0 },
@@ -47,6 +48,12 @@ export function QuoteProvider({ children }) {
         enabled: !!checkInDate && !!checkOutDate // Only run if check-in/out dates are available
     });
 
+    useEffect(() => {
+        if (loadedData) {
+            setWebsiteUrl(loadedData.website_url)
+        }
+    }, [loadedData]);
+
     return (
         <QuoteContext.Provider value={{
             checkInDate,
@@ -57,6 +64,7 @@ export function QuoteProvider({ children }) {
             occupancy,
             setOccupancy,
             totalPeople,
+            websiteUrl,
             loadedData,
             isFetching,
             isError,

@@ -43,6 +43,7 @@ export default function ConfiguratorToolbar() {
     const {loadedData} = useQuoteContext()
     const {
         updateSelection,
+        selectedItems,
         formulaDialogIsOpen,
         setFormulaDialogIsOpen,
         formatDialogIsOpen,
@@ -59,6 +60,7 @@ export default function ConfiguratorToolbar() {
         copyHtmlContent,
         copyTextContent,
         openPreviewLink,
+        openWebsiteLink,
     } = useQuotePreviewContext()
 
     const handleOpenFormulaDialog = useCallback(() => setFormulaDialogIsOpen(true), [setFormulaDialogIsOpen]);
@@ -76,8 +78,10 @@ export default function ConfiguratorToolbar() {
         setIsOnStandardMode(false)
     }
 
-    // Keyboard shortcuts
     const keyActions = useCallback((event) => {
+        // Shortcuts may interfere with the user editing in FormulaDialog.
+        // Shortcuts may raise exceptions if they call a method on selectedItems when selectedItems is empty.
+        console.log(selectedItems.length > 0)
         if (formulaDialogIsOpen === false) {
             if (event.key === "A" && event.shiftKey) {
                 updateSelection("everything");
@@ -113,7 +117,6 @@ export default function ConfiguratorToolbar() {
             }
         }
     }, [updateSelection, handleOpenFormulaDialog, handleDelete]);
-
 
     useEffect(() => {
         window.addEventListener("keydown", keyActions);
@@ -154,13 +157,13 @@ export default function ConfiguratorToolbar() {
             icon: <BoltIcon />,
             items: [
                 [
-                    { name: 'Formula...', icon: <FxIcon />, shortcutLabel: "F", handler: handleOpenFormulaDialog },
+                    { name: 'Formula...', icon: <FxIcon />, shortcutLabel: "⌘F", handler: handleOpenFormulaDialog },
                     { name: 'Net rate (world)', icon: <DocumentCurrencyDollarIcon />, shortcutLabel: "", handler: handleNetRateWorld },
                     { name: 'Net rate (Italia)', icon: <DocumentCurrencyEuroIcon />, shortcutLabel: "", handler: handleNetRateItaly },
                 ],
                 [
                     { name: 'Format...', icon: <SparklesIcon />, shortcutLabel: "", handler: handleOpenFormatDialog },
-                    { name: 'Delete', icon: <BackspaceIcon />, shortcutLabel: "⌂", handler: handleDelete },
+                    { name: 'Delete', icon: <BackspaceIcon />, shortcutLabel: "DEL", handler: handleDelete },
                 ],
                 [
                     { name: 'Restore', icon: <ArrowUturnLeftIcon />, shortcutLabel: "", handler: handleRestore },
@@ -193,7 +196,7 @@ export default function ConfiguratorToolbar() {
                 ],
                 [
                     { name: 'Open preview...', icon: <ArrowTopRightOnSquareIcon />, handler: openPreviewLink },
-                    { name: 'Open website...', icon: <GlobeAltIcon />, handler: () => {} },
+                    { name: 'Open website...', icon: <GlobeAltIcon />, handler: openWebsiteLink },
                 ],
             ]
         },

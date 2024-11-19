@@ -37,7 +37,6 @@ export function RatePresenterProvider({ children }) {
             "los": los,
             "occupancy_detail": occupancy,
             "total_guests": totalPeople,
-            "blastness_url": "...",
             "data": parsed,
         };
     }
@@ -66,6 +65,10 @@ export function RatePresenterProvider({ children }) {
 
 
     function updateSelection(action) {
+        if (!parsedData || !parsedData.data || parsedData.data.length === 0) {
+            return [];
+        }
+
         setSelectedItems((prevSelectedItems) => {
             const allItems = parsedData.data.map(occ => occ.rooms.map(room => room.entity_id)).flat();
             const currentOccupancyItems = allItemsInCurrentOccupancy;
@@ -143,42 +146,51 @@ export function RatePresenterProvider({ children }) {
     }
 
     function applyRateVariation(formula, additionalScope = {}, target = undefined, newName = undefined) {
-        parsedData.data.forEach(occupancy => {
-            occupancy.rooms.forEach(room => {
-                if (selectedItems.includes(room.entity_id)) {
-                    room.rates.forEach(rate => {
-                        let scope = {
-                            rateAmount: rate.amount,
-                            adultsCount: occupancy.adults,
-                            childrenCount: occupancy.children,
-                            guestCount: occupancy.adults + occupancy.children,
-                            los: los,
-                            ...additionalScope,
-                        };
+        const updatedData = parsedData.data.map(occupancy => {
+            return {
+                ...occupancy,
+                rooms: occupancy.rooms.map(room => {
+                    if (selectedItems.includes(room.entity_id)) {
+                        const updatedRates = room.rates.map(rate => {
+                            if (target && target.includes(rate.id)) {
+                                const scope = {
+                                    rateAmount: rate.amount,
+                                    adultsCount: occupancy.adults,
+                                    childrenCount: occupancy.children,
+                                    guestCount: occupancy.adults + occupancy.children,
+                                    los: los,
+                                    ...additionalScope,
+                                };
 
-                        try {
-                            if (!target) {
-                                // If no target is provided, formula is applied on all rates...
-                                rate.amount = safelyEvaluate(formula, scope, rate.amount)
-                                rate.data.name = newName || rate.data.name
-                                rate.data.public_name.en = newName || rate.data.public_name?.en
-
-                            } else {
-                                // ...otherwise, if targets are provided, we only apply the formula on the provided rates.
-                                if (target.includes(rate.id)) {
-                                    rate.amount = safelyEvaluate(formula, scope, rate.amount)
-                                    rate.data.name = newName || rate.data.name
-                                    rate.data.public_name.en = newName || rate.data.public_name?.en
-                                }
+                                return {
+                                    ...rate,
+                                    amount: safelyEvaluate(formula, scope, rate.amount),
+                                    data: {
+                                        ...rate.data,
+                                        name: newName || rate.data.name,
+                                        public_name: {
+                                            ...rate.data.public_name,
+                                            en: newName || rate.data.public_name?.en,
+                                        },
+                                    },
+                                };
                             }
+                            return rate;
+                        });
 
-                        } catch (error) {
-                            console.error("Error evaluating expression:", error);
-                        }
-                    });
-                    setEditedEntities((prevEdits) => [...prevEdits, room.entity_id]);
-                }
-            });
+                        return {
+                            ...room,
+                            rates: updatedRates,
+                        };
+                    }
+                    return room;
+                }),
+            };
+        });
+
+        setParsedData({
+            ...parsedData,
+            data: updatedData,
         });
     }
 

@@ -33,32 +33,24 @@ function AbstractDropdown({ title, icon, items }) {
                         <NoActionsIndicator />
                     </div>
                 ) : (
-                    items.map((group, index) => (
+                    items.map((group) => (
                         <div key={nanoid()} className="py-1">
                             {(Array.isArray(group) ? group : [group]).map((item) => (
                                 <MenuItem key={nanoid()}>
-                                    <a
-                                        href={item.href || "#"}
-                                        className="group flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                        onClick={item.handler}
-                                    >
-
-                                        <div className="flex gap-1">
-                                            <span className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500">
+                                        <div
+                                            className="group flex gap-1 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 select-none cursor-pointer"
+                                            onClick={item.handler}
+                                        >
+                                            <span className="flex-none mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500">
                                                 {item.icon || <Fragment />}
                                             </span>
-                                            <div className="flex-grow">
+                                            <span className="grow">
                                                 {item.name}
-                                            </div>
-                                            <span>
-                                                {item.shortcutLabel
-                                                    ? <span className="invisible hover:visible text-black">Esc</span>
-                                                    : <Fragment />
-                                                }
                                             </span>
-
+                                            <span className="flex-none ml-3 font-light items-baseline text-transparent group-hover:text-gray-300 group-data-[focus]:text-gray-400">
+                                                {item.shortcutLabel || ""}
+                                            </span>
                                         </div>
-                                    </a>
                                 </MenuItem>
                             ))}
                         </div>
