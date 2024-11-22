@@ -3,18 +3,11 @@ import {Menu, MenuButton} from "@headlessui/react";
 import Avatar from "./abstract/Avatar.jsx";
 
 export default function ProfileSettingsDropdown({ variant, data }) {
-    console.log(data);
-
     if (variant === "desktop") {
         return(
             <>
                 <Menu as="div" className="relative">
                     <MenuButton className="-m-1.5 flex items-center p-1.5">
-                        {/*<img*/}
-                        {/*    className="h-8 w-8 rounded-full"*/}
-                        {/*    alt={`${data.firstName} ${data.lastName}'s profile picture`}*/}
-                        {/*    src={data.profilePicUrl}*/}
-                        {/*/>*/}
                         <Avatar profileData={data} variant="sidebar" />
 
                         <span className="hidden lg:flex lg:items-center">

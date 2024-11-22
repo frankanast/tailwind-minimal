@@ -6,7 +6,7 @@ import QuotePage from "./quotes/QuotePage.jsx";
 import Messages from './messages/Messages.jsx';
 import Templates from './templates/Templates.jsx';
 import Help from './help/Help.jsx';
-import Settings from './settings/Settings.jsx';
+import SettingsPage from './settings/SettingsPage.jsx';
 import Events from "./events/Events.jsx";
 import SuperpowerUser from "./users/SuperpowerUser.jsx";
 import SuperpowerBans from "./bans/SuperpowerBans.jsx";
@@ -22,7 +22,7 @@ const navigation = [
     { name: 'Messages', page: Messages, icon: 'ChatBubbleOvalLeftIcon' },
     { name: 'Templates', page: Templates, icon: 'SwatchIcon' },
     { name: 'Help', page: Help, icon: 'QuestionMarkCircleIcon' },
-    { name: 'Settings', page: Settings, icon: 'Cog6ToothIcon' },
+    { name: 'Settings', page: SettingsPage, icon: 'Cog6ToothIcon' },
 ];
 
 // Superpowers items
@@ -66,7 +66,6 @@ export default function HomeScreen() {
                     <main>
                         <div>
                             {CurrentPage && <CurrentPage toggleHandler={toggleSidebar} />}
-
                         </div>
                     </main>
                 </div>
