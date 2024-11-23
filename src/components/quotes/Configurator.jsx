@@ -1,4 +1,4 @@
-import {useRatePresenterContext} from "./RatePresenterContext.jsx";
+import {useRatePresenterContext} from "../../context/RatePresenterContext.jsx";
 import QuoteStandardConfigurator from "./QuoteStandardConfigurator.jsx";
 import QuoteTailoredConfigurator from "./QuoteTailoredConfigurator.jsx";
 

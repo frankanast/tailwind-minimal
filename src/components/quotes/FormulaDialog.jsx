@@ -5,10 +5,10 @@ import {
     DialogPanel,
     DialogTitle,
 } from '@headlessui/react'
-import {useRatePresenterContext} from "./RatePresenterContext.jsx";
+import {useRatePresenterContext} from "../../context/RatePresenterContext.jsx";
 import FxIcon from "../../assets/FxIcon.jsx";
 import {CheckIcon, XMarkIcon} from '@heroicons/react/20/solid'
-import {useFormulaDialogContext} from "./FormulaDialogContext.jsx";
+import {useFormulaDialogContext} from "../../context/FormulaDialogContext.jsx";
 import BoxIcon from "../../assets/BoxIcon.jsx";
 import RateSelectionDropdown from "./RateSelectionDropdown.jsx";
 

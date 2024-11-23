@@ -3,12 +3,11 @@ import UkFlagIcon from "../../assets/UkFlagIcon.jsx";
 import {InformationCircleIcon} from "@heroicons/react/16/solid/index.js";
 import AbstractCheckableList from "../abstract/AbstractCheckableList.jsx";
 import {Field, Label, Switch} from "@headlessui/react";
-import {useSettingsContext} from "./SettingsContext.jsx";
-import {useRoomMappingFormContext} from "./RoomMappingFormContext.jsx";
+import {useSettingsContext} from "../../context/SettingsContext.jsx";
+import {useRoomMappingFormContext} from "../../context/RoomMappingFormContext.jsx";
 import classNames from "../../utils/classNames.js";
-import {useFileUploadContext} from "../abstract/context/FileUploadContext.jsx";
-import LoadingIcon from "../../assets/LoadingIcon.jsx";
 import formatUnixTimestamp from "../../utils/formatUnixTimestamp.js";
+import FileUploader from "./FileUploader.jsx";
 
 export default function RoomMappingEditForm() {
     // We usually don't do this, but this is convenient here.
@@ -32,14 +31,6 @@ export default function RoomMappingEditForm() {
         checkboxLabel: "ml-3 text-sm",
         priorityLabel: "block text-sm/6 font-medium text-gray-900",
         priorityInput: "block w-21 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6",
-        fileList: "divide-y divide-gray-100 rounded-md border border-gray-200 bg-gray-50",
-        fileListItem: "flex items-center justify-between py-4 pl-4 pr-5 text-sm/6",
-        fileListItemContent: "flex w-0 flex-1 items-center",
-        fileIcon: "size-5 shrink-0 text-gray-400",
-        fileDetails: "ml-4 flex min-w-0 flex-1 gap-2",
-        fileName: "truncate font-medium",
-        fileSize: "shrink-0 text-gray-400",
-        fileActions: "ml-4 shrink-0",
         link: "font-medium text-indigo-600 hover:text-indigo-500",
     };
 
@@ -56,6 +47,7 @@ export default function RoomMappingEditForm() {
         setDescription,
         url,
         setUrl,
+        imageUrl,
         priority,
         setPriority,
         virtualRoom,
@@ -68,58 +60,6 @@ export default function RoomMappingEditForm() {
         setSelectedCategory,
         lastUpdateTimestamp,
     } = useRoomMappingFormContext();
-
-    const FileUploader = () => {
-        const {
-            file,
-            sourceUrl,
-            handleFileChange,
-            handleUpload,
-            mutation: { isLoading },
-        } = useFileUploadContext();
-
-        return (
-            <ul role="list" className={styles.fileList}>
-                <li className={styles.fileListItem}>
-                    <div className={styles.fileListItemContent}>
-                        <span>
-                            {isLoading
-                                ? <LoadingIcon className="size-5 text-gray-700"/>
-                                : <img alt="" className="inline-block size-12 rounded-md" src={`https://programmino-be.onrender.com/download_pic/${sourceUrl || "1c5e9959-d53f-4c19-9117-9ffb64dcb899.png"}`} />
-                            }
-                        </span>
-
-                        <span className={styles.fileDetails}>
-                            <span className={styles.fileName}>{file?.name || "No file selected"}</span>
-                        </span>
-
-                        <div className={classNames(styles.fileActions, "flex gap-3")}>
-                            <div>
-                                <input
-                                    type="file"
-                                    id="upload"
-                                    accept=".jpg, .jpeg, .png"
-                                    onChange={handleFileChange}
-                                    onClick={handleUpload}
-                                    hidden
-                                />
-                                <label htmlFor="upload" className={classNames(styles.link, "cursor-pointer")}>
-                                    Replace
-                                </label>
-                            </div>
-                            <a
-                                className={styles.link}
-                                href={`https://programmino-be.onrender.com/download_pic/${sourceUrl || "1c5e9959-d53f-4c19-9117-9ffb64dcb899.png"}`}
-                                target="_blank"
-                            >
-                                View
-                            </a>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        );
-    };
 
     return (
         <dl className="divide-y divide-gray-100 pr-4">

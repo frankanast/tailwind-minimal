@@ -1,11 +1,16 @@
-import {useSettingsContext} from "./SettingsContext.jsx";
+import {useSettingsContext} from "../../context/SettingsContext.jsx";
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
 import MappingStatusBadge from "./MappingStatusBadge.jsx";
 
 export default function MappingRatesList() {
     const { ratesMetadata, isError, isFetching } = useSettingsContext();
-    if (isFetching || isError || !ratesMetadata) {
-        return <LoadingIcon height={12} width={12} />
+
+    if (isFetching || isError) {  // + || !roomsMetadata
+        return(
+            <div className="flex justify-center">
+                <LoadingIcon className="w-7 h-auto" />
+            </div>
+        )
     }
 
     return (

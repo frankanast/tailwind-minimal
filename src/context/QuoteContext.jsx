@@ -1,9 +1,9 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import { nanoid } from "nanoid";
 import { useQuery } from "@tanstack/react-query";
-import formatOccupancyWithAges from "../../utils/formatOccupancyWithAges.js";
-import formatDateForBackend from "../../utils/formatDateForBackend.js";
-import daysBetweenDates from "../../utils/daysBetweenDates.js";
+import formatOccupancyWithAges from "../utils/formatOccupancyWithAges.js";
+import formatDateForBackend from "../utils/formatDateForBackend.js";
+import daysBetweenDates from "../utils/daysBetweenDates.js";
 
 const BACKEND_ROOT = "https://programmino-be.onrender.com";
 

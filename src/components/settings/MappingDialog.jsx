@@ -1,17 +1,23 @@
 import {Dialog} from "@headlessui/react";
-import {useSettingsContext} from "./SettingsContext.jsx";
+import {useSettingsContext} from "../../context/SettingsContext.jsx";
 import RoomMappingEditForm from "./RoomMappingEditForm.jsx";
 import RateMappingEditForm from "./RateMappingEditForm.jsx";
 import {LinkIcon} from "@heroicons/react/16/solid/index.js";
 import CommitIcon from "../../assets/CommitIcon.jsx";
-import {useRoomMappingFormContext} from "./RoomMappingFormContext.jsx";
+import {useRoomMappingFormContext} from "../../context/RoomMappingFormContext.jsx";
 
-export default function MappingDialog({ strategy, id }) {
+export default function MappingDialog({ strategy }) {
     const { mappingDialogIsOpen, setMappingDialogIsOpen } = useSettingsContext();
-    const {isCurrentlyEditing, shortName} = useRoomMappingFormContext();
+    const {isCurrentlyEditing, shortName, resetForm, commitChanges} = useRoomMappingFormContext();
 
     function handleClose() {
+        resetForm()
         setMappingDialogIsOpen(false);
+    }
+
+    function handleCommit() {
+        commitChanges()
+        handleClose()
     }
 
     return (
@@ -58,6 +64,7 @@ export default function MappingDialog({ strategy, id }) {
                             <button
                                 type="button"
                                 className="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                onClick={handleCommit}
                             >
                                 <CommitIcon className="-ml-0.5 size-5"/>
                                 Commit

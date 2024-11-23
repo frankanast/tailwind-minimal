@@ -1,4 +1,4 @@
-import {createContext, useContext, useEffect, useMemo, useState} from "react";
+import {createContext, useContext, useMemo, useState} from "react";
 import { useQuery } from "@tanstack/react-query";
 
 export const SettingsContext = createContext(undefined);

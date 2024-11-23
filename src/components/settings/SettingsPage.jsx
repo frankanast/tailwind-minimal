@@ -1,19 +1,17 @@
 'use client'
 import 'react'
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {SettingsProvider} from "./SettingsContext.jsx";
+import {SettingsProvider} from "../../context/SettingsContext.jsx";
 import MappingRoomsList from "./MappingRoomsList.jsx";
 import MappingRatesList from "./MappingRatesList.jsx";
 import MappingDialog from "./MappingDialog.jsx";
-import {RoomMappingFormProvider} from "./RoomMappingFormContext.jsx";
-import {FileUploadProvider} from "../abstract/context/FileUploadContext.jsx";
+import {RoomMappingFormProvider} from "../../context/RoomMappingFormContext.jsx";
+import {FileUploadProvider} from "../../context/FileUploadContext.jsx";
 
 export default function SettingsPage() {
-    const queryClient = new QueryClient();
+
 
     return (
-        <QueryClientProvider client={queryClient}>
-            <SettingsProvider>
+        <SettingsProvider>
                 <RoomMappingFormProvider>
                     <FileUploadProvider>
                         <div className="flex flex-col h-screen">
@@ -26,7 +24,7 @@ export default function SettingsPage() {
                                                 <p className="mt-1 text-sm leading-6 text-gray-500">
                                                     This information will be displayed both within the UI and in letters.
                                                 </p>
-                                                <div className="flex flex-col h-auto overflow-auto">
+                                                <div className="flex flex-col h-1/3 overflow-auto">
                                                     <MappingRoomsList/>
                                                     <MappingDialog strategy="room"/>
                                                 </div>
@@ -36,7 +34,7 @@ export default function SettingsPage() {
                                                 <p className="mt-1 text-sm leading-6 text-gray-500">
                                                     This information will be displayed both within the UI and in letters.
                                                 </p>
-                                                <div className="flex flex-col h-auto overflow-auto">
+                                                <div className="flex flex-col h-1/3 overflow-auto">
                                                     <MappingRatesList />
                                                 </div>
                                             </div>
@@ -48,6 +46,5 @@ export default function SettingsPage() {
                     </FileUploadProvider>
                 </RoomMappingFormProvider>
             </SettingsProvider>
-        </QueryClientProvider>
     )
 }

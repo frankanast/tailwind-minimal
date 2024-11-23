@@ -1,7 +1,7 @@
 import AbstractToolbar from "../abstract/toolbars/AbstractToolbar.jsx";
 import InputMask from 'react-input-mask';
 import { useState, useEffect } from "react";
-import { useQuoteContext } from "./QuoteContext.jsx";
+import { useQuoteContext } from "../../context/QuoteContext.jsx";
 import {
     UserGroupIcon,
     RectangleGroupIcon,

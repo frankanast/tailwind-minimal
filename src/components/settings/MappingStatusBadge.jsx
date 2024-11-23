@@ -1,5 +1,5 @@
 import classNames from "../../utils/classNames.js";
-import {useSettingsContext} from "./SettingsContext.jsx";
+import {useSettingsContext} from "../../context/SettingsContext.jsx";
 
 export default function MappingStatusBadge({id}) {
     const {statuses} = useSettingsContext();

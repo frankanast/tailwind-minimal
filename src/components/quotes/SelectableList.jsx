@@ -1,5 +1,5 @@
 import "react";
-import { useRatePresenterContext } from "./RatePresenterContext.jsx";
+import { useRatePresenterContext } from "../../context/RatePresenterContext.jsx";
 import BoxIcon from "../../assets/BoxIcon.jsx";
 import {Fragment} from "react";
 import classNames from "../../utils/classNames.js";

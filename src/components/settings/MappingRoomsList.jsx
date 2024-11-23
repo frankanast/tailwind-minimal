@@ -1,7 +1,7 @@
-import {useSettingsContext} from "./SettingsContext.jsx";
+import {useSettingsContext} from "../../context/SettingsContext.jsx";
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
 import MappingStatusBadge from "./MappingStatusBadge.jsx";
-import {useRoomMappingFormContext} from "./RoomMappingFormContext.jsx";
+import {useRoomMappingFormContext} from "../../context/RoomMappingFormContext.jsx";
 
 export default function MappingRoomsList() {
     const {roomsMetadata, isError, isFetching, setMappingDialogIsOpen} = useSettingsContext()
@@ -13,7 +13,11 @@ export default function MappingRoomsList() {
     }
 
     if (isFetching || isError || !roomsMetadata) {
-        return <LoadingIcon height={12} width={12} />
+        return(
+            <div className="flex justify-center">
+                <LoadingIcon className="w-7 h-auto" />
+            </div>
+        )
     }
 
     return (

@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {nanoid} from "nanoid";
-import validateFormula from "../../utils/validateFormula.js";
+import validateFormula from "../utils/validateFormula.js";
 
 export const FormulaDialogContext = createContext(undefined);
 

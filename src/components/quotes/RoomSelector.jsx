@@ -1,6 +1,6 @@
 import {PlusIcon, UsersIcon, XCircleIcon} from '@heroicons/react/20/solid'
 import ChildIcon from '../../assets/images/child.svg?react'
-import {useQuoteContext} from "./QuoteContext.jsx";
+import {useQuoteContext} from "../../context/QuoteContext.jsx";
 import occupancyLiteral from "../../utils/occupancyLiteral.js";
 import {nanoid} from "nanoid";
 import {useState} from "react";

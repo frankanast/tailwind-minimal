@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { useQuoteContext } from "./QuoteContext.jsx";
-import groupRatesForPresentation from "../../utils/groupRatesForPresentation.js";
-import cleanUpResponse from "../../utils/cleanUpResponse.js";
+import groupRatesForPresentation from "../utils/groupRatesForPresentation.js";
+import cleanUpResponse from "../utils/cleanUpResponse.js";
 import { evaluate } from 'mathjs';
 
 export const RatePresenterContext = createContext(undefined);

@@ -12,6 +12,7 @@ export function RoomMappingFormProvider({children}) {
     const [abbr, setAbbr] = useState("");
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("");
+    const [imageUrl, setImageUrl] = useState("");
     const [priority, setPriority] = useState(0);
     const [virtualRoom, setVirtualRoom] = useState(false);
     const [hiddenByDefault, setHiddenByDefault] = useState(false);
@@ -28,6 +29,7 @@ export function RoomMappingFormProvider({children}) {
             setAbbr(data.abbr || "");
             setDescription(data.description || "");
             setUrl(data.url || "");
+            setImageUrl(data.picture || "")
             setPriority(data.priority || 0);
             setVirtualRoom(data.virtual_room || false);
             setHiddenByDefault(data.hidden_by_default || false);
@@ -36,6 +38,73 @@ export function RoomMappingFormProvider({children}) {
             setLastUpdateTimestamp(data.last_updated || "");
         }
     }, [isCurrentlyEditing, rooms]);
+
+    function resetForm() {
+        setName("");
+        setShortName("");
+        setAbbr("");
+        setDescription("");
+        setUrl("");
+        setImageUrl("");
+        setPriority(0);
+        setVirtualRoom(false);
+        setHiddenByDefault(false);
+        setMappingStatus("");
+        setSelectedCategory("");
+        setLastUpdateTimestamp("");
+        setIsCurrentlyEditing(null);
+    }
+
+    async function commitChanges() {
+        if (!isCurrentlyEditing) return;
+
+        const payload = {
+            id: isCurrentlyEditing,
+            name: {
+                it: name.it || "Nessun nome",
+                en: name.en || "No name"
+            },
+            short_name: {
+                it: shortName.it || "Nessun nome",
+                en: shortName.en || "No name"
+            },
+            abbr: abbr || "NONAME",
+            description: {
+                it: description.it || "Nessun nome",
+                en: description.en || "No name"
+            },
+            picture: imageUrl || "",
+            signature_suite: (selectedCategory.id === "SIGNST") || false,
+            villa: (selectedCategory.id === "VILLA") || false,
+            virtual_room: virtualRoom,
+            hidden_by_default: hiddenByDefault,
+            priority: priority || 999,
+            url: {
+                it: url.it || "https://www.borgosanfelice.com",
+                en: url.en || "https://www.borgosanfelice.com/en/index"
+            }
+        };
+
+        try {
+            const response = await fetch(`https://programmino-be.onrender.com/rooms/${isCurrentlyEditing}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to update room.`);
+            }
+
+            const result = await response.json();
+            console.log("Room updated successfully:", result);
+
+        } catch (error) {
+            console.error("Error updating room:", error);
+        }
+    }
 
     return (
         <RoomMappingFormContext.Provider
@@ -50,6 +119,8 @@ export function RoomMappingFormProvider({children}) {
                 setDescription,
                 url,
                 setUrl,
+                imageUrl,
+                setImageUrl,
                 priority,
                 setPriority,
                 virtualRoom,
@@ -63,6 +134,8 @@ export function RoomMappingFormProvider({children}) {
                 isCurrentlyEditing,
                 setIsCurrentlyEditing,
                 lastUpdateTimestamp,
+                resetForm,
+                commitChanges,
             }}
         >
             {children}

@@ -4,7 +4,7 @@ import {
     DialogBackdrop,
     DialogPanel,
 } from '@headlessui/react'
-import {useRatePresenterContext} from "./RatePresenterContext.jsx";
+import {useRatePresenterContext} from "../../context/RatePresenterContext.jsx";
 import RateSelectionDropdown from "./RateSelectionDropdown.jsx";
 import {useEffect, useState} from "react";
 

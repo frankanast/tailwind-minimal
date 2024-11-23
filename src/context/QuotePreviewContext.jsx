@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {useRatePresenterContext} from "./RatePresenterContext.jsx";
-import {copyHTMLToClipboard, copyTextToClipboard} from "../../utils/copyToClipboard.js";
+import {copyHTMLToClipboard, copyTextToClipboard} from "../utils/copyToClipboard.js";
 import {useQuoteContext} from "./QuoteContext.jsx";
 
 export const QuotePreviewContext = createContext(undefined);

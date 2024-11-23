@@ -2,7 +2,7 @@ import {Transition} from "@headlessui/react";
 import StandardCardViewList from "./SelectableList.jsx";
 import classNames from "../../utils/classNames.js";
 import occupancyLiteral from "../../utils/occupancyLiteral.js";
-import {useRatePresenterContext} from "./RatePresenterContext.jsx";
+import {useRatePresenterContext} from "../../context/RatePresenterContext.jsx";
 
 export default function OccupancyTabs() {
     const { parsedData, selectedTabId, setSelectedTabId } = useRatePresenterContext()
