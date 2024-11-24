@@ -1,5 +1,5 @@
 import Iframe from 'react-iframe';
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import {useQuotePreviewContext} from "../../context/QuotePreviewContext.jsx";
 
 export default function QuoteRenderer() {

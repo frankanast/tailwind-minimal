@@ -1,11 +1,11 @@
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
 import MappingStatusBadge from "./MappingStatusBadge.jsx";
-import {useRoomMappingFormContext} from "../../context/RoomMappingFormContext.jsx";
+import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
 
 export default function MappingRoomsList() {
     const {roomsMetadata, isError, isFetching, setMappingDialogIsOpen} = useSettingsContext()
-    const {setIsCurrentlyEditing} = useRoomMappingFormContext()
+    const {setIsCurrentlyEditing} = useRoomMappingContext()
 
     function handleOpenRoomMapping(id_) {
         setIsCurrentlyEditing(id_)

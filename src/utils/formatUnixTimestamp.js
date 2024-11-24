@@ -1,7 +1,7 @@
 export default function formatUnixTimestamp(unixTimestamp, locale = 'en-UK', options = {}) {
-    if (typeof unixTimestamp !== 'number' || isNaN(unixTimestamp)) {
-        return "Unknown."
-    }
+    // if (typeof unixTimestamp !== 'number' || isNaN(unixTimestamp)) {
+    //     return "Unknown."
+    // }
 
     const date = new Date(unixTimestamp * 1000);
 

@@ -1,7 +1,7 @@
 import {createContext, useContext, useEffect, useState} from "react";
 //import { useMutation } from "@tanstack/react-query";
 import axios from 'axios';
-import {useRoomMappingFormContext} from "./RoomMappingFormContext.jsx";
+import {useRoomMappingContext} from "./RoomMappingFormContext.jsx";
 
 export const FileUploadContext = createContext(undefined);
 
@@ -11,7 +11,7 @@ export function FileUploadProvider({ children }) {
     const [uploadProgress, setUploadProgress] = useState(0);
     const [filenameLink, setFilenameLink] = useState(null);
 
-    const {setImageUrl} = useRoomMappingFormContext()
+    const {setImageUrl} = useRoomMappingContext()
 
     function handleFileChange(e) {
         if (e.target.files) {

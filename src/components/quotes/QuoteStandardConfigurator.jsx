@@ -34,9 +34,7 @@ const QuoteStandardConfigurator = () => {
 
     if (isFetching) {
         return (
-            <div className="mt-8 w-8 mx-auto">
-                <LoadingIcon height={12} width={12} />
-            </div>
+            <LoadingIcon className="mt-8 w-8 mx-auto"/>
         );
     }
 

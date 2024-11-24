@@ -1,4 +1,4 @@
-export default function LoadingIcon ({width, height, className}) {
+export default function LoadingIcon ({className}) {
     const animation = `
         .spinner_ajPY {
             transform-origin: center;
@@ -16,11 +16,9 @@ export default function LoadingIcon ({width, height, className}) {
             <svg
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
+                className={className || "w-7 h-auto"}
                 stroke="currentColor"
                 fill="currentColor"
-                width={width || 12}
-                height={height || 12}
-                className={className}
             >
                 <style>{animation}</style>
                 <path d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z" opacity=".25" />

@@ -55,6 +55,7 @@ export function SettingsProvider({ children }) {
             roomCategories,
             isError,
             isFetching,
+            refetch,
             loadedSettings,
             roomsMetadata,
             ratesMetadata,

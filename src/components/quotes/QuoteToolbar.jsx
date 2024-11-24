@@ -122,7 +122,7 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
             component:
                 <button onClick={handleFetchClick}>
                     {isFetching
-                        ? <div className="w-4 my-auto"><LoadingIcon width={5} height={5}/></div>
+                        ? <LoadingIcon className="w-4 my-auto"/>
                         : <MagnifyingGlassIcon className="w-4" />
                     }
                     Load

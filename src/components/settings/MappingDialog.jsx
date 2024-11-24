@@ -1,23 +1,25 @@
 import {Dialog} from "@headlessui/react";
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
-import RoomMappingEditForm from "./RoomMappingEditForm.jsx";
-import RateMappingEditForm from "./RateMappingEditForm.jsx";
+import RoomMappingForm from "./RoomMappingForm.jsx";
+import RateMappingForm from "./RateMappingForm.jsx";
 import {LinkIcon} from "@heroicons/react/16/solid/index.js";
 import CommitIcon from "../../assets/CommitIcon.jsx";
-import {useRoomMappingFormContext} from "../../context/RoomMappingFormContext.jsx";
+import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
 
 export default function MappingDialog({ strategy }) {
-    const { mappingDialogIsOpen, setMappingDialogIsOpen } = useSettingsContext();
-    const {isCurrentlyEditing, shortName, resetForm, commitChanges} = useRoomMappingFormContext();
+    const { mappingDialogIsOpen, setMappingDialogIsOpen, refetch} = useSettingsContext();
+    const {isCurrentlyEditing, shortName, resetForm, commitChanges} = useRoomMappingContext();
 
     function handleClose() {
         resetForm()
         setMappingDialogIsOpen(false);
+
     }
 
     function handleCommit() {
         commitChanges()
         handleClose()
+        refetch()
     }
 
     return (
@@ -46,8 +48,8 @@ export default function MappingDialog({ strategy }) {
                                 <div className="overflow-y-auto max-h-[400px] mt-4">
                                     {/* if strategy is "room", render a room mapping form. Else, render a rate mapping form.*/}
                                     {(strategy === "room")
-                                        ? <RoomMappingEditForm/>
-                                        : <RateMappingEditForm/>
+                                        ? <RoomMappingForm/>
+                                        : <RateMappingForm/>
                                     }
                                 </div>
                             </div>
