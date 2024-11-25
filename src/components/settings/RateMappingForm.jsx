@@ -26,7 +26,6 @@ export default function RateMappingForm() {
         // url,
         // setUrl,
         // // imageUrl,
-        // priority,
         // setPriority,
         // virtualRoom,
         // setVirtualRoom,
@@ -36,7 +35,8 @@ export default function RateMappingForm() {
         // setMappingStatus,
         // selectedCategory,
         // setSelectedCategory,
-        // lastUpdateTimestamp,
+        priority,
+        lastUpdateTimestamp,
     } = useRateMappingContext();
 
     return (
@@ -297,12 +297,12 @@ export default function RateMappingForm() {
             {/*    </dd>*/}
             {/*</div>*/}
 
-            {/*<div className={mappingFormStyles.container}>*/}
-            {/*    <dt className={mappingFormStyles.label}>Last updated</dt>*/}
-            {/*    <dd className="text-sm">*/}
-            {/*        {formatUnixTimestamp(lastUpdateTimestamp, "en-UK", { weekday: 'long' })}*/}
-            {/*    </dd>*/}
-            {/*</div>*/}
+            <div className={mappingFormStyles.container}>
+                <dt className={mappingFormStyles.label}>Last updated</dt>
+                <dd className="text-sm">
+                    {formatUnixTimestamp(lastUpdateTimestamp, "en-UK", { weekday: 'long' })}
+                </dd>
+            </div>
         </dl>
     )
 }

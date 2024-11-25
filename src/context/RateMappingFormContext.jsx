@@ -7,52 +7,52 @@ export function RateMappingFormProvider({children}) {
     const {rates} = useSettingsContext()
     const [isCurrentlyEditingRate, setIsCurrentlyEditingRate] = useState(null)
 
-    // const [name, setName] = useState({ it: "", en: "" });
-    // const [shortName, setShortName] = useState({ it: "", en: "" });
-    // const [abbr, setAbbr] = useState("");
-    // const [description, setDescription] = useState({ it: "", en: "" });
-    // const [url, setUrl] = useState({ it: "", en: "" });
+    const [name, setName] = useState({ it: "", en: "" });
+    const [abbr, setAbbr] = useState("");
+    const [publicName, setPublicName] = useState({ it: "", en: "" });
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [isPackage, setIsPackage] = useState(false);
+    const [includes, setIncludes] = useState({ it: "", en: "" });
+    const [isPrivateSale, setIsPrivateSale] = useState(false);
     // const [imageUrl, setImageUrl] = useState("");
-    // const [priority, setPriority] = useState(0);
-    // const [virtualRoom, setVirtualRoom] = useState(false);
     // const [hiddenByDefault, setHiddenByDefault] = useState(false);
     // const [mappingStatus, setMappingStatus] = useState("");
-    // const [selectedCategory, setSelectedCategory] = useState("");
+    const [priority, setPriority] = useState(0);
     const [lastUpdateTimestamp, setLastUpdateTimestamp] = useState(0)
 
     useEffect(() => {
         if (isCurrentlyEditingRate !== null) {
             const data = rates[isCurrentlyEditingRate] || {};
 
-            // setName(data.name || "");
-            // setShortName(data.short_name || "");
-            // setAbbr(data.abbr || "");
-            // setDescription(data.description || "");
-            // setUrl(data.url || "");
+            setName(data.name || { it: "", en: "" });
+            setAbbr(data.abbr || "");
+            setPublicName(data.public_name || { it: "", en: "" });
+            setSelectedCategory(data.category || "");
+            setIsPackage(data.is_package || false);
+            setIncludes(data["includes"] || "");
+            setIsPrivateSale(data.is_private_sale || false);
             // setImageUrl(data.picture || "")
-            // setPriority(data.priority || 0);
-            // setVirtualRoom(data.virtual_room || false);
             // setHiddenByDefault(data.hidden_by_default || false);
             // setMappingStatus(data.mapping_status || "");
-            // setSelectedCategory(data.category || "");
-            // setLastUpdateTimestamp(data.last_updated || "");
+            setPriority(data.priority || 0);
+            setLastUpdateTimestamp(data.last_updated || "");
         }
     }, [isCurrentlyEditingRate, rates]);
 
     function resetForm() {
-        // setName({ it: "", en: "" });
-        // setShortName({ it: "", en: "" });
-        // setAbbr("");
-        // setDescription({ it: "", en: "" });
-        // setUrl({ it: "", en: "" });
+        setIsCurrentlyEditingRate(null);
+        setName({ it: "", en: "" });
+        setAbbr("");
+        setPublicName( { it: "", en: "" });
+        setSelectedCategory("");
+        setIsPackage(false);
+        setIncludes({ it: "", en: "" });
+        setIsPrivateSale(false);
         // setImageUrl("");
-        // setPriority(0);
-        // setVirtualRoom(false);
         // setHiddenByDefault(false);
         // setMappingStatus("");
-        // setSelectedCategory("");
-        // setLastUpdateTimestamp(0);
-        setIsCurrentlyEditingRate(null);
+        setLastUpdateTimestamp(0);
+        setPriority(0);
     }
 
     async function commitChanges() {
@@ -62,32 +62,29 @@ export function RateMappingFormProvider({children}) {
 
         const payload = {
             id: isCurrentlyEditingRate,
-            // name: {
-            //     it: name.it || "Nessun nome",
-            //     en: name.en || "No name"
-            // },
-            // short_name: {
-            //     it: shortName.it || "Nessun nome",
-            //     en: shortName.en || "No name"
-            // },
-            // abbr: abbr || "NONAME",
-            // description: {
-            //     it: description.it || "Nessun nome",
-            //     en: description.en || "No name"
-            // },
-            // url: {
-            //     it: url.it || "https://www.borgosanfelice.com",
-            //     en: url.en || "https://www.borgosanfelice.com/en/index"
-            // },
+            name: {
+                it: name.it || "Nessun nome",
+                en: name.en || "No name"
+            },
+            abbr: abbr || "NONAME",
+            public_name: {
+                it: publicName.it || "Nessun nome",
+                en: publicName.en || "No name"
+            },
+            category: selectedCategory?.id || "",
+            is_package: isPackage,
+            includes: {
+                it: includes.it || "Nessun servizio incluso in questo pacchetto.",
+                en: includes.en || "No services included in this package rate"
+            },
+            is_private_sale: isPrivateSale,
             // picture: imageUrl || "",
-            // category: selectedCategory?.id || "",
             // signature_suite: selectedCategory === "SIGNST",
             // villa: selectedCategory === "VILLA",
-            // virtual_room: virtualRoom,
             // hidden_by_default: hiddenByDefault,
             // mapping_status: mappingStatus?.id || "provisional",
+            priority: priority || 999,
             last_update: currentTimestamp,
-            // priority: priority || 999,
         };
 
         try {
@@ -114,10 +111,27 @@ export function RateMappingFormProvider({children}) {
     return (
         <RateMappingFormContext.Provider
             value={{
-                //...
                 isCurrentlyEditingRate,
                 setIsCurrentlyEditingRate,
+                name,
+                setName,
+                abbr,
+                setAbbr,
+                publicName,
+                setPublicName,
+                selectedCategory,
+                setSelectedCategory,
+                isPackage,
+                setIsPackage,
+                includes,
+                setIncludes,
+                isPrivateSale,
+                setIsPrivateSale,
+
+                priority,
+                setPriority,
                 lastUpdateTimestamp,
+                setLastUpdateTimestamp,
                 resetForm,
                 commitChanges,
             }}
