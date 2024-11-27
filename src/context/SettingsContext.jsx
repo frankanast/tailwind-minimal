@@ -26,6 +26,15 @@ export function SettingsProvider({ children }) {
         { id: 'ST', name: 'Suites' },
     ];
 
+    const rateCategories = [
+        { id: 'DEF', name: 'Default rate' },
+        { id: 'BNB', name: 'Bed and Breakfast rates' },
+        { id: 'PKG', name: 'Package rates' },
+        { id: 'FLEX', name: 'Flexible rates' },
+        { id: 'NREF', name: 'Not Refundable rates' },
+    ];
+
+
     const statuses = [
         {id: "unusable", style: 'text-chestnut-600 bg-chestnut-50 ring-chestnut-500/10', name: "Do not use"},
         {id: "test", style: 'text-gray-600 bg-gray-50 ring-gray-500/10', name: "Test"},
@@ -53,6 +62,7 @@ export function SettingsProvider({ children }) {
         <SettingsContext.Provider value={{
             statuses,
             roomCategories,
+            rateCategories,
             isError,
             isFetching,
             refetch,

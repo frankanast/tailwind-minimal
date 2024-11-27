@@ -1,11 +1,18 @@
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
 import MappingStatusBadge from "./MappingStatusBadge.jsx";
+import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
 
-export default function MappingRatesList() {
-    const { ratesMetadata, isError, isFetching } = useSettingsContext();
+export default function MappingRoomsList() {
+    const {ratesMetadata, isError, isFetching, setMappingDialogIsOpen} = useSettingsContext()
+    const {setIsCurrentlyEditingRate} = useRateMappingContext()
 
-    if (isFetching || isError) {  // + || !roomsMetadata
+    function handleOpenRateMapping(id_) {
+        setIsCurrentlyEditingRate(id_)
+        setMappingDialogIsOpen(true)
+    }
+
+    if (isFetching || isError || !ratesMetadata) {
         return(
             <div className="flex justify-center">
                 <LoadingIcon className="w-7 h-auto" />
@@ -22,15 +29,19 @@ export default function MappingRatesList() {
                     </dt>
                     <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                         <div className="text-gray-900 flex gap-3">
-                            <span className="font-medium">{rateDetails.name ? `${rateDetails.name} (${rateDetails.abbr})` : ""}</span>
-                            <MappingStatusBadge id={rateDetails.mapping_status} />
+                            <span className="font-medium">{rateDetails.name?.en || "Unnamed Rate"}</span>
+                            <MappingStatusBadge id={rateDetails.mapping_status}/>
                         </div>
-                        <button type="button" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                        <button
+                            type="button"
+                            className="font-semibold text-indigo-600 hover:text-indigo-500"
+                            onClick={() => {handleOpenRateMapping(rateId)}}
+                        >
                             Mapping
                         </button>
                     </dd>
                 </div>
             ))}
         </dl>
-    );
+    )
 }

@@ -81,22 +81,22 @@ export default function RoomMappingForm() {
             <div className={mappingFormStyles.container}>
                 <dt className={mappingFormStyles.label}>Short name</dt>
                 <dd className={mappingFormStyles.value}>
-                    <fieldset>
-                        <div className={mappingFormStyles.inputContainer}>
-                            <input
-                                id="short-name-it"
-                                name="short-name-it"
-                                type="text"
-                                placeholder="Immaginaria"
-                                className={classNames(mappingFormStyles.input, mappingFormStyles.roundedTop)}
-                                value={shortName.it}
-                                onChange={(e) => setShortName({ ...shortName, it: e.target.value })}
-                            />
-                            <div className={mappingFormStyles.iconContainer}>
-                                <ItalyFlagIcon className={mappingFormStyles.flagIcon}/>
-                            </div>
-                        </div>
-                        <div className={mappingFormStyles.inputContainer}>
+                            <fieldset>
+                                <div className={mappingFormStyles.inputContainer}>
+                                    <input
+                                        id="short-name-it"
+                                        name="short-name-it"
+                                        type="text"
+                                        placeholder="Immaginaria"
+                                        className={classNames(mappingFormStyles.input, mappingFormStyles.roundedTop)}
+                                        value={shortName.it}
+                                        onChange={(e) => setShortName({ ...shortName, it: e.target.value })}
+                                    />
+                                    <div className={mappingFormStyles.iconContainer}>
+                                        <ItalyFlagIcon className={mappingFormStyles.flagIcon}/>
+                                    </div>
+                                </div>
+                                <div className={mappingFormStyles.inputContainer}>
                             <input
                                 id="short-name-en"
                                 name="short-name-en"

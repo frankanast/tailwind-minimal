@@ -14,9 +14,9 @@ export function RateMappingFormProvider({children}) {
     const [isPackage, setIsPackage] = useState(false);
     const [includes, setIncludes] = useState({ it: "", en: "" });
     const [isPrivateSale, setIsPrivateSale] = useState(false);
-    // const [imageUrl, setImageUrl] = useState("");
-    // const [hiddenByDefault, setHiddenByDefault] = useState(false);
-    // const [mappingStatus, setMappingStatus] = useState("");
+    const [defaultAmount, setDefaultAmount] = useState(0);
+    const [cxlPolicy, setCxlPolicy] = useState("");  // Should be: const [cxlPolicy, setCxlPolicy] = useState({ it: "", en: "" });
+    const [rateMappingStatus, setRateMappingStatus] = useState("");
     const [priority, setPriority] = useState(0);
     const [lastUpdateTimestamp, setLastUpdateTimestamp] = useState(0)
 
@@ -31,9 +31,9 @@ export function RateMappingFormProvider({children}) {
             setIsPackage(data.is_package || false);
             setIncludes(data["includes"] || "");
             setIsPrivateSale(data.is_private_sale || false);
-            // setImageUrl(data.picture || "")
-            // setHiddenByDefault(data.hidden_by_default || false);
-            // setMappingStatus(data.mapping_status || "");
+            setPublicName(data.default_amount || 0);
+            setCxlPolicy(data.cxl_policy || "")  // Should be: setCxlPolicy(data.cxl_policy || { it: "", en: "" })
+            setRateMappingStatus(data.mapping_status || "");
             setPriority(data.priority || 0);
             setLastUpdateTimestamp(data.last_updated || "");
         }
@@ -48,9 +48,9 @@ export function RateMappingFormProvider({children}) {
         setIsPackage(false);
         setIncludes({ it: "", en: "" });
         setIsPrivateSale(false);
-        // setImageUrl("");
-        // setHiddenByDefault(false);
-        // setMappingStatus("");
+        setDefaultAmount(0);
+        setCxlPolicy("");  // Should be: setCxlPolicy({it: "", en: ""})
+        setRateMappingStatus("");
         setLastUpdateTimestamp(0);
         setPriority(0);
     }
@@ -78,11 +78,9 @@ export function RateMappingFormProvider({children}) {
                 en: includes.en || "No services included in this package rate"
             },
             is_private_sale: isPrivateSale,
-            // picture: imageUrl || "",
-            // signature_suite: selectedCategory === "SIGNST",
-            // villa: selectedCategory === "VILLA",
-            // hidden_by_default: hiddenByDefault,
-            // mapping_status: mappingStatus?.id || "provisional",
+            default_amount: defaultAmount,
+            cxl_policy: cxlPolicy || "",  // Should be: setCxlPolicy(data.cxl_policy || { it: "", en: "" })
+            mapping_status: rateMappingStatus?.id || "provisional",
             priority: priority || 999,
             last_update: currentTimestamp,
         };
@@ -127,7 +125,12 @@ export function RateMappingFormProvider({children}) {
                 setIncludes,
                 isPrivateSale,
                 setIsPrivateSale,
-
+                defaultAmount,
+                setDefaultAmount,
+                cxlPolicy,
+                setCxlPolicy,
+                rateMappingStatus,
+                setRateMappingStatus,
                 priority,
                 setPriority,
                 lastUpdateTimestamp,
