@@ -3,7 +3,7 @@ import LoadingIcon from "../../assets/LoadingIcon.jsx";
 import MappingStatusBadge from "./MappingStatusBadge.jsx";
 import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
 
-export default function MappingRoomsList() {
+export default function MappingRatesList() {
     const {ratesMetadata, isError, isFetching, setMappingDialogIsOpen} = useSettingsContext()
     const {setIsCurrentlyEditingRate} = useRateMappingContext()
 
@@ -29,7 +29,7 @@ export default function MappingRoomsList() {
                     </dt>
                     <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                         <div className="text-gray-900 flex gap-3">
-                            <span className="font-medium">{rateDetails.name?.en || "Unnamed Rate"}</span>
+                            <span className="font-medium">{rateDetails.name || "Unnamed Rate"} {`(${rateDetails.abbr || ""})`}</span>
                             <MappingStatusBadge id={rateDetails.mapping_status}/>
                         </div>
                         <button

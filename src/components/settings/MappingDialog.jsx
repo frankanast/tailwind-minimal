@@ -5,19 +5,31 @@ import RateMappingForm from "./RateMappingForm.jsx";
 import {LinkIcon} from "@heroicons/react/16/solid/index.js";
 import CommitIcon from "../../assets/CommitIcon.jsx";
 import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
+import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
 
 export default function MappingDialog({ strategy }) {
     const { mappingDialogIsOpen, setMappingDialogIsOpen, refetch} = useSettingsContext();
     const {isCurrentlyEditing, shortName, resetForm, commitChanges} = useRoomMappingContext();
+    const {isCurrentlyEditingRate, name, resetRateForm, commitRateChanges} = useRateMappingContext();
+    // const {isCurrentlyEditingRate, name, abbr} = useRateMappingContext();
 
     function handleClose() {
-        resetForm()
+        if (strategy === "room") {
+            resetForm()
+        } else {
+            resetRateForm()
+        }
         setMappingDialogIsOpen(false);
 
     }
 
     function handleCommit() {
-        commitChanges()
+        if (strategy === "room") {
+            commitChanges()
+        } else {
+            commitRateChanges()
+        }
+
         handleClose()
         refetch()
     }
@@ -38,7 +50,10 @@ export default function MappingDialog({ strategy }) {
 
                             <div className="w-full text-center sm:ml-4 sm:mt-0 sm:text-left">
                                 <Dialog.Title as="h3" className="text-base font-semibold text-gray-900">
-                                    Mapping Room <span className="font-mono font-normal">{isCurrentlyEditing} ({shortName?.en || "???"})</span>
+                                    Mapping Room {(strategy === "room")
+                                    ? <span className="font-mono font-normal">{isCurrentlyEditing} ({shortName?.en || "???"})</span>
+                                    : <span className="font-mono font-normal">{isCurrentlyEditingRate} ({name || "???"})</span>
+                                }
                                 </Dialog.Title>
 
                                 <Dialog.Description as="p" className="mt-1 max-w-2xl text-sm/6 text-gray-500">

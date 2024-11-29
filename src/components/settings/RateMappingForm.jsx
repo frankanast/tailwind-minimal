@@ -49,7 +49,7 @@ export default function RateMappingForm() {
                                 name="name"
                                 type="text"
                                 placeholder="Imaginary Rate"
-                                className={classNames(mappingFormStyles.input, mappingFormStyles.roundedTop)}
+                                className={classNames(mappingFormStyles.input, mappingFormStyles.roundedTop, mappingFormStyles.roundedBottom)}
                                 value={name.it}
                                 onChange={(e) => setName(e.target.value)}
                             />

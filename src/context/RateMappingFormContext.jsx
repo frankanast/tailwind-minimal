@@ -5,81 +5,94 @@ export const RateMappingFormContext = createContext(undefined);
 
 export function RateMappingFormProvider({children}) {
     const {rates} = useSettingsContext()
-    const [isCurrentlyEditingRate, setIsCurrentlyEditingRate] = useState(null)
 
-    const [name, setName] = useState({ it: "", en: "" });
+    const [isCurrentlyEditingRate, setIsCurrentlyEditingRate] = useState(null)
+    const [name, setName] = useState("");
     const [abbr, setAbbr] = useState("");
+
     const [publicName, setPublicName] = useState({ it: "", en: "" });
+    const [includes, setIncludes] = useState({ it: "", en: "" });
+    const [cxlPolicy, setCxlPolicy] = useState({ it: "", en: "" });
+
     const [selectedCategory, setSelectedCategory] = useState("");
     const [isPackage, setIsPackage] = useState(false);
-    const [includes, setIncludes] = useState({ it: "", en: "" });
     const [isPrivateSale, setIsPrivateSale] = useState(false);
+
     const [defaultAmount, setDefaultAmount] = useState(0);
-    const [cxlPolicy, setCxlPolicy] = useState("");  // Should be: const [cxlPolicy, setCxlPolicy] = useState({ it: "", en: "" });
     const [rateMappingStatus, setRateMappingStatus] = useState("");
     const [priority, setPriority] = useState(0);
-    const [lastUpdateTimestamp, setLastUpdateTimestamp] = useState(0)
+
+    const [lastUpdateTimestamp, setLastUpdateTimestamp] = useState(0.0)
 
     useEffect(() => {
         if (isCurrentlyEditingRate !== null) {
             const data = rates[isCurrentlyEditingRate] || {};
 
-            setName(data.name || { it: "", en: "" });
+            setName(data.name || "");
             setAbbr(data.abbr || "");
+
             setPublicName(data.public_name || { it: "", en: "" });
+            setIncludes(data["includes"] || { it: "", en: "" });
+            setCxlPolicy(data.cxl_policy || { it: "", en: "" })
+
             setSelectedCategory(data.category || "");
             setIsPackage(data.is_package || false);
-            setIncludes(data["includes"] || "");
             setIsPrivateSale(data.is_private_sale || false);
-            setPublicName(data.default_amount || 0);
-            setCxlPolicy(data.cxl_policy || "")  // Should be: setCxlPolicy(data.cxl_policy || { it: "", en: "" })
+
+            setDefaultAmount(data.default_amount || 0);
             setRateMappingStatus(data.mapping_status || "");
             setPriority(data.priority || 0);
             setLastUpdateTimestamp(data.last_updated || "");
         }
     }, [isCurrentlyEditingRate, rates]);
 
-    function resetForm() {
+    function resetRateForm() {
         setIsCurrentlyEditingRate(null);
-        setName({ it: "", en: "" });
+        setName("");
         setAbbr("");
+
         setPublicName( { it: "", en: "" });
+        setIncludes({ it: "", en: "" });
+        setCxlPolicy({it: "", en: ""})
+
         setSelectedCategory("");
         setIsPackage(false);
-        setIncludes({ it: "", en: "" });
         setIsPrivateSale(false);
+
         setDefaultAmount(0);
-        setCxlPolicy("");  // Should be: setCxlPolicy({it: "", en: ""})
         setRateMappingStatus("");
-        setLastUpdateTimestamp(0);
         setPriority(0);
+        setLastUpdateTimestamp(0);
     }
 
-    async function commitChanges() {
+    async function commitRateChanges() {
         if (isCurrentlyEditingRate === null || isCurrentlyEditingRate === undefined) return;
 
         const currentTimestamp = Date.now() / 1000;
 
         const payload = {
             id: isCurrentlyEditingRate,
-            name: {
-                it: name.it || "Nessun nome",
-                en: name.en || "No name"
-            },
+            name: name || "No name",
             abbr: abbr || "NONAME",
+
             public_name: {
                 it: publicName.it || "Nessun nome",
                 en: publicName.en || "No name"
             },
-            category: selectedCategory?.id || "",
-            is_package: isPackage,
             includes: {
                 it: includes.it || "Nessun servizio incluso in questo pacchetto.",
                 en: includes.en || "No services included in this package rate"
             },
+            cxl_policy: {
+                it: cxlPolicy.it || "Politiche di cancellazione...",
+                en: cxlPolicy.en || "Cancellation policy..."
+            },
+
+            category: selectedCategory?.id || "",
+            is_package: isPackage,
             is_private_sale: isPrivateSale,
+
             default_amount: defaultAmount,
-            cxl_policy: cxlPolicy || "",  // Should be: setCxlPolicy(data.cxl_policy || { it: "", en: "" })
             mapping_status: rateMappingStatus?.id || "provisional",
             priority: priority || 999,
             last_update: currentTimestamp,
@@ -135,8 +148,8 @@ export function RateMappingFormProvider({children}) {
                 setPriority,
                 lastUpdateTimestamp,
                 setLastUpdateTimestamp,
-                resetForm,
-                commitChanges,
+                resetRateForm,
+                commitRateChanges,
             }}
         >
             {children}
