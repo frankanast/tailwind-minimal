@@ -121,7 +121,6 @@ export function RoomMappingFormProvider({children}) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                //body: JSON.stringify(payload)
             });
 
             if (!response.ok) {
@@ -134,6 +133,63 @@ export function RoomMappingFormProvider({children}) {
         } catch (error) {
             console.error("Error updating room:", error);
             alert("Error updating room.");
+        }
+    }
+
+    async function addRoom(id) {
+        // This function creates an empty new room with the provided ID.
+        // Prompting and result handling should be implemented in the actual use case.
+        const currentTimestamp = Date.now() / 1000;
+
+        try {
+            const response = await fetch(`https://programmino-be.onrender.com/rooms/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    name: {
+                        it: "Nessun nome",
+                        en: "No name"
+                    },
+                    short_name: {
+                        it: "Nessun nome",
+                        en: "No name"
+                    },
+                    abbr: `NN${id}`,
+                    description: {
+                        it: "Nessun nome",
+                        en: "No name"
+                    },
+                    url: {
+                        it: "https://www.borgosanfelice.com",
+                        en: "https://www.borgosanfelice.com/en/index"
+                    },
+                    picture: "",
+                    category: "",
+                    signature_suite: selectedCategory === "SIGNST",
+                    villa: selectedCategory === "VILLA",
+                    virtual_room: virtualRoom,
+                    hidden_by_default: hiddenByDefault,
+                    mapping_status: "provisional",
+                    last_update: currentTimestamp,
+                    priority: 999,
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Failed to add the room.");
+            }
+
+            const result = await response.json();
+            resetForm()
+            console.log(result.message || `Room ${id} successfully added!`);
+
+        } catch (error) {
+            console.error("Error creating room:", error);
+            alert("Error creating room.");
         }
     }
 
@@ -168,6 +224,7 @@ export function RoomMappingFormProvider({children}) {
                 resetForm,
                 commitChanges,
                 deleteRoom,
+                addRoom,
             }}
         >
             {children}

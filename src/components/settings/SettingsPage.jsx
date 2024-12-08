@@ -50,12 +50,10 @@ export default function SettingsPage() {
                         <FileUploadProvider>
                             <div className="flex flex-col h-screen">
                                 <SettingsToolbar/>
-                                <div className="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:px-8 lg:py-12 space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
+                                <div className="mx-auto max-w-7xl px-6 lg:px-8 lg:mx-0 lg:max-w-none">
                                     {isRoot ? (
-                                        // Render the grid of fancy buttons when on the root route
                                         <SettingsSections />
                                     ) : (
-                                        // Render the dynamic content when navigating to a specific route
                                         <Outlet />
                                     )}
                                 </div>

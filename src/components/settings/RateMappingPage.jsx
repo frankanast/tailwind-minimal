@@ -6,33 +6,47 @@ import {useEffect} from "react";
 import formatUnixTimestamp from "../../utils/formatUnixTimestamp.js";
 import {ArrowUturnLeftIcon, XMarkIcon} from "@heroicons/react/20/solid";
 import {Link} from "react-router-dom";
+import {useSettingsContext} from "../../context/SettingsContext.jsx";
 
 export default function RateMappingPage() {
     const {
         isCurrentlyEditingRate,
         setIsCurrentlyEditingRate,
-        lastUpdateTimestamp,
         name,
-        resetForm,
-        commitChanges,
+        lastUpdateTimestamp,
+        resetRateForm,
+        commitRateChanges,
         deleteRate,
     } = useRateMappingContext();
+
+    const { refetch } = useSettingsContext();
 
     let params = useParams();
     let navigate = useNavigate();
 
     function handleCommit() {
-        commitChanges()
-        resetForm()
-        navigate('/settings/rates')
+        commitRateChanges().then(() => {
+            refetch()
+            resetRateForm()
+            navigate('/settings/rates')
+        });
     }
 
     function handleDelete() {
-        if (confirm("BEWARE!!! This operation is irreversible. Once you delete a rate, you can't go back. It is advised to use mapping status to mark an unusable rate rather than deleting it. Do you want to continue?") === true) {
-            deleteRate()
+        if (confirm(
+            `
+            Important: This action is irreversible. 
+            Once a rate is deleted, it cannot be restored. 
+            We recommend using the 'mapping status' feature to mark rates as unusable instead of deleting them. 
+            Are you sure you want to proceed?
+            `
+        ) === true) {
+            deleteRate().then(() => {
+                refetch()
+                resetRateForm()
+                navigate('/settings/rates')
+            });
         }
-        resetForm()
-        navigate('/settings/rates')
     }
 
     useEffect(() => {
@@ -103,9 +117,9 @@ export default function RateMappingPage() {
 
                             <span className="hidden sm:block">
                                 <button
-                                    className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                     type="button"
                                     onClick={handleCommit}
+                                    className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
                                     <CommitIcon className="-ml-0.5 mr-1.5 size-5 text-white"/>
                                     Save changes

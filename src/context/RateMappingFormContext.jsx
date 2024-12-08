@@ -143,6 +143,61 @@ export function RateMappingFormProvider({children}) {
         }
     }
 
+    async function addRate(id) {
+        // This function creates an empty new rate with a provided ID.
+        // Prompting and result handling should be implemented in the actual use case.
+        const currentTimestamp = Date.now() / 1000;
+
+        try {
+            const response = await fetch(`https://programmino-be.onrender.com/rates/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    name: "No name",
+                    abbr: `NN${id}`,
+
+                    public_name: {
+                        it: "Nessun nome",
+                        en: "No name"
+                    },
+                    includes: {
+                        it: "Nessun servizio incluso in questo pacchetto.",
+                        en: "No services included in this package rate"
+                    },
+                    cxl_policy: {
+                        it: "Politiche di cancellazione...",
+                        en: "Cancellation policy..."
+                    },
+
+                    category: "",
+                    is_package: isPackage,
+                    is_private_sale: isPrivateSale,
+
+                    default_amount: 0,
+                    mapping_status: "provisional",
+                    priority: 999,
+                    last_update: currentTimestamp,
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Failed to add rate.");
+            }
+
+            const result = await response.json();
+            resetRateForm()
+            console.log(result.message || `Rate ${id} successfully added!`);
+
+        } catch (error) {
+            console.error("Error creating rate:", error);
+            alert("Error creating rate.");
+        }
+    }
+
     return (
         <RateMappingFormContext.Provider
             value={{
@@ -175,6 +230,7 @@ export function RateMappingFormProvider({children}) {
                 resetRateForm,
                 commitRateChanges,
                 deleteRate,
+                addRate,
             }}
         >
             {children}

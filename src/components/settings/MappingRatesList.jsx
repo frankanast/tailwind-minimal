@@ -4,14 +4,34 @@ import MappingStatusBadge from "./MappingStatusBadge.jsx";
 import {Link} from "react-router-dom";
 import {PlusSmallIcon} from "@heroicons/react/20/solid/index.js";
 import {useState} from "react";
-import {CheckIcon, PencilIcon} from "@heroicons/react/20/solid";
-import CommitIcon from "../../assets/CommitIcon.jsx";
+import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
+import {useNavigate} from "react-router";
 
 export default function MappingRatesList() {
-    const {ratesMetadata, isError, isFetching} = useSettingsContext()
+    const { ratesMetadata, isError, isFetching, refetch } = useSettingsContext()
+    const { addRate } = useRateMappingContext()
 
     const [filterCriteria, setFilterCriteria] = useState(null);
     const [sortCriteria, setSortCriteria] = useState(null);
+
+    const navigate = useNavigate()
+    function handleAddRate() {
+        let newRateId = prompt("Enter the ID for the new rate. It is recommended to use numbers only.")
+        if (!newRateId) return;
+
+        addRate(newRateId).then(() => {
+            refetch()
+            navigate(`/settings/rates/${newRateId}`)
+        });
+    }
+
+    if (isFetching || isError || !ratesMetadata) {
+        return(
+            <div className="flex justify-center">
+                <LoadingIcon className="w-7 h-auto" />
+            </div>
+        )
+    }
 
     const processedRates = () => {
         if (!ratesMetadata) return [];
@@ -95,6 +115,7 @@ export default function MappingRatesList() {
                     </div>
                     <button
                         className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={handleAddRate}
                     >
                         <PlusSmallIcon aria-hidden="true" className="-ml-1.5 size-5"/>
                         New rate
@@ -109,7 +130,7 @@ export default function MappingRatesList() {
                         </dt>
                         <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                             <div className="text-gray-900 flex gap-3">
-                                <span className="font-medium">{rateDetails.name || "Unnamed Room"}</span>
+                                <span className="font-medium">{rateDetails.name || "Unnamed Rate"}</span>
                                 <MappingStatusBadge id={rateDetails.mapping_status}/>
                             </div>
                             <Link

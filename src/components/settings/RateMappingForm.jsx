@@ -8,8 +8,7 @@ import classNames from "../../utils/classNames.js";
 import formatUnixTimestamp from "../../utils/formatUnixTimestamp.js";
 import mappingFormStyles from "./mappingFormStyles.js";
 import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
-import {useParams} from "react-router";
-import {useEffect, useRef} from "react";
+
 
 export default function RateMappingForm() {
     const {statuses, rateCategories} = useSettingsContext()

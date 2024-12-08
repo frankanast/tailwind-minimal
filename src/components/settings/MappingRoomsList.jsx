@@ -4,11 +4,12 @@ import MappingStatusBadge from "./MappingStatusBadge.jsx";
 import {Link} from "react-router-dom";
 import {PlusSmallIcon} from "@heroicons/react/20/solid/index.js";
 import {useState} from "react";
-import {CheckIcon, PencilIcon} from "@heroicons/react/20/solid";
-import CommitIcon from "../../assets/CommitIcon.jsx";
+import {useNavigate} from "react-router";
+import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
 
 export default function MappingRoomsList() {
-    const {roomsMetadata, isError, isFetching} = useSettingsContext()
+    const {roomsMetadata, isError, isFetching, refetch} = useSettingsContext()
+    const {addRoom} = useRoomMappingContext()
 
     const [filterCriteria, setFilterCriteria] = useState(null);
     const [sortCriteria, setSortCriteria] = useState(null);
@@ -38,6 +39,17 @@ export default function MappingRoomsList() {
 
         return filteredRooms;
     };
+
+    const navigate = useNavigate()
+    function handleAddRoom() {
+        let newRoomId = prompt("Enter the ID for the new room. It is recommended to use numbers only.")
+        if (!newRoomId) return;
+
+        addRoom(newRoomId).then(() => {
+            refetch()
+            navigate(`/settings/rooms/${newRoomId}`)
+        });
+    }
 
     if (isFetching || isError || !roomsMetadata) {
         return(
@@ -93,6 +105,7 @@ export default function MappingRoomsList() {
                     </div>
                     <button
                         className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={handleAddRoom}
                     >
                         <PlusSmallIcon aria-hidden="true" className="-ml-1.5 size-5"/>
                         New room

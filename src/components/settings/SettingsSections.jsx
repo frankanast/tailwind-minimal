@@ -18,7 +18,7 @@ const sections = [
         to: "rates",
         description: 'Rate mapping with website data.',
         icon: CurrencyEuroIcon,
-        background: 'bg-indigo-500',
+        background: 'bg-lavender-500',
     },
 ]
 
@@ -35,8 +35,7 @@ export default function SettingsSections() {
                 {sections.map((item, itemIdx) => (
                     <li key={itemIdx} className="flow-root">
 
-                        <div
-                            className="relative -m-2 flex items-center space-x-4 rounded-xl p-2 focus-within:ring-2 focus-within:ring-indigo-500 hover:bg-gray-50">
+                        <div className="relative -m-2 flex items-center space-x-4 rounded-xl p-2 focus-within:ring-2 focus-within:ring-indigo-500 hover:bg-gray-50">
                             <div
                                 className={classNames(item.background, 'flex size-16 shrink-0 items-center justify-center rounded-lg')}
                             >

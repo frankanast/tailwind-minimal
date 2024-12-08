@@ -4,7 +4,7 @@ import CustomerLogoImg from "./abstract/CustomerLogoImg.jsx";
 export default function PageNotFound() {
     return (
         <>
-            <div className="grid min-h-full grid-cols-1 grid-rows-[1fr_auto_1fr] bg-white lg:grid-cols-[max(50%,36rem)_1fr]">
+            <div className="grid h-screen grid-cols-1 grid-rows-[1fr_auto_1fr] bg-white lg:grid-cols-[max(50%,36rem)_1fr]">
                 <header className="mx-auto w-full max-w-7xl px-6 pt-6 sm:pt-10 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:px-8">
                     <Link to="/">
                         <span className="sr-only">Borgo San Felice Resort</span>
@@ -41,7 +41,7 @@ export default function PageNotFound() {
                 <div className="hidden lg:relative lg:col-start-2 lg:row-start-1 lg:row-end-4 lg:block">
                     <img
                         alt=""
-                        src="https://programmino-be.onrender.com/download_pic/164d2785-c20b-406a-825f-63f0689ee7f7.jpg"
+                        src="https://programmino-be.onrender.com/download_pic/ed84fda9-3fae-4109-89a5-1a9d7b188420.jpg"
                         className="absolute inset-0 h-screen object-cover"
                     />
                 </div>
