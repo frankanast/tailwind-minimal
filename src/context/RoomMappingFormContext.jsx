@@ -112,6 +112,31 @@ export function RoomMappingFormProvider({children}) {
         }
     }
 
+    async function deleteRoom() {
+        if (isCurrentlyEditing === null || isCurrentlyEditing === undefined) return;
+
+        try {
+            const response = await fetch(`https://programmino-be.onrender.com/rooms/${isCurrentlyEditing}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                //body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to delete room.`);
+            }
+
+            const result = await response.json();
+            alert(result.message || "Success, but with errors. ");
+
+        } catch (error) {
+            console.error("Error updating room:", error);
+            alert("Error updating room.");
+        }
+    }
+
     return (
         <RoomMappingFormContext.Provider
             value={{
@@ -142,6 +167,7 @@ export function RoomMappingFormProvider({children}) {
                 lastUpdateTimestamp,
                 resetForm,
                 commitChanges,
+                deleteRoom,
             }}
         >
             {children}

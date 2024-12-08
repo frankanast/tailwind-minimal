@@ -27,6 +27,8 @@
     "react-iframe": "^1.8.5",
     "react-input-mask": "^2.0.4",
     "react-resizable-panels": "^2.1.3",
+    "react-router": "^7.0.2",
+    "react-router-dom": "^7.0.2",
     "split-pane-react": "^0.1.3",
     "vite-plugin-svgr": "^4.2.0"
   },

@@ -11,7 +11,7 @@ const statuses = {
     'In progress': 'text-gray-600 bg-gray-50 ring-gray-500/10',
     Archived: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20',
 }
-const templates = [
+const templatesPage = [
     {
         id: 1,
         name: 'Offer of Stay (Resort)',
@@ -72,7 +72,7 @@ const actions = [
     {id: nanoid(), name: "paste", icon: <ClipboardDocumentListIcon />, text: "Paste"},
 ]
 
-function TemplateNavigation() {
+function TemplateToolbar() {
     return (
         <div
             className="sticky flex top-0 z-40 h-16 shrink-0 border-b border-gray-200 bg-white px-4 shadow-sm sm:px-6 lg:px-8"
@@ -122,13 +122,13 @@ function TemplateNavigation() {
 export default function Templates() {
      return (
         <div className="bg-white">
-            <TemplateNavigation  />
+            <TemplateToolbar  />
             <div className="mx-auto max-w-7xl px-6 py-12 sm:py-16 lg:px-8 lg:py-12 space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
                 <div className="flex flex-col mx-auto max-w-4xl divide-y divide-gray-900/10">
                     <div>
 
                         <ul role="list" className="divide-y divide-gray-100">
-                            {templates.map((project) => (
+                            {templatesPage.map((project) => (
                                 <li key={project.id} className="flex items-center justify-between gap-x-6 py-5">
                                     <div className="min-w-0">
                                         <div className="flex items-start gap-x-3">

@@ -8,7 +8,7 @@ import ChatDivider from "./ChatDivider.jsx";
 import messages from "../../assets/mockups/chat.js";
 
 
-export default function Messages() {
+export default function MessagesPage() {
 
     return (
         <div className="chat-background flex flex-col h-full justify-between">

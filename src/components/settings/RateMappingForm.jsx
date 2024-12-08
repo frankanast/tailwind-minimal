@@ -8,6 +8,8 @@ import classNames from "../../utils/classNames.js";
 import formatUnixTimestamp from "../../utils/formatUnixTimestamp.js";
 import mappingFormStyles from "./mappingFormStyles.js";
 import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
+import {useParams} from "react-router";
+import {useEffect, useRef} from "react";
 
 export default function RateMappingForm() {
     const {statuses, rateCategories} = useSettingsContext()
@@ -146,29 +148,28 @@ export default function RateMappingForm() {
                                 id="desc-it"
                                 className={mappingFormStyles.textarea}
                                 placeholder="Caratteristiche: 1 letto matrimoniale immaginario..."
-                                value={includes}
-                                // Should be: value={includes.it}
-                                onChange={(e) => setIncludes(e.target.value)}
-                                // Should be: onChange={(e) => setIncludes({ ...includes, it: e.target.value })}
+                                // value={includes}
+                                value={includes.it}
+                                // onChange={(e) => setIncludes(e.target.value)}
+                                onChange={(e) => setIncludes({ ...includes, it: e.target.value })}
                             />
                             <div className={mappingFormStyles.textareaFooter}>
                                 <ItalyFlagIcon className={mappingFormStyles.flagIcon}/>
                             </div>
                         </div>
 
-                        {/*TODO: There should also be: */}
-                        {/*<div className={mappingFormStyles.textareaWrapper}>*/}
-                        {/*    <textarea*/}
-                        {/*        id="desc-en"*/}
-                        {/*        className={mappingFormStyles.textarea}*/}
-                        {/*        placeholder="Features: 1 imaginary king-size bed..."*/}
-                        {/*        value={description.en}*/}
-                        {/*        onChange={(e) => setDescription({ ...description, en: e.target.value })}*/}
-                        {/*    />*/}
-                        {/*    <div className={mappingFormStyles.textareaFooter}>*/}
-                        {/*        <UkFlagIcon className={mappingFormStyles.flagIcon}/>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                        <div className={mappingFormStyles.textareaWrapper}>
+                            <textarea
+                                id="desc-en"
+                                className={mappingFormStyles.textarea}
+                                placeholder="Features: 1 imaginary king-size bed..."
+                                value={includes.en}
+                                onChange={(e) => setIncludes({ ...includes, en: e.target.value })}
+                            />
+                            <div className={mappingFormStyles.textareaFooter}>
+                                <UkFlagIcon className={mappingFormStyles.flagIcon}/>
+                            </div>
+                        </div>
                     </div>
                 </dd>
             </div>
@@ -184,32 +185,31 @@ export default function RateMappingForm() {
                     <div className={mappingFormStyles.descriptionContainer}>
                         <div className={mappingFormStyles.textareaWrapper}>
                             <textarea
-                                id="cxl-policy"
+                                id="cxl-policy-it"
                                 className={mappingFormStyles.textarea}
                                 placeholder="Cancellabile fino a X giorni prima dell'arrivo..."
-                                value={cxlPolicy}
-                                // Should be: value={cxlPolicy.it}
-                                onChange={(e) => setCxlPolicy(e.target.value)}
-                                // Should be: onChange={(e) => setCxlPolicy({ ...cxlPolicy, it: e.target.value })}
+                                // value={cxlPolicy}
+                                value={cxlPolicy.it}
+                                // onChange={(e) => setCxlPolicy(e.target.value)}
+                                onChange={(e) => setCxlPolicy({ ...cxlPolicy, it: e.target.value })}
                             />
                             <div className={mappingFormStyles.textareaFooter}>
                                 <ItalyFlagIcon className={mappingFormStyles.flagIcon}/>
                             </div>
                         </div>
 
-                        {/*TODO: There should also be: */}
-                        {/*<div className={mappingFormStyles.textareaWrapper}>*/}
-                        {/*    <textarea*/}
-                        {/*        id="desc-en"*/}
-                        {/*        className={mappingFormStyles.textarea}*/}
-                        {/*        placeholder="Features: 1 imaginary king-size bed..."*/}
-                        {/*        value={description.en}*/}
-                        {/*        onChange={(e) => setDescription({ ...description, en: e.target.value })}*/}
-                        {/*    />*/}
-                        {/*    <div className={mappingFormStyles.textareaFooter}>*/}
-                        {/*        <UkFlagIcon className={mappingFormStyles.flagIcon}/>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                        <div className={mappingFormStyles.textareaWrapper}>
+                            <textarea
+                                id="cxl-policy-en"
+                                className={mappingFormStyles.textarea}
+                                placeholder="Features: 1 imaginary king-size bed..."
+                                value={cxlPolicy.en}
+                                onChange={(e) => setCxlPolicy({ ...cxlPolicy, en: e.target.value })}
+                            />
+                            <div className={mappingFormStyles.textareaFooter}>
+                                <UkFlagIcon className={mappingFormStyles.flagIcon}/>
+                            </div>
+                        </div>
                     </div>
                 </dd>
             </div>

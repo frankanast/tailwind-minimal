@@ -119,6 +119,30 @@ export function RateMappingFormProvider({children}) {
         }
     }
 
+    async function deleteRate() {
+        if (isCurrentlyEditingRate === null || isCurrentlyEditingRate === undefined) return;
+
+        try {
+            const response = await fetch(`https://programmino-be.onrender.com/rates/${isCurrentlyEditingRate}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to delete rate.`);
+            }
+
+            const result = await response.json();
+            alert(result.message || "Success, but with errors. ");
+
+        } catch (error) {
+            console.error("Error updating rate:", error);
+            alert("Error updating rate.");
+        }
+    }
+
     return (
         <RateMappingFormContext.Provider
             value={{
@@ -150,6 +174,7 @@ export function RateMappingFormProvider({children}) {
                 setLastUpdateTimestamp,
                 resetRateForm,
                 commitRateChanges,
+                deleteRate,
             }}
         >
             {children}

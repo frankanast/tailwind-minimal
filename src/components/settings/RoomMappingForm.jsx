@@ -24,7 +24,6 @@ export default function RoomMappingForm() {
         setDescription,
         url,
         setUrl,
-        // imageUrl,
         priority,
         setPriority,
         virtualRoom,
