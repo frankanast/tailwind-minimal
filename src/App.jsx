@@ -11,22 +11,21 @@ import Templates from "./components/templates/TemplatesPage.jsx";
 import SupportPage from "./components/help/SupportPage.jsx";
 import MappingRoomsList from "./components/settings/MappingRoomsList.jsx";
 import MappingRatesList from "./components/settings/MappingRatesList.jsx";
-import RateMappingForm from "./components/settings/RateMappingForm.jsx";
-import RoomMappingForm from "./components/settings/RoomMappingForm.jsx";
 import RoomMappingPage from "./components/settings/RoomMappingPage.jsx";
 import RateMappingPage from "./components/settings/RateMappingPage.jsx";
+import PageNotFound from "./components/PageNotFound.jsx";
 
 const mainRouter = createBrowserRouter([
     {
         path: '/',
         element: <HomeScreen />,
         handle: { breadcrumb: 'Home' },
-        errorElement: <div>This page has not been found. </div>,  //TODO: Create a proper ErrorPage element
+        errorElement: <PageNotFound />,
         children: [
             {
                 path: '/quote',
                 element: <QuotePage />,
-                handle: { breadcrumb: 'Quote' }, //iconElement: <CurrencyEuroIcon />
+                handle: { breadcrumb: 'Quote' },
             },
             {
                 path: '/events',
@@ -46,8 +45,8 @@ const mainRouter = createBrowserRouter([
             {
                 path: '/settings',
                 element: <SettingsPage />,
-                handle: { breadcrumb: 'Settings' },  //iconElement: <Cog6ToothIcon />
-                errorElement: <div>Unable to configure these settings, please report the bug. </div>,
+                handle: { breadcrumb: 'Settings' },
+                errorElement: <PageNotFound />,
                 children: [
                     {
                         path: 'rooms',
@@ -75,6 +74,13 @@ const mainRouter = createBrowserRouter([
                 path: '/support',
                 element: <SupportPage />,
                 handle: { breadcrumb: 'Support' },
+                children: [
+                    {
+                        path: 'status',
+                        element: <div>Status...</div>,
+                        handle: { breadcrumb: 'Service status' },
+                    },
+                ]
             },
         ]
     },

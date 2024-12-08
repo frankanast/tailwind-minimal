@@ -2,6 +2,8 @@ import 'react'
 import CustomerLogoImg from "./abstract/CustomerLogoImg.jsx";
 
 export default function LoginView() {
+    {/*TODO: When implementing Login, redesign this page to be consistent with NotFoundPage*/}
+    {/* Use the template "Split screen" at https://tailwindui.com/components/application-ui/forms/sign-in-forms*/}
     return (
         <>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
