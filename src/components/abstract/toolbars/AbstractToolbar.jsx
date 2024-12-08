@@ -2,26 +2,12 @@ import React from 'react';
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
 import toolbarStyles from './toolbarStyles.js';
-import {Bars3Icon} from "@heroicons/react/24/outline";
 
-function SidebarToggle({toggleHandler}) {
-    return (
-        <>
-            <div onClick={toggleHandler}>
-                <Bars3Icon className={toolbarStyles.toggleButton} />
-            </div>
-        </>
-    )
-}
-
-export default function AbstractToolbar({ items, drawerItem, toggleHandler }) {
+export default function AbstractToolbar({ items, drawerItem }) {
     return (
         <Popover className="sticky isolate flex justify-between top-0 z-50 h-16 shrink-0 border-b border-gray-200 bg-white shadow-sm">
             <div className="flex min-w-full flex-none gap-x-6 px-4 text-sm text-gray-400">
                 <div className="flex w-full justify-between items-center">
-                    {/* Sidebar toggle */}
-                    <SidebarToggle toggleHandler={toggleHandler} />
-
                     {/* Toolbar content */}
                     <div className="flex-1 overflow-x-auto toolbar-scroll">
                         <div className="flex flex-nowrap">

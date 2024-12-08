@@ -23,6 +23,12 @@ const mainRouter = createBrowserRouter([
         errorElement: <PageNotFound />,
         children: [
             {
+                // At startup, when no section is opened...
+                path: '/',
+                element: <QuotePage />,
+                handle: { breadcrumb: 'Quote' },
+            },
+            {
                 path: '/quote',
                 element: <QuotePage />,
                 handle: { breadcrumb: 'Quote' },

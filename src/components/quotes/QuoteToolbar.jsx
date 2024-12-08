@@ -20,13 +20,10 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
         setCheckOutDate,
         occupancy,
         totalPeople,
-        loadedData,
         isFetching,
-        isError,
         refetch,
     } = useQuoteContext();
 
-    // Maintain separate states for raw string inputs
     const [checkInInput, setCheckInInput] = useState(checkInDate ? formatShortDate(checkInDate) : "");
     const [checkOutInput, setCheckOutInput] = useState(checkOutDate ? formatShortDate(checkOutDate) : "");
 
@@ -54,17 +51,6 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
             setCheckOutDate(completedDate);
             setCheckOutInput(formatShortDate(completedDate));
         }
-    };
-
-    const handleLoad = () => {
-        if (isFetching) {
-            console.log("'Load' clicked while in loading state." + new Date().toDateString() + new Date().toTimeString());
-        } else if (isError) {
-            alert("Unable to fetch rates at this time.");
-        } else {
-            alert(JSON.stringify(loadedData));
-        }
-
     };
 
     const handleFetchClick = () => {
@@ -136,7 +122,6 @@ export default function QuoteToolbar({toggleHandler, drawerItem}) {
             <AbstractToolbar
                 items={toolbarItems}
                 drawerItem={drawerItem}
-                toggleHandler={toggleHandler}
             />
         </>
     );
