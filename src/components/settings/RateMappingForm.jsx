@@ -9,7 +9,6 @@ import formatUnixTimestamp from "../../utils/formatUnixTimestamp.js";
 import mappingFormStyles from "./mappingFormStyles.js";
 import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
 
-
 export default function RateMappingForm() {
     const {statuses, rateCategories} = useSettingsContext()
 
@@ -41,7 +40,7 @@ export default function RateMappingForm() {
         <dl className="divide-y divide-gray-100 pr-4">
             {/*/!* Name *!/*/}
             <div className={mappingFormStyles.container}>
-                <dt className={mappingFormStyles.label}>Name</dt>
+                <dt className={mappingFormStyles.label}>Internal name</dt>
                 <dd className={mappingFormStyles.value}>
                     <fieldset>
                         <div className={mappingFormStyles.inputContainer}>
@@ -49,7 +48,6 @@ export default function RateMappingForm() {
                                 id="name"
                                 name="name"
                                 type="text"
-                                placeholder="Imaginary Rate"
                                 className={classNames(mappingFormStyles.input, mappingFormStyles.roundedTop, mappingFormStyles.roundedBottom)}
                                 value={name.it}
                                 onChange={(e) => setName(e.target.value)}
@@ -61,7 +59,7 @@ export default function RateMappingForm() {
 
             {/*/!* Public name *!/*/}
             <div className={mappingFormStyles.container}>
-                <dt className={mappingFormStyles.label}>Name</dt>
+                <dt className={mappingFormStyles.label}>Public name</dt>
                 <dd className={mappingFormStyles.value}>
                     <fieldset>
                         <div className={mappingFormStyles.inputContainer}>
@@ -69,7 +67,6 @@ export default function RateMappingForm() {
                                 id="public-name-it"
                                 name="public-name-it"
                                 type="text"
-                                placeholder="Tariffa Immaginaria"
                                 className={classNames(mappingFormStyles.input, mappingFormStyles.roundedTop)}
                                 value={publicName.it}
                                 onChange={(e) => setPublicName({...publicName, it: e.target.value})}
@@ -137,19 +134,17 @@ export default function RateMappingForm() {
                         )}
                     >
                         <span><InformationCircleIcon className="size-5 text-gray-400"/></span>
-                        <span className={mappingFormStyles.label}>Description(s)</span>
+                        <span className={mappingFormStyles.label}>Services included</span>
                     </div>
                 </dt>
                 <dd className={mappingFormStyles.value}>
                     <div className={mappingFormStyles.descriptionContainer}>
                         <div className={mappingFormStyles.textareaWrapper}>
                             <textarea
-                                id="desc-it"
+                                id="incl-it"
                                 className={mappingFormStyles.textarea}
-                                placeholder="Caratteristiche: 1 letto matrimoniale immaginario..."
-                                // value={includes}
+                                placeholder="Il pacchetto include: ..."
                                 value={includes.it}
-                                // onChange={(e) => setIncludes(e.target.value)}
                                 onChange={(e) => setIncludes({ ...includes, it: e.target.value })}
                             />
                             <div className={mappingFormStyles.textareaFooter}>
@@ -159,9 +154,9 @@ export default function RateMappingForm() {
 
                         <div className={mappingFormStyles.textareaWrapper}>
                             <textarea
-                                id="desc-en"
+                                id="incl-en"
                                 className={mappingFormStyles.textarea}
-                                placeholder="Features: 1 imaginary king-size bed..."
+                                placeholder="The Package rate includes: ..."
                                 value={includes.en}
                                 onChange={(e) => setIncludes({ ...includes, en: e.target.value })}
                             />
@@ -173,7 +168,7 @@ export default function RateMappingForm() {
                 </dd>
             </div>
 
-            {/* Cancelation policy */}
+            {/* Cancellation policy */}
             <div className={mappingFormStyles.container}>
                 <dt>
                     <div>
@@ -187,9 +182,7 @@ export default function RateMappingForm() {
                                 id="cxl-policy-it"
                                 className={mappingFormStyles.textarea}
                                 placeholder="Cancellabile fino a X giorni prima dell'arrivo..."
-                                // value={cxlPolicy}
                                 value={cxlPolicy.it}
-                                // onChange={(e) => setCxlPolicy(e.target.value)}
                                 onChange={(e) => setCxlPolicy({ ...cxlPolicy, it: e.target.value })}
                             />
                             <div className={mappingFormStyles.textareaFooter}>
@@ -201,7 +194,7 @@ export default function RateMappingForm() {
                             <textarea
                                 id="cxl-policy-en"
                                 className={mappingFormStyles.textarea}
-                                placeholder="Features: 1 imaginary king-size bed..."
+                                placeholder="Free cancellation until 21 days before arrival..."
                                 value={cxlPolicy.en}
                                 onChange={(e) => setCxlPolicy({ ...cxlPolicy, en: e.target.value })}
                             />
