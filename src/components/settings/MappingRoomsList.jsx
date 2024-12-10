@@ -33,7 +33,7 @@ export default function MappingRoomsList() {
             );
         } else if (sortCriteria === "priority") {
             filteredRooms = [...filteredRooms].sort(([, aDetails], [, bDetails]) =>
-                (bDetails.priority || 0) - (aDetails.priority || 0)
+                (aDetails.priority || 0) - (bDetails.priority || 0)
             );
         }
 

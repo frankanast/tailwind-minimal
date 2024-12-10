@@ -57,6 +57,10 @@ export default function ConfiguratorToolbar() {
     } = useRatePresenterContext();
 
     const {
+        language,
+        setLanguage,
+        template,
+        setTemplate,
         copyHtmlContent,
         copyTextContent,
         openPreviewLink,
@@ -76,6 +80,14 @@ export default function ConfiguratorToolbar() {
 
     function switchToTailored() {
         setIsOnStandardMode(false)
+    }
+    
+    function switchToEnglish() {
+        setLanguage("en")
+    }
+
+    function switchToItalian() {
+        setLanguage("it")
     }
 
     const keyActions = useCallback((event) => {
@@ -175,8 +187,8 @@ export default function ConfiguratorToolbar() {
             icon: <EnvelopeIcon />,
             items: [
                 [
-                    { name: 'Italian', icon: <ItalyFlagIcon />, handler: () => {} },
-                    { name: 'English', icon: <UkFlagIcon />, handler: () => {} },
+                    { name: 'Italian', icon: <ItalyFlagIcon />, handler: switchToItalian },
+                    { name: 'English', icon: <UkFlagIcon />, handler: switchToEnglish },
                 ],
                 [
                     { name: 'Favorite Templ. 1', icon: <StarIcon />, handler: () => {} },

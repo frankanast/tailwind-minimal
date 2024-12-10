@@ -9,7 +9,7 @@ export function QuotePreviewProvider({ children }) {
     const [token, setToken] = useState(null)
     const [htmlContent, setHtmlContent] = useState("")
     const [previewUrl, setPreviewUrl] = useState("")
-    const [language, setLanguage] = useState("enUK")
+    const [language, setLanguage] = useState("en")
     const [template, setTemplate] = useState("default")
 
     const { parsedData, editedEntities } = useRatePresenterContext()
@@ -21,10 +21,17 @@ export function QuotePreviewProvider({ children }) {
         if (parsedData.data) {
             const sendParsedData = async () => {
                 try {
+                    console.log("PARSED DATA: ", parsedData)
+
                     const response = await fetch('https://programmino-be.onrender.com/preview_template/', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ content: { data: parsedData } }),
+                        body: JSON.stringify({
+                            id: template,
+                            method: "std",  // TODO: We only support standard for now, but we'll have tailored as well
+                            lang: language,
+                            content: { data: parsedData },
+                        }),
                     });
 
                     if (!response.ok) {
@@ -43,7 +50,7 @@ export function QuotePreviewProvider({ children }) {
             };
             sendParsedData()
         }
-    }, [parsedData, editedEntities]);
+    }, [parsedData, editedEntities, language, template]);
 
     async function updateContentState() {
         // Load preview content and store in state

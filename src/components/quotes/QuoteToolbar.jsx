@@ -12,7 +12,7 @@ import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
 import formatShortDate from "../../utils/formatDateShort.js"
 import LoadingIcon from "../../assets/LoadingIcon.jsx";
 
-export default function QuoteToolbar({toggleHandler, drawerItem}) {
+export default function QuoteToolbar({drawerItem}) {
     const {
         checkInDate,
         setCheckInDate,

@@ -54,7 +54,7 @@ export default function MappingRatesList() {
 
         } else if (sortCriteria === "priority") {
             filteredRates = [...filteredRates].sort(([, aDetails], [, bDetails]) =>
-                (bDetails.priority || 0) - (aDetails.priority || 0)
+                (aDetails.priority || 0) - (bDetails.priority || 0)
             );
         }
 
