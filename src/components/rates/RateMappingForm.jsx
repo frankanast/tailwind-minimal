@@ -1,12 +1,12 @@
-import ItalyFlagIcon from "../../assets/ItalyFlagIcon.jsx";
-import UkFlagIcon from "../../assets/UkFlagIcon.jsx";
+import ItalyFlagIcon from "../../assets/icons/ItalyFlagIcon.jsx";
+import UkFlagIcon from "../../assets/icons/UkFlagIcon.jsx";
 import {InformationCircleIcon} from "@heroicons/react/16/solid/index.js";
 import AbstractCheckableList from "../abstract/AbstractCheckableList.jsx";
 import {Field, Label, Switch} from "@headlessui/react";
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
 import classNames from "../../utils/classNames.js";
 import formatUnixTimestamp from "../../utils/formatUnixTimestamp.js";
-import mappingFormStyles from "./mappingFormStyles.js";
+import mappingFormStyles from "../../assets/styles/mappingFormStyles.js";
 import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
 
 export default function RateMappingForm() {

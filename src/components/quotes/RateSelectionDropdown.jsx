@@ -1,6 +1,6 @@
 import {Popover} from "@headlessui/react";
 import {ChevronUpDownIcon} from "@heroicons/react/20/solid/index.js";
-import BoxIcon from "../../assets/BoxIcon.jsx";
+import BoxIcon from "../../assets/icons/BoxIcon.jsx";
 
 export default function RateSelectionDropdown({allRates, selectedRateOptions, setSelectedRateOptions, label="Apply on..."}) {
     const handleCheckboxChange = (rateId) => {

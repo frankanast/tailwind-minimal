@@ -1,5 +1,5 @@
-import ItalyFlagIcon from "../../assets/ItalyFlagIcon.jsx";
-import UkFlagIcon from "../../assets/UkFlagIcon.jsx";
+import ItalyFlagIcon from "../../assets/icons/ItalyFlagIcon.jsx";
+import UkFlagIcon from "../../assets/icons/UkFlagIcon.jsx";
 import {InformationCircleIcon} from "@heroicons/react/16/solid/index.js";
 import AbstractCheckableList from "../abstract/AbstractCheckableList.jsx";
 import {Field, Label, Switch} from "@headlessui/react";
@@ -8,7 +8,7 @@ import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
 import classNames from "../../utils/classNames.js";
 import formatUnixTimestamp from "../../utils/formatUnixTimestamp.js";
 import FileUploader from "./FileUploader.jsx";
-import mappingFormStyles from "./mappingFormStyles.js";
+import mappingFormStyles from "../../assets/styles/mappingFormStyles.js";
 
 export default function RoomMappingForm() {
     const {statuses, roomCategories} = useSettingsContext()

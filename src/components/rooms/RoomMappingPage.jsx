@@ -1,5 +1,5 @@
 import RoomMappingForm from "./RoomMappingForm.jsx";
-import CommitIcon from "../../assets/CommitIcon.jsx";
+import CommitIcon from "../../assets/icons/CommitIcon.jsx";
 import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
 import {useNavigate, useParams} from "react-router";
 import {useEffect} from "react";
@@ -12,12 +12,12 @@ export default function RoomMappingPage() {
     const {
         isCurrentlyEditing,
         setIsCurrentlyEditing,
-        lastUpdateTimestamp,
-        imageUrl,
         shortName,
+        imageUrl,
         resetForm,
         commitChanges,
         deleteRoom,
+        lastUpdateTimestamp,
     } = useRoomMappingContext();
 
     const {refetch} = useSettingsContext()
@@ -29,7 +29,7 @@ export default function RoomMappingPage() {
         commitChanges().then(() => {
             refetch()
             resetForm()
-            navigate('/settings/rooms')
+            navigate('/rooms')
         });
     }
 
@@ -45,7 +45,7 @@ export default function RoomMappingPage() {
             deleteRoom().then(() => {
                 refetch()
                 resetForm()
-                navigate('/settings/rooms')
+                navigate('/rooms')
             });
         }
     }
@@ -53,7 +53,7 @@ export default function RoomMappingPage() {
     useEffect(() => {
         setIsCurrentlyEditing(params.roomId || "999")
 
-    }, [params])
+    })
 
     return (
         <div className="flex flex-col items-center justify-center p-4 text-center sm:p-0">
@@ -91,7 +91,7 @@ export default function RoomMappingPage() {
                             className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-3 sm:space-y-0 sm:space-x-reverse md:mt-0 md:flex-row md:space-x-3">
                             <Link
                                 type="button"
-                                to="/settings/rooms"
+                                to="/rooms"
                                 className="inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                 viewTransition
                             >
@@ -117,7 +117,7 @@ export default function RoomMappingPage() {
                         <div className="flex gap-3">
                             <span className="hidden sm:block">
                                 <Link
-                                    to="/settings/rooms"
+                                    to="/rooms"
                                     className="inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                     type="button"
                                     viewTransition

@@ -7,10 +7,10 @@ import {
     RectangleGroupIcon,
     MagnifyingGlassIcon
 } from "@heroicons/react/24/solid/index.js";
-import toolbarStyles from "../abstract/toolbars/toolbarStyles.js";
+import toolbarStyles from "../../assets/styles/toolbarStyles.js";
 import autocompleteStayDate from "../../utils/autocompleteStayDate.js";
 import formatShortDate from "../../utils/formatDateShort.js"
-import LoadingIcon from "../../assets/LoadingIcon.jsx";
+import LoadingIcon from "../../assets/icons/LoadingIcon.jsx";
 
 export default function QuoteToolbar({drawerItem}) {
     const {

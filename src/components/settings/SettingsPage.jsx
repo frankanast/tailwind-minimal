@@ -9,36 +9,6 @@ import SettingsToolbar from "./SettingsToolbar.jsx";
 import {Outlet, useLocation} from 'react-router-dom'
 import SettingsSections from "./SettingsSections.jsx";
 
-// const router = createBrowserRouter([
-//     {
-//         path: "/",
-//         element: <SettingsSections />,
-//         handle: {breadcrumb: "Home"},
-//         errorElement: <SettingsNotFoundPage />
-//     },
-//     {
-//         path: "/rooms",
-//         element: <MappingRoomsList />,
-//         handle: {breadcrumb: "Rooms"}
-//     },
-//     {
-//         path: "/rates",
-//         element: <MappingRatesList />,
-//         handle: {breadcrumb: "Rates"}
-//     },
-//     {
-//         path: "/rooms/:roomId",
-//         element: <RoomMappingForm />,
-//         handle: {breadcrumb: ({ params }) => `Room ${params.id}`}
-//     },
-//     {
-//         path: "/rates/:rateId",
-//         element: <RateMappingForm />,
-//         handle: {breadcrumb: ({ params }) => `Rate ${params.id}`}
-//     },
-//
-// ])
-
 export default function SettingsPage() {
     const location = useLocation()
     const isRoot = location.pathname === "/settings";

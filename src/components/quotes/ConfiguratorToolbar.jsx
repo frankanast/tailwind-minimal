@@ -23,20 +23,20 @@ import {
 } from '@heroicons/react/20/solid'
 import {useRatePresenterContext} from "../../context/RatePresenterContext.jsx";
 import {Square2StackIcon, } from "@heroicons/react/24/outline";
-import FxIcon from "../../assets/FxIcon.jsx";
-import SelectAllIcon from "../../assets/SelectAllIcon.jsx";
-import InvertSelectionIcon from "../../assets/InvertSelectionIcon.jsx";
-import InvertEverythingIcon from "../../assets/InvertEverythingIcon.jsx";
-import SelectNothingIcon from "../../assets/SelectNothingIcon.jsx";
-import SelectEverythingIcon from "../../assets/SelectEverythingIcon.jsx";
+import FxIcon from "../../assets/icons/FxIcon.jsx";
+import SelectAllIcon from "../../assets/icons/SelectAllIcon.jsx";
+import InvertSelectionIcon from "../../assets/icons/InvertSelectionIcon.jsx";
+import InvertEverythingIcon from "../../assets/icons/InvertEverythingIcon.jsx";
+import SelectNothingIcon from "../../assets/icons/SelectNothingIcon.jsx";
+import SelectEverythingIcon from "../../assets/icons/SelectEverythingIcon.jsx";
 import FormulaDialog from "./FormulaDialog.jsx";
 import FormatDialog from "./FormatDialog.jsx";
 import {FormulaDialogProvider} from "../../context/FormulaDialogContext.jsx";
 import {FormatDialogProvider} from "../../context/FormatDialogContext.jsx";
 import {Fragment, useCallback, useEffect} from "react";
 import {useQuoteContext} from "../../context/QuoteContext.jsx";
-import UkFlagIcon from "../../assets/UkFlagIcon.jsx";
-import ItalyFlagIcon from "../../assets/ItalyFlagIcon.jsx";
+import UkFlagIcon from "../../assets/icons/UkFlagIcon.jsx";
+import ItalyFlagIcon from "../../assets/icons/ItalyFlagIcon.jsx";
 import {useQuotePreviewContext} from "../../context/QuotePreviewContext.jsx";
 
 export default function ConfiguratorToolbar() {

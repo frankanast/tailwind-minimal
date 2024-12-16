@@ -1,6 +1,6 @@
 import "react";
 import { useRatePresenterContext } from "../../context/RatePresenterContext.jsx";
-import BoxIcon from "../../assets/BoxIcon.jsx";
+import BoxIcon from "../../assets/icons/BoxIcon.jsx";
 import {Fragment} from "react";
 import classNames from "../../utils/classNames.js";
 import formatToEuro from "../../utils/formatToEuro.js";

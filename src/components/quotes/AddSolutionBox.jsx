@@ -1,4 +1,4 @@
-import AddSolutionIcon from "../../assets/AddSolutionIcon.jsx";
+import AddSolutionIcon from "../../assets/icons/AddSolutionIcon.jsx";
 
 export default function AddSolutionBox() {
     return (

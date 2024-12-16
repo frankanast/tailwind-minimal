@@ -1,7 +1,7 @@
 import React from 'react';
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react';
 import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
-import toolbarStyles from './toolbarStyles.js';
+import toolbarStyles from '../../../assets/styles/toolbarStyles.js';
 
 export default function AbstractToolbar({ items, drawerItem }) {
     return (

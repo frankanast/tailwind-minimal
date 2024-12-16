@@ -1,8 +1,8 @@
 import { useQuoteContext } from "../../context/QuoteContext.jsx";
 import { useEffect, useState } from "react";
 import EmptyStateIndicator from "../abstract/StateIndicator.jsx";
-import MagnifyingGlass from "../../assets/MagnifyingGlass.jsx";
-import LoadingIcon from "../../assets/LoadingIcon.jsx";
+import MagnifyingGlass from "../../assets/icons/MagnifyingGlass.jsx";
+import LoadingIcon from "../../assets/icons/LoadingIcon.jsx";
 import {useRatePresenterContext} from "../../context/RatePresenterContext.jsx";
 import OccupancyTabs from "./OccupancyTabs.jsx";
 

@@ -1,6 +1,6 @@
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
-import LoadingIcon from "../../assets/LoadingIcon.jsx";
-import MappingStatusBadge from "./MappingStatusBadge.jsx";
+import LoadingIcon from "../../assets/icons/LoadingIcon.jsx";
+import MappingStatusBadge from "../abstract/MappingStatusBadge.jsx";
 import {Link} from "react-router-dom";
 import {PlusSmallIcon} from "@heroicons/react/20/solid/index.js";
 import {useState} from "react";
@@ -135,7 +135,7 @@ export default function MappingRatesList() {
                             </div>
                             <Link
                                 type="button"
-                                to={rateId}
+                                to={`${rateId}`}
                                 className="font-semibold text-indigo-600 hover:text-indigo-500"
                                 viewTransition
                             >

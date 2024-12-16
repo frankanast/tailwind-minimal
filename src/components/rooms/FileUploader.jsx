@@ -1,8 +1,8 @@
 import { useFileUploadContext } from "../../context/FileUploadContext.jsx";
 import classNames from "../../utils/classNames.js";
-import LoadingIcon from "../../assets/LoadingIcon.jsx";
+import LoadingIcon from "../../assets/icons/LoadingIcon.jsx";
 import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
-import mappingFormStyles from "./mappingFormStyles.js";
+import mappingFormStyles from "../../assets/styles/mappingFormStyles.js";
 
 const FileUploader = () => {
     const {

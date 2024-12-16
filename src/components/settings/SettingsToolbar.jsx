@@ -25,14 +25,6 @@ export default function SettingsToolbar() {
                     role="list"
                     className="flex min-w-full flex-none gap-x-6 px-4 text-sm font-semibold leading-6 text-gray-400 sm:px-6 lg:px-8"
                 >
-                    {/*<li className="flex">*/}
-                    {/*    <div className="flex items-center">*/}
-                    {/*        <Link to="/" className="text-gray-400 hover:text-gray-500">*/}
-                    {/*            <HomeIcon aria-hidden="true" className="h-5 w-5 flex-shrink-0"/>*/}
-                    {/*            <span className="sr-only">Home</span>*/}
-                    {/*        </Link>*/}
-                    {/*    </div>*/}
-                    {/*</li>*/}
                     {breadcrumbs.map((page, index) => {
                         const isFirst = index === 0 // Home
 

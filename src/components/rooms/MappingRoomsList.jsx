@@ -1,10 +1,9 @@
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
-import LoadingIcon from "../../assets/LoadingIcon.jsx";
-import MappingStatusBadge from "./MappingStatusBadge.jsx";
-import {Link} from "react-router-dom";
+import LoadingIcon from "../../assets/icons/LoadingIcon.jsx";
+import MappingStatusBadge from "../abstract/MappingStatusBadge.jsx";
 import {PlusSmallIcon} from "@heroicons/react/20/solid/index.js";
 import {useState} from "react";
-import {useNavigate} from "react-router";
+import {Link, useNavigate} from "react-router-dom";
 import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
 
 export default function MappingRoomsList() {
@@ -125,7 +124,7 @@ export default function MappingRoomsList() {
                             </div>
                             <Link
                                 type="button"
-                                to={roomId}
+                                to={`${roomId}`}
                                 className="font-semibold text-indigo-600 hover:text-indigo-500"
                                 viewTransition
                             >

@@ -18,7 +18,7 @@ import {
     CalendarDaysIcon,
     ChatBubbleOvalLeftIcon,
     QuestionMarkCircleIcon,
-    SwatchIcon
+    SwatchIcon, RectangleGroupIcon, BanknotesIcon
 } from '@heroicons/react/24/outline';
 
 import { NavLink, Outlet } from 'react-router-dom';
@@ -36,9 +36,14 @@ const navigation = [
         icon: CalendarDaysIcon,
     },
     {
-        name: 'Messages',
-        to: '/messages',
-        icon: ChatBubbleOvalLeftIcon,
+        name: 'Rooms',
+        to: '/rooms',
+        icon: RectangleGroupIcon,
+    },
+    {
+        name: 'Rates',
+        to: '/rates',
+        icon: BanknotesIcon,
     },
     {
         name: 'Templates',

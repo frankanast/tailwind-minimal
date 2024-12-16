@@ -4,7 +4,7 @@ import {useQuoteContext} from "../../context/QuoteContext.jsx";
 import occupancyLiteral from "../../utils/occupancyLiteral.js";
 import {nanoid} from "nanoid";
 import {useState} from "react";
-import ToddlerIcon from "../../assets/ToddlerIcon.jsx";
+import ToddlerIcon from "../../assets/icons/ToddlerIcon.jsx";
 
 
 function RoomsList() {

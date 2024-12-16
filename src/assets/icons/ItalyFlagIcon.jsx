@@ -1,4 +1,4 @@
-import classNames from "../utils/classNames.js";
+import classNames from "../../utils/classNames.js";
 
 export default function ItalyFlagIcon({className}) {
     const style = classNames(className, "iconify iconify--twemoji")

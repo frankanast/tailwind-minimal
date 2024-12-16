@@ -23,7 +23,7 @@ export function QuotePreviewProvider({ children }) {
                 try {
                     console.log("PARSED DATA: ", parsedData)
 
-                    const response = await fetch('https://programmino-be.onrender.com/preview_template/', {
+                    const response = await fetch('https://programmino-be.onrender.com/render_template/', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
