@@ -46,6 +46,7 @@ export function SettingsProvider({ children }) {
 
     const roomsMetadata = useMemo(() => loadedSettings ? Object.entries(loadedSettings.rooms) : [], [loadedSettings]);
     const ratesMetadata = useMemo(() => loadedSettings ? Object.entries(loadedSettings.rates) : [], [loadedSettings]);
+    const templatesMetadata = useMemo(() => loadedSettings ? Object.entries(loadedSettings.templates) : [], [loadedSettings]);
 
     const rooms = useMemo(() => {
         return roomsMetadata.reduce((obj, [id, data]) => ({ ...obj, [`${id}`]: data }), {});
@@ -54,6 +55,10 @@ export function SettingsProvider({ children }) {
     const rates = useMemo(() => {
         return ratesMetadata.reduce((obj, [id, data]) => ({ ...obj, [`${id}`]: data }), {});
     }, [ratesMetadata]);
+
+    const templates = useMemo(() => {
+        return templatesMetadata.reduce((obj, [code, data]) => ({ ...obj, [`${code}`]: data }), {});
+    }, [templatesMetadata]);
 
     const [mappingDialogIsOpen, setMappingDialogIsOpen] = useState(false);
 
@@ -69,8 +74,10 @@ export function SettingsProvider({ children }) {
             loadedSettings,
             roomsMetadata,
             ratesMetadata,
+            templatesMetadata,
             rooms,
             rates,
+            templates,
             mappingDialogIsOpen,
             setMappingDialogIsOpen,
         }}>

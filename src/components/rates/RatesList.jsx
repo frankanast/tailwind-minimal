@@ -7,7 +7,7 @@ import {useState} from "react";
 import {useRateMappingContext} from "../../context/RateMappingFormContext.jsx";
 import {useNavigate} from "react-router";
 
-export default function MappingRatesList() {
+export default function RatesList() {
     const { ratesMetadata, isError, isFetching, refetch } = useSettingsContext()
     const { addRate } = useRateMappingContext()
 

@@ -6,7 +6,7 @@ import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import {useRoomMappingContext} from "../../context/RoomMappingFormContext.jsx";
 
-export default function MappingRoomsList() {
+export default function RoomsList() {
     const {roomsMetadata, isError, isFetching, refetch} = useSettingsContext()
     const {addRoom} = useRoomMappingContext()
 

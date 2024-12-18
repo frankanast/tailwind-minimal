@@ -1,29 +1,21 @@
-import {createContext, useContext} from "react";
-import {useQuery} from "@tanstack/react-query";
-
+import {createContext, useContext, useState} from "react";
+import {useSettingsContext} from "./SettingsContext.jsx";
 export const TemplateContext = createContext(undefined);
 
 export function TemplateProvider({children}) {
-    const { data: templatesData, isError, isFetching, refetch } = useQuery({
-        queryKey: ["templates", {}],
-        queryFn: async () => {
-            const url = "https://programmino-be.onrender.com/templates";
-            const response = await fetch(url);
+    const {templates} = useSettingsContext()
 
-            if (!response.ok) {
-                throw new Error("Unable to fetch settings due to network issues.");
-            }
+    const [isCurrentlyEditingTemplate, setIsCurrentlyEditingTemplate] = useState(null)
 
-            return await response.json();
-        },
-        enabled: true,
-    });
+    function addTemplate({code}) {
+        alert(`addTemplate: ${code}`)
+    }
 
     return (
         <TemplateContext.Provider value={{
-            isError,
-            isFetching,
-            templatesData,
+            templates,
+            addTemplate,
+
         }}>
             {children}
         </TemplateContext.Provider>
