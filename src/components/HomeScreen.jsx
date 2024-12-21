@@ -191,7 +191,7 @@ export default function HomeScreen() {
                         <Bars3Icon aria-hidden='true' className='size-6' />
                     </button>
                     <div className='flex-1 text-sm/6 font-semibold text-gray-900'>
-                        Dashboard
+                        <CustomerLogoImg className='h-5' />
                     </div>
                     <a href='#'>
                         <span className='sr-only'>Your profile</span>

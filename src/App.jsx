@@ -22,6 +22,7 @@ import { FileUploadProvider } from "./context/FileUploadContext.jsx";
 import TemplateEditor from "./components/templates/TemplateEditor.jsx";
 import TemplatesList from "./components/templates/TemplatesList.jsx";
 import {TemplateProvider} from "./context/TemplatesContext.jsx";
+import {TemplatesPage} from "./components/templates/TemplatesPage.jsx";
 
 const mainRouter = createBrowserRouter([
     {
@@ -72,13 +73,26 @@ const mainRouter = createBrowserRouter([
             },
             {
                 path: '/templates',
-                element: <TemplatesList />,
+                element: <TemplatesPage />,
                 handle: { breadcrumb: 'Templates' },
-            },
-            {
-                path: '/templates/:templateId',
-                element: <TemplateEditor />,
-                handle: { breadcrumb: 'Template Editor' },
+                children: [
+                    {
+                        path: ':templateId',
+                        element: <div>Options</div>,  // Default
+                    },
+                    {
+                        path: ':templateId/options',
+                        element: <div>Options</div>,
+                    },
+                    {
+                        path: ':templateId/design',
+                        element: <div>Design</div>,
+                    },
+                    {
+                        path: ':templateId/source',
+                        element: <div>Source</div>,
+                    }
+                ]
             },
             {
                 path: '/settings',

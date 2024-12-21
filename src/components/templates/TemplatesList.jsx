@@ -1,15 +1,14 @@
 import LoadingIcon from "../../assets/icons/LoadingIcon.jsx";
 import MappingStatusBadge from "../abstract/MappingStatusBadge.jsx";
-import {PlusSmallIcon} from "@heroicons/react/20/solid/index.js";
+import {ChevronRightIcon} from "@heroicons/react/20/solid/index.js";
 import {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
-import {useTemplateContext} from "../../context/TemplatesContext.jsx";
+import formatUnixTimestamp from "../../utils/formatUnixTimestamp.js";
+import {ChevronDownIcon} from "@heroicons/react/16/solid";
 
 export default function TemplatesList() {
     const {templatesMetadata, isError, isFetching, refetch} = useSettingsContext()
-    const {addTemplate} = useTemplateContext()
-
     const [filterCriteria, setFilterCriteria] = useState(null);
     const [sortCriteria, setSortCriteria] = useState(null);
 
@@ -24,7 +23,7 @@ export default function TemplatesList() {
             );
         }
 
-         if (sortCriteria === "name") {
+        if (sortCriteria === "name") {
             filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
                 (aDetails.name || "").localeCompare(bDetails.name || "")
             );
@@ -37,94 +36,65 @@ export default function TemplatesList() {
         return filteredTemplates;
     };
 
-    const navigate = useNavigate()
-    function handleAddTemplate() {
-        let newTemplateCode = prompt(
-            "Enter a code ID for the new template. It is recommended to end the code with the 2-digit year of validity, i.e.: testTemplate25."
-        )
-        if (!newTemplateCode) return;
-
-        addTemplate(newTemplateCode).then(() => {
-            refetch()
-            navigate(`/templates/${newTemplateCode}`)
-        });
-    }
-
-    if (isFetching || isError || !templatesMetadata) {
-        return(
-            <div className="flex justify-center">
-                <LoadingIcon className="w-7 h-auto" />
-            </div>
-        )
-    }
-
     return (
-        <div className="flex flex-col max-w-6xl mx-auto">
-            <div>
-                <div className="flex flex-wrap items-center my-16 gap-6 sm:flex-nowrap">
-                    <h1 className="text-base/7 font-semibold text-gray-900">Templates</h1>
-                    <div
-                        className="order-last flex w-full gap-x-8 text-sm/6 font-semibold sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:text-sm/7">
-                        <button
-                            className="text-gray-500 hover:text-indigo-600"
-                            onClick={() => {
-                                setFilterCriteria(null);
-                                setSortCriteria("name");
-                            }}
-                        >
-                            Name
-                        </button>
-                        <button
-                            className="text-gray-500 hover:text-indigo-600"
-                            onClick={() => {
-                                setFilterCriteria(null);
-                                setSortCriteria("status");
-                            }}
-                        >
-                            Status
-                        </button>
-                        <button
-                            className="text-gray-500 hover:text-indigo-600"
-                            onClick={() => {
-                                setFilterCriteria("provisional");
-                                setSortCriteria(null);
-                            }}
-                        >
-                            Only provisional
-                        </button>
-                    </div>
-                    <button
-                        className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        onClick={handleAddTemplate}
-                    >
-                        <PlusSmallIcon aria-hidden="true" className="-ml-1.5 size-5"/>
-                        New Template
-                    </button>
-                </div>
+        <>
+            {/* Mobile: Dropdown */}
+            <div className="grid grid-cols-1 sm:hidden">
+                <select
+                    defaultValue="Design"
+                    aria-label="Select a tab"
+                    className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white
+                       py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1
+                       outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2
+                       focus:outline-indigo-600"
+                >
+                    {templatesMetadata.map((templateDetails) => (
+                        <option key={templateDetails.name}>{templateDetails.name}</option>
+                    ))}
+                </select>
+                <ChevronDownIcon
+                    aria-hidden="true"
+                    className="pointer-events-none col-start-1 row-start-1 mr-2 size-5
+                       self-center justify-self-end fill-gray-500"
+                />
             </div>
-            <dl className="space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
-                {processedTemplates().map(([templateId, templateDetails]) => (
-                    <div key={templateId} className="pt-6 sm:flex">
-                        <dt className="text-gray-900 sm:w-21 sm:flex-none sm:pr-6 font-mono">
-                            {templateId}
-                        </dt>
-                        <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                            <div className="text-gray-900 flex gap-3">
-                                <span className="font-medium">{templateDetails.name || "Unnamed Template"}</span>
-                                <MappingStatusBadge id={templateDetails.status}/>
+
+            {/* Desktop: Tabs */}
+            <div className="hidden sm:block">
+                <ul role="list" className="divide-y divide-gray-100">
+                    {processedTemplates().map(([templateId, templateDetails]) => (
+                        <li
+                            key={templateId}
+                            className="relative flex justify-between gap-x-6 px-4 py-5 hover:bg-gray-50 sm:px-6 lg:px-8"
+                        >
+                            <div className="flex min-w-0 gap-x-4">
+                                <div className="min-w-0 flex-auto">
+                                    <p className="text-sm/6 font-semibold text-gray-900">
+                                        <NavLink to={`/templates/${templateId}`}>
+                                            <span className="absolute inset-x-0 -top-px bottom-0"/>
+                                            {templateDetails.name}
+                                        </NavLink>
+                                    </p>
+                                    <p className="mt-1 flex text-xs/5 text-gray-500">
+                                        <NavLink to={`/templates/${templateId}`}
+                                                 className="relative truncate hover:underline">
+                                            <span
+                                                className="font-mono">{templateDetails.code}</span> ▪ {formatUnixTimestamp(templateDetails.lastUpdate)}
+                                        </NavLink>
+                                    </p>
+                                </div>
                             </div>
-                            <Link
-                                type="button"
-                                to={`${templateId}`}
-                                className="font-semibold text-indigo-600 hover:text-indigo-500"
-                                viewTransition
-                            >
-                                Edit
-                            </Link>
-                        </dd>
-                    </div>
-                ))}
-            </dl>
-        </div>
+                            <div className="flex shrink-0 items-center gap-x-4">
+                                <div className="hidden sm:flex sm:flex-col sm:items-end">
+                                    <MappingStatusBadge id={templateDetails.status}/>
+
+                                </div>
+                                <ChevronRightIcon aria-hidden="true" className="size-5 flex-none text-gray-400"/>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
     )
 }
