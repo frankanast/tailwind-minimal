@@ -3,11 +3,9 @@ import { Editor } from "@monaco-editor/react";
 import { useParams } from "react-router";
 import { CodeBracketIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
 import classNames from "../../utils/classNames.js";
-import {ChevronDownIcon, DocumentTextIcon} from "@heroicons/react/16/solid";
+import {ChevronDownIcon} from "@heroicons/react/16/solid";
 import {NavLink, Outlet} from "react-router-dom";
-import {QueueListIcon, ScissorsIcon, Cog6ToothIcon} from "@heroicons/react/20/solid/index.js";
-import UkFlagIcon from "../../assets/icons/UkFlagIcon.jsx";
-import ItalyFlagIcon from "../../assets/icons/ItalyFlagIcon.jsx";
+import {Cog6ToothIcon} from "@heroicons/react/20/solid/index.js";
 
 export default function TemplateEditor() {
     const params = useParams();
@@ -16,56 +14,6 @@ export default function TemplateEditor() {
         { name: "Design", to: `/templates/${params.templateId}/design`, icon: PencilSquareIcon },
         { name: "Source", to: `/templates/${params.templateId}/source`, icon: CodeBracketIcon },
     ];
-
-    const toolbarItems = [
-        {
-            title: 'Mode',
-            icon: <QueueListIcon />,
-            items: [
-                [
-                    { name: 'Standard', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                    { name: 'Tailored', icon: <ScissorsIcon />, shortcutLabel: "", handler: () => {} },
-                ],
-            ]
-        },
-        {
-            title: 'Language',
-            icon: <UkFlagIcon />,
-            items: [
-                [
-                    { name: 'Italian', icon: <ItalyFlagIcon />, shortcutLabel: "", handler: () => {} },
-                    { name: 'English', icon: <UkFlagIcon />, shortcutLabel: "", handler: () => {} },
-                ],
-            ]
-        },
-        {
-            title: 'Content',
-            icon: <DocumentTextIcon />,
-            items: [
-                [
-                    { name: 'Import', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                    { name: 'Import from template', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                    { name: 'Copy from language', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                    { name: 'Improve HTML...', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                ],
-                [
-                    { name: 'Translate with AI...', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                    { name: 'Proofread', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                    { name: 'Stats', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-
-                ],
-                [
-                    { name: 'Save', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                    { name: 'Export', icon: <QueueListIcon />, shortcutLabel: "", handler: () => {} },
-                ]
-            ]
-        },
-        {
-            title: 'Snippets',
-            icon: <DocumentTextIcon />,
-            items: []
-        },
-    ]
 
     return (
         <>

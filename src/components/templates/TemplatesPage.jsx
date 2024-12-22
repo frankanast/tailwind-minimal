@@ -2,8 +2,6 @@ import 'react'
 import {Panel, PanelGroup, PanelResizeHandle} from "react-resizable-panels";
 import TemplatesList from "./TemplatesList.jsx";
 import TemplateEditor from "./TemplateEditor.jsx";
-import {ChevronDownIcon} from "@heroicons/react/16/solid/index.js";
-
 
 export function TemplatesPage() {
     return (
