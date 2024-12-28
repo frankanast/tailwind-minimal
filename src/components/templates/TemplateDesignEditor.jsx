@@ -2,13 +2,12 @@ import 'react'
 import {DocumentTextIcon, QueueListIcon, ScissorsIcon} from "@heroicons/react/20/solid/index.js";
 import UkFlagIcon from "../../assets/icons/UkFlagIcon.jsx";
 import ItalyFlagIcon from "../../assets/icons/ItalyFlagIcon.jsx";
-import "../abstract/AbstractWysiwygEditor.jsx"
 import AbstractSecondaryToolbar from "../abstract/toolbars/AbstractSecondaryToolbar.jsx";
 import AbstractWysiwygEditor from "../abstract/AbstractWysiwygEditor.jsx";
+import '../../assets/styles/wysiwygEditorStyle.css'
+
 
 export function TemplateDesignEditor() {
-
-
     const toolbarItems = [
         {
             title: 'Mode',
@@ -60,8 +59,8 @@ export function TemplateDesignEditor() {
     ]
 
     return (
-        <div className="h-full">
-            <AbstractSecondaryToolbar items={toolbarItems} />
+        <div className="h-screen overflow-auto">
+            <AbstractSecondaryToolbar actions={toolbarItems} />
             <AbstractWysiwygEditor />
         </div>
     );

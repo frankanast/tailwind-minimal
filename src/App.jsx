@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import LoginView from "./components/LoginView.jsx";
 import HomeScreen from "./components/HomeScreen.jsx";
 import QuotePage from "./components/quotes/QuotePage.jsx";
-import MessagesPage from "./components/messages/MessagesPage.jsx";
+//import MessagesPage from "./components/messages/MessagesPage.jsx";
 import PageNotFound from "./components/PageNotFound.jsx";
 import { RoomMappingFormProvider } from "./context/RoomMappingFormContext.jsx";
 import { SettingsProvider } from "./context/SettingsContext.jsx";

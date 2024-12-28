@@ -3,6 +3,8 @@ import AbstractSecondaryToolbar from "../abstract/toolbars/AbstractSecondaryTool
 import {DocumentTextIcon, QueueListIcon, ScissorsIcon} from "@heroicons/react/20/solid";
 import UkFlagIcon from "../../assets/icons/UkFlagIcon.jsx";
 import ItalyFlagIcon from "../../assets/icons/ItalyFlagIcon.jsx";
+import {Editor} from "@monaco-editor/react";
+import {useRef} from "react";
 export function TemplateCodeEditor() {
 
     const toolbarItems = [
@@ -55,9 +57,25 @@ export function TemplateCodeEditor() {
         },
     ]
 
+    const editorRef = useRef(null);
+
+    function handleEditorDidMount(editor, monaco) {
+        editorRef.current = editor;
+    }
+
     return (
-        <div>
-            <AbstractSecondaryToolbar items={toolbarItems}/>
+        <div className="h-screen bg-[#1e1e1e] overflow-hidden">
+            <AbstractSecondaryToolbar actions={toolbarItems}/>
+
+            <div style={{height: "100%", marginTop: "18px", marginBottom: "36px"}}>
+                <Editor
+                    height="90%"
+                    defaultLanguage="html"
+                    defaultValue="<!-- some comment -->"
+                    theme="vs-dark"
+                    onMount={handleEditorDidMount}
+                />
+            </div>
         </div>
     );
 };

@@ -8,7 +8,7 @@ export default function MappingStatusBadge({id}) {
     return (
         <p
             className={classNames(
-                'mt-0.5 whitespace-nowrap rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+                'mt-0.5 truncate rounded-md px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset w-min',
                 (status ? status.style : "")
             )}
         >

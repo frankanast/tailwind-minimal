@@ -34,14 +34,13 @@ export function SettingsProvider({ children }) {
         { id: 'NREF', name: 'Not Refundable rates' },
     ];
 
-
     const statuses = [
-        {id: "unusable", style: 'text-chestnut-600 bg-chestnut-50 ring-chestnut-500/10', name: "Do not use"},
-        {id: "test", style: 'text-gray-600 bg-gray-50 ring-gray-500/10', name: "Test"},
-        {id: "draft", style: 'text-gray-600 bg-gray-50 ring-gray-500/10', name: "Work in progress"},
-        {id: "provisional", style: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20', name: "Attention required"},
+        {id: "complete", style: 'text-indigo-700 bg-indigo-50 ring-indigo-600/20', name: "Complete"},
         {id: "deprecated", style: 'text-chestnut-600 bg-chestnut-50 ring-chestnut-500/10', name: "Deprecated"},
-        {id: "complete", style: 'text-indigo-700 bg-indigo-50 ring-indigo-600/20', name: "Public"},
+        {id: "draft", style: 'text-lavender-600 bg-lavender-50 ring-lavender-600/30', name: "Draft"},
+        {id: "provisional", style: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20', name: "Provisional"},
+        {id: "test", style: 'text-gray-600 bg-gray-50 ring-gray-500/10', name: "Test"},
+        {id: "unusable", style: 'text-chestnut-600 bg-chestnut-50 ring-chestnut-500/10', name: "Unusable"},
     ]
 
     const roomsMetadata = useMemo(() => loadedSettings ? Object.entries(loadedSettings.rooms) : [], [loadedSettings]);
@@ -61,7 +60,6 @@ export function SettingsProvider({ children }) {
     }, [templatesMetadata]);
 
     const [mappingDialogIsOpen, setMappingDialogIsOpen] = useState(false);
-
 
     return (
         <SettingsContext.Provider value={{
