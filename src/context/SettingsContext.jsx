@@ -36,6 +36,7 @@ export function SettingsProvider({ children }) {
 
     const statuses = [
         {id: "complete", style: 'text-indigo-700 bg-indigo-50 ring-indigo-600/20', name: "Complete"},
+        {id: "public", style: 'text-indigo-700 bg-indigo-50 ring-indigo-600/20', name: "Public"},
         {id: "deprecated", style: 'text-chestnut-600 bg-chestnut-50 ring-chestnut-500/10', name: "Deprecated"},
         {id: "draft", style: 'text-lavender-600 bg-lavender-50 ring-lavender-600/30', name: "Draft"},
         {id: "provisional", style: 'text-yellow-800 bg-yellow-50 ring-yellow-600/20', name: "Provisional"},

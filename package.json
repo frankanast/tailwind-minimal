@@ -12,17 +12,19 @@
   },
   "dependencies": {
     "@ag-grid-community/theming": "^32.2.0",
+    "@codemirror/language": "^6.10.8",
     "@easylogic/react-summernote": "^0.1.4",
     "@easylogic/react-summernote-bs4": "^0.1.4",
     "@easylogic/react-summernote-lite": "^0.1.4",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
-    "@monaco-editor/react": "^4.6.0",
     "@tailwindcss/forms": "^0.5.7",
     "@tanstack/react-query": "^5.59.0",
-    "ag-grid-react": "^32.2.0",
+    "@types/codemirror": "^5.60.15",
+    "@types/katex": "^0.16.7",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+    "codemirror": "^5.65.18",
     "date-fns": "^3.6.0",
     "draft-js": "^0.11.7",
     "jquery": "^3.7.1",
@@ -46,6 +48,7 @@
     "react-router": "^7.0.2",
     "react-router-dom": "^7.0.2",
     "split-pane-react": "^0.1.3",
+    "suneditor": "^2.47.1",
     "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {
@@ -62,6 +65,7 @@
     "globals": "^15.9.0",
     "husky": "^9.1.7",
     "postcss": "^8.4.41",
+    "sass-embedded": "^1.83.1",
     "tailwindcss": "^3.4.10",
     "vite": "^5.4.1",
     "vite-plugin-pwa": "^0.20.5"

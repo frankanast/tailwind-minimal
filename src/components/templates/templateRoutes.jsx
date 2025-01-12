@@ -1,44 +1,38 @@
 import {TemplatesPage} from "./TemplatesPage.jsx";
 import {TemplateOptionsEditor} from "./TemplateOptionsEditor.jsx";
-import {TemplateDesignEditor} from "./TemplateDesignEditor.jsx";
-import {TemplateCodeEditor} from "./TemplateCodeEditor.jsx";
+import {TemplateContentEditor} from "./TemplateContentEditor.jsx";
 import StateIndicator from "../abstract/StateIndicator.jsx";
 import MagnifyingGlass from "../../assets/icons/MagnifyingGlass.jsx";
+import {TemplateProvider} from "../../context/TemplatesContext.jsx";
 
 export const templateRoutes = [
     {
         path: '/templates',
-        element: <TemplatesPage />,
+        element: <TemplateProvider><TemplatesPage /></TemplateProvider>,
         handle: { breadcrumb: 'Templates' },
         children: [
             {
-                path: ':templateId',          // <-- your template parameter
+                path: ':templateId',
                 children: [
                     {
-                        path: 'options',          // matches "/templates/:templateId/options"
+                        path: 'options',
                         element: <TemplateOptionsEditor />,
                     },
                     {
-                        path: 'design',          // matches "/templates/:templateId/design"
-                        element: <TemplateDesignEditor />,
+                        path: 'design',
+                        element: <TemplateContentEditor />,
                     },
                     {
-                        path: 'source',          // matches "/templates/:templateId/source"
-                        element: <TemplateCodeEditor />,
-                    },
-                    {
-                        // Optional: Show something if user visits just "/templates/:templateId"
+                        // Show 'Options' if user visits just "/templates/:templateId"
                         index: true,
                         element: (
-                            <div className="p-4 text-gray-500">
-                                Select “Options,” “Design,” or “Source.”
-                            </div>
+                            <TemplateOptionsEditor />
                         )
                     }
                 ],
             },
             {
-                // (Optional) If user visits "/templates" without any templateId:
+                // If user visits "/templates" without any templateId:
                 index: true,
                 element: (
                     <StateIndicator

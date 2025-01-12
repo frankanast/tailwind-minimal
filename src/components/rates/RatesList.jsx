@@ -1,6 +1,6 @@
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
 import LoadingIcon from "../../assets/icons/LoadingIcon.jsx";
-import MappingStatusBadge from "../abstract/MappingStatusBadge.jsx";
+import StatusBadge from "../abstract/StatusBadge.jsx";
 import {Link} from "react-router-dom";
 import {PlusSmallIcon} from "@heroicons/react/20/solid/index.js";
 import {useState} from "react";
@@ -131,7 +131,7 @@ export default function RatesList() {
                         <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                             <div className="text-gray-900 flex gap-3">
                                 <span className="font-medium">{rateDetails.name || "Unnamed Rate"}</span>
-                                <MappingStatusBadge id={rateDetails.mapping_status}/>
+                                <StatusBadge id={rateDetails.mapping_status}/>
                             </div>
                             <Link
                                 type="button"

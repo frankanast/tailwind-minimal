@@ -1,4 +1,4 @@
-import MappingStatusBadge from "../abstract/MappingStatusBadge.jsx";
+import StatusBadge from "../abstract/StatusBadge.jsx";
 import {ChevronRightIcon} from "@heroicons/react/20/solid/index.js";
 import {NavLink, useNavigate} from "react-router-dom";
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
@@ -46,7 +46,7 @@ function FilterButton() {
                                         setFilterCriteria(status.id)
                                     }}
                                 >
-                                    <MappingStatusBadge id={status.id || "test"}/>
+                                    <StatusBadge id={status.id || "test"}/>
                                 </div>
                             </MenuItem>
                         );
@@ -138,7 +138,7 @@ function SortButton() {
     );
 }
 
-function TemplateItemMenu({templateId, templateDetails}) {
+function TemplateItemMenu({templateId}) {
     const navigate = useNavigate()
     const {
         templates,
@@ -218,11 +218,11 @@ function TemplateItemMenu({templateId, templateDetails}) {
     );
 }
 
-
 export default function TemplatesList() {
     const navigate = useNavigate()
     const {
         orderedTemplates,
+        setIsCurrentlyEditingTemplate,
         addTemplate,
         refetch
     } = useTemplateContext()
@@ -256,14 +256,22 @@ export default function TemplatesList() {
             {/* Mobile: Dropdown */}
             <div className="grid grid-cols-1 sm:hidden">
                 <select
-                    defaultValue="default"
                     className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white
                        py-2 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1
                        outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2
                        focus:outline-indigo-600"
+                    onChange={(e) => {
+                        const selectedId = e.target.value;
+                        setIsCurrentlyEditingTemplate(selectedId);
+                    }}
                 >
                     {orderedTemplates.map(([templateId, templateDetails]) => (
-                        <option key={templateId}>{templateDetails.name} ({templateDetails.code})</option>
+                        <option
+                            key={templateId}
+                            value={templateId}
+                        >
+                            {templateDetails.name} ({templateDetails.code})
+                        </option>
                     ))}
                 </select>
             </div>
@@ -289,7 +297,7 @@ export default function TemplatesList() {
                                     </p>
                                     <div className="mt-1 flex text-xs/5 text-gray-500">
                                         <div className="flex gap-2 relative truncate">
-                                            <MappingStatusBadge id={templateDetails.status}/>
+                                            <StatusBadge id={templateDetails.status}/>
                                             <span className="font-mono">{templateDetails.code}</span>
                                         </div>
                                     </div>

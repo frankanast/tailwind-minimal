@@ -1,7 +1,7 @@
 import classNames from "../../utils/classNames.js";
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
 
-export default function MappingStatusBadge({id}) {
+export default function StatusBadge({id}) {
     const {statuses} = useSettingsContext();
     const status = statuses.find(status => status.id === id);
 

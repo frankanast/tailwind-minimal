@@ -1,15 +1,86 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {useSettingsContext} from "./SettingsContext.jsx";
+import {useQuery} from "@tanstack/react-query";
+import {useParams} from "react-router-dom";
 export const TemplateContext = createContext(undefined);
 
 export function TemplateProvider({children}) {
-    const {templates, templatesMetadata, statuses, refetch} = useSettingsContext()
-    
+    const {templates, templatesMetadata} = useSettingsContext()
     const [orderedTemplates, setOrderedTemplates] = useState([])
     const [filterCriteria, setFilterCriteria] = useState("all")
     const [sortCriteria, setSortCriteria] = useState("name-az")
 
+    useEffect(() => {
+        if (!templatesMetadata) return [];
+        let filteredTemplates = templatesMetadata;
+
+        // Filtering logic
+        if (filterCriteria && filterCriteria !== "all") {
+            if (Array.isArray(filterCriteria) && filterCriteria.length > 0) {
+                filteredTemplates = filteredTemplates.filter(([, templateDetails]) =>
+                    filterCriteria.includes(templateDetails.status)
+                );
+            } else if (typeof filterCriteria === "string") {
+                filteredTemplates = filteredTemplates.filter(([, templateDetails]) =>
+                    templateDetails.status === filterCriteria
+                );
+            }
+        }
+
+        // Sorting logic
+        if (sortCriteria === "name-az") {
+            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
+                (aDetails.name || "").localeCompare(bDetails.name || "")
+            );
+        } else if (sortCriteria === "name-za") {
+            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
+                (bDetails.name || "").localeCompare(aDetails.name || "")
+            );
+        } else if (sortCriteria === "code-az") {
+            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
+                (aDetails.code || "").localeCompare(bDetails.code || "")
+            );
+        } else if (sortCriteria === "code-za") {
+            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
+                (bDetails.code || "").localeCompare(aDetails.code || "")
+            );
+        } else if (sortCriteria === "status-az") {
+            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
+                (aDetails.mapping_status || "").localeCompare(bDetails.mapping_status || "")
+            );
+        } else if (sortCriteria === "status-za") {
+            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
+                (bDetails.mapping_status || "").localeCompare(aDetails.mapping_status || "")
+            );
+        }
+
+        setOrderedTemplates(filteredTemplates);
+
+    }, [filterCriteria, sortCriteria, templatesMetadata]);
+
+    // Update isCurrentlyEditingTemplate from the URL
+    const { templateId } = useParams()
     const [isCurrentlyEditingTemplate, setIsCurrentlyEditingTemplate] = useState(null)
+    useEffect(() => {
+        setIsCurrentlyEditingTemplate(templateId);
+    }, [templateId]);
+
+    const { data: versions, isLoadingVersions, isErrorVersions, refetch, error } = useQuery({
+        queryKey: ['versions', {}],
+        queryFn: async () => {
+            const response = await fetch(`https://programmino-be.onrender.com/template/versions/${isCurrentlyEditingTemplate}`);
+            if (!response.ok) {
+                throw new Error(`Could not load versions of this template: ${isCurrentlyEditingTemplate}`);
+            }
+
+            return response.json()
+        },
+        enabled: true,
+    });
+
+    const [isCurrentlyEditingFile, setIsCurrentlyEditingFile] = useState(null)
+    const [language, setLanguage] = useState(null)
+    const [mode, setMode] = useState(null)
 
     async function addTemplate(code, data) {
         const currentTimestamp = Math.floor(Date.now() / 1000);
@@ -71,63 +142,17 @@ export function TemplateProvider({children}) {
         }
     }
 
-    async function updateTemplateSchema(templateId, data){
-        return("");
+    async function updateTemplateSchema() {
+        //TODO: To be completed
+        return true
     }
-
-    useEffect(() => {
-        if (!templatesMetadata) return [];
-        let filteredTemplates = templatesMetadata;
-
-        // Filtering logic
-        if (filterCriteria && filterCriteria !== "all") {
-            if (Array.isArray(filterCriteria) && filterCriteria.length > 0) {
-                filteredTemplates = filteredTemplates.filter(([, templateDetails]) =>
-                    filterCriteria.includes(templateDetails.status)
-                );
-            } else if (typeof filterCriteria === "string") {
-                filteredTemplates = filteredTemplates.filter(([, templateDetails]) =>
-                    templateDetails.status === filterCriteria
-                );
-            }
-        }
-
-        // Sorting logic
-        if (sortCriteria === "name-az") {
-            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
-                (aDetails.name || "").localeCompare(bDetails.name || "")
-            );
-        } else if (sortCriteria === "name-za") {
-            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
-                (bDetails.name || "").localeCompare(aDetails.name || "")
-            );
-        } else if (sortCriteria === "code-az") {
-            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
-                (aDetails.code || "").localeCompare(bDetails.code || "")
-            );
-        } else if (sortCriteria === "code-za") {
-            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
-                (bDetails.code || "").localeCompare(aDetails.code || "")
-            );
-        } else if (sortCriteria === "status-az") {
-            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
-                (aDetails.mapping_status || "").localeCompare(bDetails.mapping_status || "")
-            );
-        } else if (sortCriteria === "status-za") {
-            filteredTemplates = [...filteredTemplates].sort(([, aDetails], [, bDetails]) =>
-                (bDetails.mapping_status || "").localeCompare(aDetails.mapping_status || "")
-            );
-        }
-
-        setOrderedTemplates(filteredTemplates);
-
-    }, [filterCriteria, sortCriteria, templatesMetadata]);
-
 
     return (
         <TemplateContext.Provider value={{
             isCurrentlyEditingTemplate,
             setIsCurrentlyEditingTemplate,
+            isCurrentlyEditingFile,
+            setIsCurrentlyEditingFile,
             templates,
             addTemplate,
             deleteTemplate,
@@ -135,7 +160,7 @@ export function TemplateProvider({children}) {
             orderedTemplates,
             setFilterCriteria,
             setSortCriteria,
-            refetch,
+            versions,
         }}>
             {children}
         </TemplateContext.Provider>

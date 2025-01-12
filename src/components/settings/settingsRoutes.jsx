@@ -4,8 +4,8 @@ import PageNotFound from "../PageNotFound.jsx";
 export const settingsRoutes = [
     {
         path: '/settings',
-        element: <SettingsPage />,
-        handle: { breadcrumb: 'Settings' },
-        errorElement: <PageNotFound />
+        element: <SettingsPage/>,
+        handle: {breadcrumb: 'Settings'},
+        errorElement: <PageNotFound />,
     },
 ]

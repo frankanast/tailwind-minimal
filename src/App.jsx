@@ -60,11 +60,11 @@ function App() {
                 <QuoteProvider>
                     <RoomMappingFormProvider>
                         <RateMappingFormProvider>
-                            <TemplateProvider>
+                            {/*<TemplateProvider>  --> Called at route, as we use params for business logic */}
                                 <FileUploadProvider>
                                     <RouterProvider router={mainRouter} />
                                 </FileUploadProvider>
-                            </TemplateProvider>
+                            {/*</TemplateProvider>*/}
                         </RateMappingFormProvider>
                     </RoomMappingFormProvider>
                 </QuoteProvider>

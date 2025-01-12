@@ -1,6 +1,6 @@
 import {useSettingsContext} from "../../context/SettingsContext.jsx";
 import LoadingIcon from "../../assets/icons/LoadingIcon.jsx";
-import MappingStatusBadge from "../abstract/MappingStatusBadge.jsx";
+import StatusBadge from "../abstract/StatusBadge.jsx";
 import {PlusSmallIcon} from "@heroicons/react/20/solid/index.js";
 import {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
@@ -120,7 +120,7 @@ export default function RoomsList() {
                         <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
                             <div className="text-gray-900 flex gap-3">
                                 <span className="font-medium">{roomDetails.name?.en || "Unnamed Room"}</span>
-                                <MappingStatusBadge id={roomDetails.mapping_status}/>
+                                <StatusBadge id={roomDetails.mapping_status}/>
                             </div>
                             <Link
                                 type="button"

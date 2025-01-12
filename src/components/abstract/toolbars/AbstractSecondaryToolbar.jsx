@@ -15,7 +15,7 @@ function AbstractDropdown({ title, icon, items }) {
 
 
     return (
-        <Menu as="div" className="relative inline-block text-left justify-center px-3">
+        <Menu as="div" className="relative inline-block text-left justify-center px-5"> {/*Here*/}
             <div>
                 <MenuButton className="w-full justify-center align-middle">
                     <div className="flex items-center h-9 font-semibold text-gray-500 hover:text-indigo-700 hover:bg-indigo-200 gap-1">
