@@ -1,5 +1,4 @@
 import {
-    Label,
     Listbox,
     ListboxButton,
     ListboxOptions,
@@ -10,9 +9,18 @@ import { CheckIcon } from '@heroicons/react/20/solid'
 import { useTemplateContext } from '../../context/TemplatesContext.jsx'
 import { nanoid } from 'nanoid'
 
-// Custom flag icons
-import UkFlagIcon from '../../assets/icons/UkFlagIcon.jsx'
-import ItalyFlagIcon from '../../assets/icons/ItalyFlagIcon.jsx'
+import {
+    SaudiArabiaFlagIcon,
+    ChinaFlagIcon,
+    GermanyFlagIcon,
+    UkFlagIcon,
+    SpainFlagIcon,
+    FranceFlagIcon,
+    ItalyFlagIcon,
+    JapanFlagIcon,
+    BrazilFlagIcon,
+    RussiaFlagIcon,
+} from "../../assets/icons/countryFlags.jsx";
 import { FlagIcon } from '@heroicons/react/16/solid'
 
 import { useState } from 'react'
@@ -29,9 +37,17 @@ export default function TemplateVersionsMenu() {
     // Allowed values: 'it', 'en', 'es', 'fr', 'de', 'jp'
     const flagSize = "h-5 w-auto"
     const flags = {
-        en: <UkFlagIcon className={flagSize} />,
-        it: <ItalyFlagIcon className={flagSize} />,
         unnamed: <FlagIcon className={flagSize} />,
+        ar: <SaudiArabiaFlagIcon className={flagSize} />,
+        ch: <ChinaFlagIcon className={flagSize} />,
+        de: <GermanyFlagIcon className={flagSize} />,
+        en: <UkFlagIcon className={flagSize} />,
+        es: <SpainFlagIcon className={flagSize} />,
+        fr: <FranceFlagIcon className={flagSize} />,
+        it: <ItalyFlagIcon className={flagSize} />,
+        jp: <JapanFlagIcon className={flagSize} />,
+        pt: <BrazilFlagIcon className={flagSize} />,
+        ru: <RussiaFlagIcon className={flagSize} />,
     }
 
     return (
@@ -49,7 +65,7 @@ export default function TemplateVersionsMenu() {
                         {/* Display for the selected version */}
                           {selectedVersion ? (
                               <>
-                                  {flags[selectedVersion.language]}
+                                  {flags[selectedVersion.language] || <FlagIcon />}
                                   <span className="block truncate">
                                       {modes[selectedVersion.mode] || selectedVersion.mode}
                                   </span>
@@ -88,30 +104,28 @@ export default function TemplateVersionsMenu() {
                                 key={nanoid()}
                                 value={version}
                                 className="group relative cursor-default select-none py-2 pl-3 pr-9
-                           text-gray-900 data-[focus]:bg-indigo-600
-                           data-[focus]:text-white data-[focus]:outline-none"
+                                   text-gray-900 data-[focus]:bg-indigo-600
+                                   data-[focus]:text-white data-[focus]:outline-none"
                             >
                                 {/* Option content */}
                                 <div className="flex items-center">
-                  <span className="flex h-3 w-3 items-center justify-center">
-                    {flags[version.language] || flags.unnamed}
-                  </span>
+                                    <span className="flex h-3 w-3 items-center justify-center">
+                                        {flags[version.language] || flags.unnamed}
+                                    </span>
                                     <span className="ml-3 truncate font-normal group-data-[selected]:font-semibold">
-                    {modes[version.mode] || version.mode}
-                  </span>
+                                        {modes[version.mode] || version.mode}
+                                    </span>
                                     <span className="ml-2 truncate text-gray-500 group-data-[focus]:text-indigo-200">
-                    {version.code}
-                  </span>
+                                        {version.code}
+                                    </span>
                                 </div>
 
                                 {/* Check icon (only visible if selected) */}
                                 <span
-                                    className="absolute inset-y-0 right-0 flex items-center pr-4
-                             text-indigo-600 group-[&:not([data-selected])]:hidden
-                             group-data-[focus]:text-white"
+                                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-indigo-600 group-[&:not([data-selected])]:hidden group-data-[focus]:text-white"
                                 >
-                  <CheckIcon aria-hidden="true" className="size-5" />
-                </span>
+                                  <CheckIcon aria-hidden="true" className="size-5" />
+                                </span>
                             </ListboxOption>
                         ))}
                     </ListboxOptions>

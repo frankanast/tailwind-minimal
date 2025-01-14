@@ -1,5 +1,7 @@
-import ItalyFlagIcon from "../../assets/icons/ItalyFlagIcon.jsx";
-import UkFlagIcon from "../../assets/icons/UkFlagIcon.jsx";
+import {
+    UkFlagIcon,
+    ItalyFlagIcon,
+} from "../../assets/icons/countryFlags.jsx";
 import {InformationCircleIcon} from "@heroicons/react/16/solid/index.js";
 import AbstractCheckableList from "../abstract/AbstractCheckableList.jsx";
 import {Field, Label, Switch} from "@headlessui/react";

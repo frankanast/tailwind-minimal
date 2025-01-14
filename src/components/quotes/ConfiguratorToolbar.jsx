@@ -35,8 +35,10 @@ import {FormulaDialogProvider} from "../../context/FormulaDialogContext.jsx";
 import {FormatDialogProvider} from "../../context/FormatDialogContext.jsx";
 import {Fragment, useCallback, useEffect} from "react";
 import {useQuoteContext} from "../../context/QuoteContext.jsx";
-import UkFlagIcon from "../../assets/icons/UkFlagIcon.jsx";
-import ItalyFlagIcon from "../../assets/icons/ItalyFlagIcon.jsx";
+import {
+    UkFlagIcon,
+    ItalyFlagIcon,
+} from "../../assets/icons/countryFlags.jsx";
 import {useQuotePreviewContext} from "../../context/QuotePreviewContext.jsx";
 
 export default function ConfiguratorToolbar() {
