@@ -16,7 +16,7 @@ export default function QuoteRenderer() {
 
     return (
         <Iframe
-            // if webpage has no background, without bg-white it'll look weirdly transparent. Padding simulates a page's margins.
+            // if webpage has no background, without bg-white it'll look weirdly transparent. Padding simulates a paper sheet's margins.
             // margin top set on parent component (padding top), to avoid weird overflow.
             url={iframeUrl}
             id="renderer-iframe"

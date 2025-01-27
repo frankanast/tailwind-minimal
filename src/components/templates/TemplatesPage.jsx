@@ -9,11 +9,9 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import classNames from "../../utils/classNames.js";
 import {Fragment} from "react";
-import {useTemplateContext} from "../../context/TemplatesContext.jsx";
 
 export function TemplatesPage() {
     const params = useParams(); // e.g. { templateId: "default" } ; templateId matches <code> in backend
-    const {isCurrentlyEditingVersion} = useTemplateContext()
 
     const tabs = [
         {
@@ -106,10 +104,8 @@ export function TemplatesPage() {
                                                 }
                                             </span>
                                             <span className="w-60">
-                                                {/*<TemplateVersionsCombobox />*/}
                                                 <h3 className="text-sm/6 font-semibold text-gray-900 mt-4 text-right">
-                                                    {/*FIXME : SHOULD APPEAR ONLY IN DESIGN MODE*/}
-                                                    {isCurrentlyEditingVersion}
+                                                    {/*<TemplateVersionsCombobox />*/}
                                                 </h3>
                                             </span>
 

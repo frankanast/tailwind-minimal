@@ -1,6 +1,6 @@
 import 'react'
 import {
-    ArrowDownOnSquareStackIcon, CheckBadgeIcon,
+    ArrowDownOnSquareStackIcon,
     DocumentArrowDownIcon,
     DocumentTextIcon,
     FolderArrowDownIcon,
@@ -10,7 +10,7 @@ import {
 import AbstractSecondaryToolbar from "../abstract/toolbars/AbstractSecondaryToolbar.jsx";
 import TemplateDesigner from "../abstract/TemplateDesigner.tsx";
 import {useTemplateContext} from "../../context/TemplatesContext.jsx";
-import {ArrowDownTrayIcon, ArrowUpTrayIcon, CheckIcon, CloudArrowUpIcon} from "@heroicons/react/20/solid";
+import {ArrowDownTrayIcon, ArrowUpTrayIcon, CheckIcon} from "@heroicons/react/20/solid";
 import {FlagIcon} from "@heroicons/react/16/solid/index.js";
 import {
     BrazilFlagIcon,
@@ -22,7 +22,7 @@ import {
 } from "../../assets/icons/countryFlags.jsx";
 
 export function TemplateContentEditor() {
-    const {versions} = useTemplateContext()
+    const {versions, updateVersionSelection, content, setContent} = useTemplateContext()
 
     const modes = {
         std: 'Standard',
@@ -97,7 +97,9 @@ export function TemplateContentEditor() {
                         name: ` ${version.language}, ${modes[version.mode]}`,
                         icon: flags[version.language],
                         shortcutLabel: "",
-                        handler: () => {}
+                        handler: () => {
+                            updateVersionSelection(version.mode, version.language)
+                        }
                     }
                 }),
                 [
@@ -114,13 +116,21 @@ export function TemplateContentEditor() {
         },
     ]
 
+    const handleEditorChange = (newHtml) => {
+        setContent(newHtml);
+    };
+
     return (
         // <div className="flex flex-col h-full">
         <div className="flex flex-col">
             <AbstractSecondaryToolbar actions={toolbarItems}/>
             {/*<div className="flex-1 overflow-scroll overflow-x-hidden">*/}
             <div className="flex-1">
-                <TemplateDesigner onSave={() => {alert("save!")}}/>
+                <TemplateDesigner
+                    contents={content}
+                    onChange={handleEditorChange}
+                    onSave={() => {alert("save!")}}
+                />
             </div>
         </div>
     );

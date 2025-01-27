@@ -78,10 +78,6 @@ export function TemplateProvider({children}) {
         enabled: true,
     });
 
-    const [isCurrentlyEditingFile, setIsCurrentlyEditingFile] = useState(null)
-    const [language, setLanguage] = useState(null)
-    const [mode, setMode] = useState(null)
-
     async function addTemplate(code, data) {
         const currentTimestamp = Math.floor(Date.now() / 1000);
         const bodyData = data || {
@@ -142,25 +138,96 @@ export function TemplateProvider({children}) {
         }
     }
 
-    async function updateTemplateSchema() {
-        //TODO: To be completed
-        return true
+    async function updateTemplateData(templateId, updatedData) {
+        try {
+            const response = await fetch(`https://programmino-be.onrender.com/template/${templateId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedData),
+            });
+
+            console.table(updatedData);
+            if (!response.ok) {
+                throw new Error('Failed to update template.');
+            }
+
+            const result = await response.json();
+            // Here you could optimistically update local state or refetch your templates
+            // e.g., refetch() if using React Query, or manually update 'templates' state
+            await refetch()
+            console.log('Update successful:', result);
+
+        } catch (error) {
+            console.error('Error updating template:', error);
+            throw error;
+        }
     }
+
+    const [isCurrentlyEditingVersion, setIsCurrentlyEditingVersion] = useState(null)
+    const [language, setLanguage] = useState("en")
+    const [mode, setMode] = useState("std")
+    const [content, setContent] = useState("")
+
+    const updateVersionSelection = (newMode, newLanguage) => {
+        setLanguage(newLanguage);
+        setMode(newMode);
+        console.log(`Selected ${newMode} ${newLanguage} for template ${isCurrentlyEditingTemplate}`)
+    }
+
+    async function loadVersionContent() {
+        try {
+            const response = await fetch(
+                `https://programmino-be.onrender.com/download_template?id_=${isCurrentlyEditingTemplate}&mode=${mode}&lang=${language}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'text/html',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to load version's content.");
+            }
+
+            setContent(await response.text())
+            console.log(content)
+
+        } catch (error) {
+            console.error('Error loading version\'s content:', error);
+            throw error;
+        }
+    }
+
+    useEffect(() => {
+        const userOk = confirm("If you switch version without saving first, all your edits will be lost. Continue?")
+        if (userOk) {
+            loadVersionContent().then(r => console.log(r));
+        }
+
+    }, [language, mode])
+
+
 
     return (
         <TemplateContext.Provider value={{
             isCurrentlyEditingTemplate,
             setIsCurrentlyEditingTemplate,
-            isCurrentlyEditingFile,
-            setIsCurrentlyEditingFile,
+            isCurrentlyEditingVersion,
+            setIsCurrentlyEditingVersion,
             templates,
             addTemplate,
             deleteTemplate,
-            updateTemplateSchema,
+            updateTemplateData,
             orderedTemplates,
             setFilterCriteria,
             setSortCriteria,
             versions,
+            mode,
+            language,
+            content,
+            setContent,
+            updateVersionSelection,
         }}>
             {children}
         </TemplateContext.Provider>
