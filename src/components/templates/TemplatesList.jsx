@@ -144,7 +144,6 @@ function TemplateItemMenu({templateId}) {
         templates,
         addTemplate,
         deleteTemplate,
-        refetch
     } = useTemplateContext()
 
     function handleDelete() {
@@ -159,8 +158,7 @@ function TemplateItemMenu({templateId}) {
             console.log("Deleting: ", templateId)  // --> null ???
 
             deleteTemplate(templateId).then(() => {
-                refetch()
-                navigate('/templates')
+                window.location.reload();
             });
         }
     }
@@ -175,8 +173,7 @@ function TemplateItemMenu({templateId}) {
         newTemplateData.lastUpdate = Math.floor(Date.now() / 1000);
 
         addTemplate(newTemplateCode, newTemplateData).then(() => {
-            refetch()
-            navigate('/templates')
+            window.location.reload();
         });
     }
 

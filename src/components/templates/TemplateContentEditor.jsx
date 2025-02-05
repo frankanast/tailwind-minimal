@@ -29,7 +29,6 @@ export function TemplateContentEditor() {
         tailored: 'Tailored',
     }
 
-    // Allowed values: 'it', 'en', 'es', 'fr', 'de', 'jp'
     const flagSize = "h-5 w-auto"
     const flags = {
         unnamed: <FlagIcon className={flagSize} />,
@@ -46,6 +45,28 @@ export function TemplateContentEditor() {
     }
 
     const toolbarItems = [
+        {
+            title: 'Versions',
+            icon: <DocumentTextIcon/>,
+            items: [
+                versions.slice(0,6).map(version => {
+                    console.log(version)
+                    return {
+                        name: ` ${version.language}, ${modes[version.mode]}`,
+                        icon: flags[version.language],
+                        shortcutLabel: "",
+                        handler: () => {
+                            updateVersionSelection(version.mode, version.language)
+                        }
+                    }
+                }),
+                [
+                    {
+                        name: `All ${Object.keys(versions).length} version${(Object.keys(versions).length >= 0) ? "s" : ""}...`, icon: <QueueListIcon />, shortcutLabel: '', handler: () => {}
+                    }
+                ]
+            ]
+        },
         {
             title: 'Content',
             icon: <DocumentTextIcon/>,
@@ -88,28 +109,6 @@ export function TemplateContentEditor() {
             ]
         },
         {
-            title: 'Versions',
-            icon: <DocumentTextIcon/>,
-            items: [
-                versions.slice(0,6).map(version => {
-                    console.log(version)
-                    return {
-                        name: ` ${version.language}, ${modes[version.mode]}`,
-                        icon: flags[version.language],
-                        shortcutLabel: "",
-                        handler: () => {
-                            updateVersionSelection(version.mode, version.language)
-                        }
-                    }
-                }),
-                [
-                    {
-                        name: `All ${Object.keys(versions).length} version${(Object.keys(versions).length >= 0) ? "s" : ""}...`, icon: <QueueListIcon />, shortcutLabel: '', handler: () => {}
-                    }
-                ]
-            ]
-        },
-        {
             title: 'Snippets',
             icon: <DocumentTextIcon/>,
             items: []
@@ -121,10 +120,8 @@ export function TemplateContentEditor() {
     };
 
     return (
-        // <div className="flex flex-col h-full">
         <div className="flex flex-col">
             <AbstractSecondaryToolbar actions={toolbarItems}/>
-            {/*<div className="flex-1 overflow-scroll overflow-x-hidden">*/}
             <div className="flex-1">
                 <TemplateDesigner
                     contents={content}

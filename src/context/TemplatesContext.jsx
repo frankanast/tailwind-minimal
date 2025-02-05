@@ -176,6 +176,10 @@ export function TemplateProvider({children}) {
         console.log(`Selected ${newMode} ${newLanguage} for template ${isCurrentlyEditingTemplate}`)
     }
 
+    useEffect(() => {
+        updateVersionSelection("std", "en")
+    }, [isCurrentlyEditingTemplate])
+
     async function loadVersionContent() {
         try {
             const response = await fetch(
@@ -186,6 +190,8 @@ export function TemplateProvider({children}) {
                 },
             });
 
+            console.log(`https://programmino-be.onrender.com/download_template?id_=${isCurrentlyEditingTemplate}&mode=${mode}&lang=${language}`)
+
             if (!response.ok) {
                 throw new Error("Failed to load version's content.");
             }
@@ -194,16 +200,16 @@ export function TemplateProvider({children}) {
             console.log(content)
 
         } catch (error) {
-            console.error('Error loading version\'s content:', error);
+            console.error("Error loading version's content:", error);
             throw error;
         }
     }
 
     useEffect(() => {
-        const userOk = confirm("If you switch version without saving first, all your edits will be lost. Continue?")
-        if (userOk) {
+        //const userOk = confirm("If you switch version without saving first, all your edits will be lost. Continue?")
+        //if (userOk) {
             loadVersionContent().then(r => console.log(r));
-        }
+        //}
 
     }, [language, mode])
 

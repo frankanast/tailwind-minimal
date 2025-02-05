@@ -2,9 +2,8 @@ import 'react'
 import {
     CalendarIcon,
     CheckIcon,
-    LinkIcon,
     CodeBracketIcon,
-    ScissorsIcon
+    ScissorsIcon, TrashIcon
 } from '@heroicons/react/20/solid'
 import { useTemplateContext } from '../../context/TemplatesContext.jsx'
 import { ChevronUpDownIcon, FlagIcon } from "@heroicons/react/16/solid";
@@ -36,17 +35,10 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import StatusBadge from "../abstract/StatusBadge.jsx";
 import { useSettingsContext } from "../../context/SettingsContext.jsx";
 
-/* ------------------------------------------------------------------
-     BASICS
-     - We remove the “on every render” effect that calls onChange.
-     - Instead, we update the parent only when inputs change.
-     ------------------------------------------------------------------ */
 export function Basics({ initialCode, initialName, onChange }) {
     const [code, setCode] = useState(initialCode || "noname");
     const [name, setName] = useState(initialName || "Unnamed Template");
 
-    // If parent props change over time (e.g., user edits the header),
-    // re-sync local states. (Avoid running if unchanged to prevent loops.)
     useEffect(() => {
         setCode(initialCode || "noname");
         setName(initialName || "Unnamed Template");
@@ -130,11 +122,6 @@ export function Basics({ initialCode, initialName, onChange }) {
     );
 }
 
-/* ------------------------------------------------------------------
-     LANGUAGES
-     - Remove the effect that calls onChange for every render.
-     - Instead, call onChange in handleCheckboxChange only.
-     ------------------------------------------------------------------ */
 export function Languages({ initialLanguages = [], onChange }) {
     const AVAILABLE_LANGUAGES = [
         { code: "ar", flag: <SaudiArabiaFlagIcon className="size-5 inline" />, name: "Arabic" },
@@ -211,10 +198,6 @@ export function Languages({ initialLanguages = [], onChange }) {
     );
 }
 
-/* ------------------------------------------------------------------
-     MODES
-     - Call onChange only when the user toggles the switch.
-     ------------------------------------------------------------------ */
 export function Modes({ initialTailoredModeToggleEnabled = false, onChange }) {
     const [tailoredModeToggleEnabled, setTailoredModeToggleEnabled] = useState(initialTailoredModeToggleEnabled);
 
@@ -263,10 +246,6 @@ export function Modes({ initialTailoredModeToggleEnabled = false, onChange }) {
     );
 }
 
-/* ------------------------------------------------------------------
-     DISPLAY
-     - Similar to the others: call onChange only when user picks a new value.
-     ------------------------------------------------------------------ */
 function Display({ initialPriority, initialStatus, onChange }) {
     const { statuses } = useSettingsContext();
     const [priority, setPriority] = useState(initialPriority || 1);
@@ -389,18 +368,13 @@ function Display({ initialPriority, initialStatus, onChange }) {
     );
 }
 
-/* ------------------------------------------------------------------
-     TEMPLATE OPTIONS EDITOR
-     ------------------------------------------------------------------ */
 export function TemplateOptionsEditor() {
-    const { isCurrentlyEditingTemplate, templates, updateTemplateData, refetch } = useTemplateContext();
+    const { isCurrentlyEditingTemplate, templates, updateTemplateData, deleteTemplate } = useTemplateContext();
     const currentTemplate = templates[isCurrentlyEditingTemplate];
 
-    // Keep "currentTimestamp" stable across re-renders to avoid infinite loop
     const [currentTimestamp] = useState(() => Math.floor(Date.now() / 1000));
     const tags = [""]  // Placeholder, tags are not supported yet.
 
-    // Master state for edited fields
     const [formData, setFormData] = useState({
         code: currentTemplate?.code || "noname",
         name: currentTemplate?.name || "Unnamed Template",
@@ -412,7 +386,6 @@ export function TemplateOptionsEditor() {
         lastUpdate: currentTimestamp,
     });
 
-    // Re-init formData if user switches templates
     useEffect(() => {
         if (!currentTemplate) return;
 
@@ -429,11 +402,7 @@ export function TemplateOptionsEditor() {
 
     }, [currentTemplate, currentTimestamp]);
 
-    /* -----------------------------
-        Child handlers for each part
-    ----------------------------- */
-
-    // <Basics /> => user changes code/name
+    /* Child handlers for each part */
     const handleBasicsChange = ({ code, name }) => {
         setFormData((prev) => ({
             ...prev,
@@ -442,7 +411,6 @@ export function TemplateOptionsEditor() {
         }));
     };
 
-    // <Languages /> => returns array of languages
     const handleLanguagesChange = (langsArray) => {
         setFormData((prev) => ({
             ...prev,
@@ -450,7 +418,6 @@ export function TemplateOptionsEditor() {
         }));
     };
 
-    // <Modes /> => user toggles tailoredModeToggleEnabled
     const handleModesChange = ({ tailoredModeToggleEnabled }) => {
         setFormData((prev) => {
             let newModes = [...prev.modes];
@@ -465,7 +432,6 @@ export function TemplateOptionsEditor() {
         });
     };
 
-    // <Display /> => { priority, selectedStatus }
     const handleDisplayChange = ({ priority, selectedStatus }) => {
         setFormData((prev) => ({
             ...prev,
@@ -474,7 +440,6 @@ export function TemplateOptionsEditor() {
         }));
     };
 
-    // Handler for the top "Name" in the header
     const handleNameInHeader = (e) => {
         const newName = e.target.value;
         setFormData((prev) => ({
@@ -491,6 +456,16 @@ export function TemplateOptionsEditor() {
 
         } catch (error) {
             alert(`Failed to update template: ${error}`);
+        }
+    };
+
+    const handleDelete = async () => {
+        try {
+            await deleteTemplate(isCurrentlyEditingTemplate);
+            window.location.reload();
+
+        } catch (error) {
+            alert(`Failed to delete template: ${error}`);
         }
     };
 
@@ -542,33 +517,6 @@ export function TemplateOptionsEditor() {
                         </div>
                     </div>
                 </div>
-
-                <div className="mt-5 flex lg:ml-4 lg:mt-0">
-                    <span className="ml-3 hidden sm:block">
-                        <button
-                            type="button"
-                            className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm
-                                                 font-semibold text-gray-900 shadow-sm ring-1 ring-inset
-                                                 ring-gray-300 hover:bg-gray-50"
-                        >
-                            <LinkIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-5 text-gray-400" />
-                            Run a test
-                        </button>
-                    </span>
-                    <span className="sm:ml-3">
-                        <button
-                            type="button"
-                            className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2
-                                                 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500
-                                                 focus-visible:outline focus-visible:outline-2
-                                                 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                            onClick={handleSave}
-                        >
-                            <CheckIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-5" />
-                            Save
-                        </button>
-                    </span>
-                </div>
             </header>
 
             {/* MAIN CONTENT */}
@@ -604,6 +552,32 @@ export function TemplateOptionsEditor() {
                             onChange={handleDisplayChange}
                         />
                     </section>
+                </div>
+
+                <div className="pt-16 flex gap-5 justify-end">
+                    <button
+                        type="button"
+                        className="inline-flex items-end rounded-md bg-chestnut-600 px-10 py-2
+                                             text-sm font-semibold text-white shadow-sm hover:bg-chestnut-500
+                                             focus-visible:outline focus-visible:outline-2
+                                             focus-visible:outline-offset-2 focus-visible:outline-chestnut-600"
+                        onClick={handleDelete}
+                    >
+                        <TrashIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-5"/>
+                        Delete
+                    </button>
+                    <button
+                        type="button"
+                        className="inline-flex items-end rounded-md bg-indigo-600 px-10 py-2
+                                             text-sm font-semibold text-white shadow-sm hover:bg-indigo-500
+                                             focus-visible:outline focus-visible:outline-2
+                                             focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+                        onClick={handleSave}
+                    >
+                        <CheckIcon aria-hidden="true" className="-ml-0.5 mr-1.5 size-5"/>
+                        Save
+                    </button>
+
                 </div>
             </main>
         </div>
