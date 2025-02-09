@@ -48,7 +48,8 @@
     "react-router": "^7.0.2",
     "react-router-dom": "^7.0.2",
     "split-pane-react": "^0.1.3",
-    "suneditor": "^2.47.1",
+    "suneditor": "^2.47.5",
+    "suneditor-react": "^3.6.1",
     "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {

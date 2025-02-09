@@ -10,6 +10,7 @@ export function TemplateProvider({children}) {
     const [filterCriteria, setFilterCriteria] = useState("all")
     const [sortCriteria, setSortCriteria] = useState("name-az")
 
+    // Filtering & Sorting logic
     useEffect(() => {
         if (!templatesMetadata) return [];
         let filteredTemplates = templatesMetadata;
@@ -59,13 +60,14 @@ export function TemplateProvider({children}) {
     }, [filterCriteria, sortCriteria, templatesMetadata]);
 
     // Update isCurrentlyEditingTemplate from the URL
+    // todo: do we need this?
     const { templateId } = useParams()
     const [isCurrentlyEditingTemplate, setIsCurrentlyEditingTemplate] = useState(null)
     useEffect(() => {
         setIsCurrentlyEditingTemplate(templateId);
     }, [templateId]);
 
-    const { data: versions, isLoadingVersions, isErrorVersions, refetch, error } = useQuery({
+    const { data: versions, refetch } = useQuery({
         queryKey: ['versions', {}],
         queryFn: async () => {
             const response = await fetch(`https://programmino-be.onrender.com/template/versions/${isCurrentlyEditingTemplate}`);
@@ -138,7 +140,7 @@ export function TemplateProvider({children}) {
         }
     }
 
-    async function updateTemplateData(templateId, updatedData) {
+    async function updateTemplateOptions(templateId, updatedData) {
         try {
             const response = await fetch(`https://programmino-be.onrender.com/template/${templateId}`, {
                 method: 'PUT',
@@ -165,75 +167,18 @@ export function TemplateProvider({children}) {
         }
     }
 
-    const [isCurrentlyEditingVersion, setIsCurrentlyEditingVersion] = useState(null)
-    const [language, setLanguage] = useState("en")
-    const [mode, setMode] = useState("std")
-    const [content, setContent] = useState("")
-
-    const updateVersionSelection = (newMode, newLanguage) => {
-        setLanguage(newLanguage);
-        setMode(newMode);
-        console.log(`Selected ${newMode} ${newLanguage} for template ${isCurrentlyEditingTemplate}`)
-    }
-
-    useEffect(() => {
-        updateVersionSelection("std", "en")
-    }, [isCurrentlyEditingTemplate])
-
-    async function loadVersionContent() {
-        try {
-            const response = await fetch(
-                `https://programmino-be.onrender.com/download_template?id_=${isCurrentlyEditingTemplate}&mode=${mode}&lang=${language}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'text/html',
-                },
-            });
-
-            console.log(`https://programmino-be.onrender.com/download_template?id_=${isCurrentlyEditingTemplate}&mode=${mode}&lang=${language}`)
-
-            if (!response.ok) {
-                throw new Error("Failed to load version's content.");
-            }
-
-            setContent(await response.text())
-            console.log(content)
-
-        } catch (error) {
-            console.error("Error loading version's content:", error);
-            throw error;
-        }
-    }
-
-    useEffect(() => {
-        //const userOk = confirm("If you switch version without saving first, all your edits will be lost. Continue?")
-        //if (userOk) {
-            loadVersionContent().then(r => console.log(r));
-        //}
-
-    }, [language, mode])
-
-
-
     return (
         <TemplateContext.Provider value={{
             isCurrentlyEditingTemplate,
             setIsCurrentlyEditingTemplate,
-            isCurrentlyEditingVersion,
-            setIsCurrentlyEditingVersion,
             templates,
             addTemplate,
             deleteTemplate,
-            updateTemplateData,
+            updateTemplateData: updateTemplateOptions,
             orderedTemplates,
             setFilterCriteria,
             setSortCriteria,
-            versions,
-            mode,
-            language,
-            content,
-            setContent,
-            updateVersionSelection,
+            versions
         }}>
             {children}
         </TemplateContext.Provider>

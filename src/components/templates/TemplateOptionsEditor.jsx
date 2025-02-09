@@ -31,7 +31,7 @@ import {
     ListboxOptions,
     Switch
 } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import StatusBadge from "../abstract/StatusBadge.jsx";
 import { useSettingsContext } from "../../context/SettingsContext.jsx";
 
@@ -369,7 +369,7 @@ function Display({ initialPriority, initialStatus, onChange }) {
 }
 
 export function TemplateOptionsEditor() {
-    const { isCurrentlyEditingTemplate, templates, updateTemplateData, deleteTemplate } = useTemplateContext();
+    const { isCurrentlyEditingTemplate, templates, updateTemplateOptions, deleteTemplate } = useTemplateContext();
     const currentTemplate = templates[isCurrentlyEditingTemplate];
 
     const [currentTimestamp] = useState(() => Math.floor(Date.now() / 1000));
@@ -450,7 +450,7 @@ export function TemplateOptionsEditor() {
 
     const handleSave = async () => {
         try {
-            await updateTemplateData(isCurrentlyEditingTemplate, formData);
+            await updateTemplateOptions(isCurrentlyEditingTemplate, formData);
             alert("Template updated successfully!");
             window.location.reload();
 

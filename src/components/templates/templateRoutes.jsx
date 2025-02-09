@@ -1,9 +1,10 @@
 import {TemplatesPage} from "./TemplatesPage.jsx";
 import {TemplateOptionsEditor} from "./TemplateOptionsEditor.jsx";
-import {TemplateContentEditor} from "./TemplateContentEditor.jsx";
 import StateIndicator from "../abstract/StateIndicator.jsx";
 import MagnifyingGlass from "../../assets/icons/MagnifyingGlass.jsx";
 import {TemplateProvider} from "../../context/TemplatesContext.jsx";
+import VersionsList from "./VersionsList.jsx";
+import VersionEditor from "./VersionEditor.jsx";
 
 export const templateRoutes = [
     {
@@ -19,8 +20,19 @@ export const templateRoutes = [
                         element: <TemplateOptionsEditor />,
                     },
                     {
+                        // element: <TemplateContentEditor />,
+                        // element: <VersionsList />,
                         path: 'design',
-                        element: <TemplateContentEditor />,
+                        children: [
+                            {
+                                index: true,
+                                element: <VersionsList />,
+                            },
+                            {
+                                path: ':modeId/:languageId',
+                                element: <VersionEditor />,
+                            }
+                        ]
                     },
                     {
                         // Show 'Options' if user visits just "/templates/:templateId"
