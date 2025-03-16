@@ -9,7 +9,6 @@ import {useRatePresenterContext} from "../../context/RatePresenterContext.jsx";
 import FxIcon from "../../assets/icons/FxIcon.jsx";
 import {CheckIcon, XMarkIcon} from '@heroicons/react/20/solid'
 import {useFormulaDialogContext} from "../../context/FormulaDialogContext.jsx";
-import BoxIcon from "../../assets/icons/BoxIcon.jsx";
 import RateSelectionDropdown from "./RateSelectionDropdown.jsx";
 
 function PresetFormulaList({onPresetSelect}) {

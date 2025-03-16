@@ -174,7 +174,7 @@ export function TemplateProvider({children}) {
             templates,
             addTemplate,
             deleteTemplate,
-            updateTemplateData: updateTemplateOptions,
+            updateTemplateOptions,
             orderedTemplates,
             setFilterCriteria,
             setSortCriteria,

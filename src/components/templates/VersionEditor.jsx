@@ -6,16 +6,22 @@ import AbstractSecondaryToolbar from "../abstract/toolbars/AbstractSecondaryTool
 import {
     ArrowDownOnSquareStackIcon,
     ArrowDownTrayIcon,
-    ArrowUpTrayIcon,
+    ArrowUpTrayIcon, BookOpenIcon,
     CheckIcon,
     DocumentTextIcon,
     LanguageIcon,
 } from "@heroicons/react/20/solid/index.js";
+import 'suneditor/dist/css/suneditor.min.css';
+import TemplateImportFromDialog from "./TemplateImportFromDialog.jsx";
+import TranslateDialog from "./TranslateDialog.jsx";
+import ProofreadDialog from "./ProofreadDialog.jsx";
 
 export default function VersionEditor() {
     const {templateId, modeId, languageId} = useParams()
-    //const [versionContent, setVersionContent] = useState(null)
     const [isDirty, setIsDirty] = useState(false)
+    const [importDialogIsOpen, setImportDialogIsOpen] = useState(false)
+    const [translateDialogIsOpen, setTranslateDialogIsOpen] = useState(false)
+    const [proofreadDialogIsOpen, setProofreadDialogIsOpen] = useState(false)
 
     const editorInstance = useRef(null)
     const contentRef = useRef("")
@@ -23,7 +29,11 @@ export default function VersionEditor() {
     useEffect(() => {
         async function loadVersionContent() {
             try {
-                const response = await fetch(`https://programmino-be.onrender.com/download_template?id_=${templateId}&mode=${modeId}&lang=${languageId}`)
+                const response = await fetch(
+                    `https://programmino-be.onrender.com/download_template?id_=${templateId}&mode=${modeId}&lang=${languageId}`,
+                    { cache: 'no-store' }
+
+                )
 
                 if (!response.ok) {
                     throw new Error("Failed to load version content")
@@ -44,13 +54,6 @@ export default function VersionEditor() {
         loadVersionContent()
     }, [templateId, modeId, languageId])
 
-    // useEffect(() => {
-    //     if (editorInstance.current && versionContent) {
-    //         editorInstance.current.setContents(versionContent)
-    //     }
-    //
-    // }, [versionContent]);
-
     useEffect(() => {
         const handleBeforeUnload = (e) => {
             if (isDirty) {
@@ -58,12 +61,12 @@ export default function VersionEditor() {
                 e.returnValue = ""
             }
         }
-        
+
         window.addEventListener("beforeunload", handleBeforeUnload)
         return () => {
             window.removeEventListener("beforeunload", handleBeforeUnload)
         }
-        
+
     }, [isDirty]);
 
     const handleEditorChange = (content) => {
@@ -100,17 +103,152 @@ export default function VersionEditor() {
         }
     }
 
+    // Additional features
+    const handleLoadFromFile = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.html';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const htmlContent = event.target.result;
+                    contentRef.current = htmlContent;
+                    if (editorInstance.current) {
+                        editorInstance.current.setContents(htmlContent);
+                    }
+                    setIsDirty(true);
+                };
+                reader.readAsText(file);
+            }
+        };
+        input.click();
+    };
+
+    const handleExportAs = () => {
+        const contentToExport = contentRef.current
+        const blob = new Blob([contentToExport], { type: 'text/html' })
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'exported_content.html'
+        a.click();
+        URL.revokeObjectURL(url)
+    }
+
+    const handleImportFrom = async () => {
+        setImportDialogIsOpen(true)
+    }
+
+    const handleImportTemplate = async (version) => {
+        try {
+            // The version object has an 'url' property (see docs on the backend: /template/versions/{templateId})
+            const response = await fetch(version.url);
+
+            if (!response.ok) {
+                throw new Error("Failed to import version content in current editor.");
+            }
+
+            const importedContent = await response.text();
+
+            contentRef.current = importedContent;
+            if (editorInstance.current) {
+                editorInstance.current.setContents(importedContent);
+            }
+            setIsDirty(true);
+
+        } catch (error) {
+            console.error("Error during content import:", error);
+            alert("Error during content import.");
+        }
+    }
+
+    const handleTranslate = async () => {
+        setTranslateDialogIsOpen(true)
+    };
+
+    const handleTranslateTemplate = async (language) => {
+        try {
+            const contentToTranslate = contentRef.current;
+            const response = await fetch("https://programmino-be.onrender.com/ai_translate_template", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    to_lang: language,
+                    content: contentToTranslate,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to translate");
+            }
+
+            const translatedHtml = await response.json();
+            contentRef.current = translatedHtml;
+
+            if (editorInstance.current) {
+                editorInstance.current.setContents(translatedHtml.content);
+            }
+
+            setIsDirty(true);
+
+        } catch (error) {
+            console.error("Error during AI translation", error);
+            alert(`Error during AI translation: ${error}`);
+        }
+    }
+
+    const handleProofread = async () => {
+        setProofreadDialogIsOpen(true)
+    }
+
+    const handleProofreadTemplate = async () => {
+        try {
+            const contentToReview = contentRef.current;
+            const response = await fetch("https://programmino-be.onrender.com/ai_proofread_template", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    content: contentToReview,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to proofread.");
+            }
+
+            const review = await response.json();
+            contentRef.current = review;
+
+            if (editorInstance.current) {
+                editorInstance.current.setContents(review.content);
+            }
+
+            setIsDirty(true);
+
+        } catch (error) {
+            console.error("Error during AI proofreading", error);
+            alert(`Error during AI proofreading: ${error}`);
+        }
+    };
+
+
     const toolbarItems = [
         {
             title: 'File',
-            icon: <DocumentTextIcon/>,
+            icon: <DocumentTextIcon />,
             items: [
                 [
                     {
-                        name: 'Load from file...', icon: <ArrowDownOnSquareStackIcon />, shortcutLabel: "", handler: () => {}
+                        name: 'Load from file...', icon: <ArrowDownOnSquareStackIcon />, shortcutLabel: "", handler: handleLoadFromFile
                     },
                     {
-                        name: 'Import from...', icon: <ArrowDownOnSquareStackIcon />, shortcutLabel: "", handler: () => {}
+                        name: 'Import from...', icon: <ArrowDownOnSquareStackIcon />, shortcutLabel: "", handler: handleImportFrom
                     },
                 ],
                 [
@@ -118,28 +256,23 @@ export default function VersionEditor() {
                         name: 'Save', icon: <ArrowUpTrayIcon />, shortcutLabel: "", handler: () => handleSave()
                     },
                     {
-                        name: 'Export as...', icon: <ArrowDownTrayIcon />, shortcutLabel: "", handler: () => {}
+                        name: 'Export as...', icon: <ArrowDownTrayIcon />, shortcutLabel: "", handler: handleExportAs
                     },
                 ]
             ]
         },
         {
             title: 'Content',
-            icon: <DocumentTextIcon/>,
+            icon: <BookOpenIcon />,
             items: [
                 {
-                    name: 'Translate with AI...', icon: <LanguageIcon/>, shortcutLabel: "", handler: () => {}
+                    name: 'Translate with AI...', icon: <LanguageIcon/>, shortcutLabel: "", handler: handleTranslate
                 },
                 {
-                    name: 'Proofread', icon: <CheckIcon />, shortcutLabel: "", handler: () => {}
+                    name: 'Proofread', icon: <CheckIcon />, shortcutLabel: "", handler: handleProofread
                 },
             ]
         },
-        // {
-        //     title: 'Snippets',
-        //     icon: <DocumentTextIcon/>,
-        //     items: []
-        // },
     ]
 
     return (
@@ -161,6 +294,22 @@ export default function VersionEditor() {
                 }}
                 onChange={handleEditorChange}
             />
+            <TemplateImportFromDialog
+                open={importDialogIsOpen}
+                setOpen={setImportDialogIsOpen}
+                onImport={handleImportTemplate}
+            />
+            <TranslateDialog
+                open={translateDialogIsOpen}
+                setOpen={setTranslateDialogIsOpen}
+                onTranslate={handleTranslateTemplate}
+            />
+            <ProofreadDialog
+                open={proofreadDialogIsOpen}
+                setOpen={setProofreadDialogIsOpen}
+                onProofread={handleProofreadTemplate}
+            />
+
         </div>
     )
 }

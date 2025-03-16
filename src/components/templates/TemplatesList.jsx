@@ -196,13 +196,6 @@ function TemplateItemMenu({templateId}) {
                     </button>
                 </MenuItem>
                 <MenuItem>
-                    <button
-                        className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
-                    >
-                        Set priority
-                    </button>
-                </MenuItem>
-                <MenuItem>
                     <div
                         className="block px-3 py-1 text-sm/6 text-gray-900 data-[focus]:bg-gray-50 data-[focus]:outline-none"
                         onClick={handleDelete}
