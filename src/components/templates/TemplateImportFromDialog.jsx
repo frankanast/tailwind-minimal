@@ -181,6 +181,7 @@ export default function TemplateImportFromDialog({open, setOpen, onImport}) {
                             </button>
                         </div>
                     </DialogPanel>
+                    {/*New branch test*/}
                 </div>
             </div>
         </Dialog>
