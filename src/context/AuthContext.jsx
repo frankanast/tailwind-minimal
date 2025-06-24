@@ -5,23 +5,37 @@ export const AuthContext = createContext(undefined);
 export function AuthProvider({ children }) {
     const [token, setToken] = useState(() => localStorage.getItem('token'));
     const [user, setUser] = useState(null);
+    const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(!!token);
 
     useEffect(() => {
         if (token) {
             setLoading(true);
+
             fetch('https://programmino-be.onrender.com/users/me', {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
                 .then(async res => {
                     if (!res.ok) throw new Error('Failed to fetch user');
-                    const data = await res.json();
+                    return res.json();
+                })
+                .then(data => {
                     setUser(data);
+                    // Fetch profile after user
+                    return fetch('https://programmino-be.onrender.com/users/me/profile', {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                })
+                .then(async res => {
+                    if (!res.ok) throw new Error('Failed to fetch profile');
+                    const profData = await res.json();
+                    setProfile(profData);
                 })
                 .catch(() => {
                     setToken(null);
                     localStorage.removeItem('token');
                     setUser(null);
+                    setProfile(null);
                 })
                 .finally(() => setLoading(false));
         }
@@ -40,14 +54,33 @@ export function AuthProvider({ children }) {
         return data;
     };
 
+    const updateProfile = async (profileUpdates) => {
+        const res = await fetch('https://programmino-be.onrender.com/users/me/profile', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(profileUpdates)
+        });
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.detail || 'Failed to update profile');
+        }
+        const updated = await res.json();
+        setProfile(updated);
+        return updated;
+    };
+
     const logout = () => {
         setToken(null);
         setUser(null);
+        setProfile(null);
         localStorage.removeItem('token');
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, loading, login, logout }}>
+        <AuthContext.Provider value={{ token, user, profile, loading, login, logout, updateProfile }}>
             {children}
         </AuthContext.Provider>
     );
