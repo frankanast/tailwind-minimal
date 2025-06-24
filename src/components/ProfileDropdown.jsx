@@ -1,13 +1,6 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import {
-    ArrowRightStartOnRectangleIcon,
-    UserIcon,
-    ClockIcon
-} from '@heroicons/react/20/solid'
-
 import {CheckBadgeIcon} from '@heroicons/react/16/solid'
 import {useAuthContext} from "../context/AuthContext.jsx";
-import {useState} from "react";
+import {Fragment, useState} from "react";
 import ProfileDrawer from "./ProfileDrawer.jsx";
 import getInitials from "../utils/getInitials.js";
 
@@ -38,7 +31,7 @@ export default function ProfileDropdown() {
                     <span className="flex gap-1">
                         <span className='sr-only'>Your profile</span>
                         <span aria-hidden='true'>{profile.name} {profile.surname}</span>
-                        <CheckBadgeIcon className="size-4 text-slate-500 hover:bg-slate-40 mt-1"/>
+                        {user.role === "admin" ? <CheckBadgeIcon className="size-4 text-slate-500 hover:bg-slate-40 mt-1"/> : <Fragment/>}
                     </span>
 
                 </button>
