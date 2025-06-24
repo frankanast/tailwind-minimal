@@ -20,19 +20,23 @@ import {eventsRoutes} from "./components/events/eventsRoutes.jsx";
 import {quoteRoutes} from "./components/quotes/quoteRoutes.jsx";
 import {roomsRoutes} from "./components/rooms/roomsRoutes.jsx";
 import {ratesRoutes} from "./components/rates/ratesRoutes.jsx";
+import RequireAuth from "./components/RequireAuth.jsx";
+import {AuthProvider} from "./context/AuthContext.jsx";
 
 const mainRouter = createBrowserRouter([
+    { path: '/login', element: <LoginView /> },
     {
         path: '/',
-        element: <HomeScreen />,
-        handle: { breadcrumb: 'Home' },
+        element: <RequireAuth><HomeScreen/></RequireAuth>,
         errorElement: <PageNotFound />,
         children: [
             {
                 // 'Quote' section shows by default at startup
-                path: '/',
+                // path: '/',
+                // element: <QuotePage />,
+                // handle: { breadcrumb: 'Quote' },
+                index: true,
                 element: <QuotePage />,
-                handle: { breadcrumb: 'Quote' },
             },
             ...quoteRoutes,
             ...eventsRoutes,
@@ -51,26 +55,26 @@ const mainRouter = createBrowserRouter([
     },
 ]);
 
-function App() {
+export default function App() {
     const queryClient = new QueryClient();
 
     return (
         <QueryClientProvider client={queryClient}>
-            <SettingsProvider>
-                <QuoteProvider>
-                    <RoomMappingFormProvider>
-                        <RateMappingFormProvider>
-                            {/*<TemplateProvider>  --> Called at route, as we use params for business logic */}
+            <AuthProvider>
+                <SettingsProvider>
+                    <QuoteProvider>
+                        <RoomMappingFormProvider>
+                            <RateMappingFormProvider>
+                                {/*<TemplateProvider>  --> Called at route, as we use params for business logic */}
                                 <FileUploadProvider>
                                     <RouterProvider router={mainRouter} />
                                 </FileUploadProvider>
-                            {/*</TemplateProvider>*/}
-                        </RateMappingFormProvider>
-                    </RoomMappingFormProvider>
-                </QuoteProvider>
-            </SettingsProvider>
+                                {/*</TemplateProvider>*/}
+                            </RateMappingFormProvider>
+                        </RoomMappingFormProvider>
+                    </QuoteProvider>
+                </SettingsProvider>
+            </AuthProvider>
         </QueryClientProvider>
     );
 }
-
-export default App;

@@ -16,13 +16,14 @@ import {
     CurrencyEuroIcon,
     Cog6ToothIcon,
     CalendarDaysIcon,
-    ChatBubbleOvalLeftIcon,
+    //ChatBubbleOvalLeftIcon,
     QuestionMarkCircleIcon,
     SwatchIcon, RectangleGroupIcon, BanknotesIcon
 } from '@heroicons/react/24/outline';
 
 import { NavLink, Outlet } from 'react-router-dom';
 import CustomerLogoImg from "./abstract/CustomerLogoImg.jsx";
+import ProfileDropdown from "./ProfileDropdown.jsx";
 
 const navigation = [
     {
@@ -123,6 +124,7 @@ export default function HomeScreen() {
                                                         </NavLink>
                                                     </li>
                                                 ))}
+                                                <li><ProfileDropdown /></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -163,18 +165,7 @@ export default function HomeScreen() {
                                     </ul>
                                 </li>
                                 <li className='-mx-6 mt-auto'>
-                                    <a
-                                        href='#'
-                                        className='flex items-center gap-x-4 px-6 py-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-50'
-                                    >
-                                        <img
-                                            alt=''
-                                            src='https://avatars.githubusercontent.com/u/82828758?v=4'
-                                            className='size-8 rounded-full bg-gray-50'
-                                        />
-                                        <span className='sr-only'>Your profile</span>
-                                        <span aria-hidden='true'>Francesco Anastasio</span>
-                                    </a>
+                                    <ProfileDropdown />
                                 </li>
                             </ul>
                         </nav>
@@ -193,14 +184,6 @@ export default function HomeScreen() {
                     <div className='flex-1 text-sm/6 font-semibold text-gray-900'>
                         <CustomerLogoImg className='h-5' />
                     </div>
-                    <a href='#'>
-                        <span className='sr-only'>Your profile</span>
-                        <img
-                            alt=''
-                            src='https://avatars.githubusercontent.com/u/82828758?v=4'
-                            className='size-8 rounded-full bg-gray-50'
-                        />
-                    </a>
                 </div>
 
                 <main className='lg:pl-72'>  {/* 72 for the sidebar space on lg viewport! */}
