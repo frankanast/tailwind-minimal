@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   version="1.1"
+   id="Icons"
+   viewBox="0 0 32 32"
+   xml:space="preserve"
+   sodipodi:docname="pram.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs141" /><sodipodi:namedview
+   id="namedview139"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="18.318485"
+   inkscape:cx="27.131065"
+   inkscape:cy="15.558055"
+   inkscape:window-width="1920"
+   inkscape:window-height="1009"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Icons" />
+<style
+   type="text/css"
+   id="style134">
+	.st0{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<path
+   d="m 16.166521,10.055743 -0.0588,-7.5204743 C 16.102665,1.8889813 15.676847,1.4580902 15.030539,1.4580902 h -1.077178 c -6.5707893,0 -11.8489639,5.2781746 -11.8489639,11.8489638 v 1.292614 c 0,3.123818 1.2926142,5.816764 3.4469712,7.755685 -1.4003321,0.754025 -2.3697927,2.154357 -2.3697927,3.877843 0,2.369793 1.9389213,4.308714 4.308714,4.308714 2.3697927,0 4.3087144,-1.938921 4.3087144,-4.308714 0,-0.430872 -0.107718,-0.754025 -0.215436,-1.077179 h 0.969461 6.893942 0.969461 c -0.107718,0.323154 -0.215436,0.754025 -0.215436,1.077179 0,2.369793 1.938921,4.308714 4.308714,4.308714 2.369793,0 4.308714,-1.938921 4.308714,-4.308714 0,-1.723486 -0.96946,-3.123818 -2.369793,-3.877843 2.154357,-1.938921 3.446972,-4.739585 3.446972,-7.755685 -5.721742,-4.479391 -5.662571,-0.105563 -13.729082,-4.543925 z"
+   id="path136"
+   sodipodi:nodetypes="cssssscsssccccsssccc"
+   style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:2.15436;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1" />
+</svg>
