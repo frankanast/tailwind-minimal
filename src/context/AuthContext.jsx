@@ -12,8 +12,9 @@ export function AuthProvider({ children }) {
         if (token) {
             setLoading(true);
 
-            fetch('https://programmino-be.onrender.com/users/me', {
+            fetch('https://programmino-be.onrender.com/auth/users/me', {
                 headers: { 'Authorization': `Bearer ${token}` }
+
             })
                 .then(async res => {
                     if (!res.ok) throw new Error('Failed to fetch user');
@@ -22,15 +23,18 @@ export function AuthProvider({ children }) {
                 .then(data => {
                     setUser(data);
                     // Fetch profile after user
-                    return fetch('https://programmino-be.onrender.com/users/me/profile', {
+                    return fetch('https://programmino-be.onrender.com/auth/users/me/profile', {
                         headers: { 'Authorization': `Bearer ${token}` }
+
                     });
                 })
+
                 .then(async res => {
                     if (!res.ok) throw new Error('Failed to fetch profile');
                     const profData = await res.json();
                     setProfile(profData);
                 })
+
                 .catch(() => {
                     setToken(null);
                     localStorage.removeItem('token');
@@ -42,7 +46,7 @@ export function AuthProvider({ children }) {
     }, [token]);
 
     const login = async (username, password) => {
-        const res = await fetch('https://programmino-be.onrender.com/token', {
+        const res = await fetch('https://programmino-be.onrender.com/auth/authtoken', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: new URLSearchParams({ username, password })
@@ -55,7 +59,7 @@ export function AuthProvider({ children }) {
     };
 
     const updateProfile = async (profileUpdates) => {
-        const res = await fetch('https://programmino-be.onrender.com/users/me/profile', {
+        const res = await fetch('https://programmino-be.onrender.com/auth/users/me/profile', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

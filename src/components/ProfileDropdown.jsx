@@ -6,7 +6,7 @@ import getInitials from "../utils/getInitials.js";
 
 
 export default function ProfileDropdown() {
-    const { logout, user, profile } = useAuthContext()
+    const { user, profile } = useAuthContext()
     const [open, setOpen] = useState(false);
 
     return (
